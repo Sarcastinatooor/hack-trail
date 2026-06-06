@@ -1,65 +1,223 @@
-import Image from "next/image";
+import Link from "next/link"
+import { INCIDENTS } from "@/data/incidents"
+import type { IncidentSummary } from "@/data/types"
 
-export default function Home() {
+function fmtUsd(n: number) {
+  if (!isFinite(n) || n === 0) return "$0"
+  const abs = Math.abs(n)
+  if (abs >= 1e9) return `$${(n / 1e9).toFixed(2)}B`
+  if (abs >= 1e6) return `$${(n / 1e6).toFixed(0)}M`
+  if (abs >= 1e3) return `$${(n / 1e3).toFixed(0)}k`
+  return `$${n.toFixed(0)}`
+}
+
+const CHAIN_COLORS: Record<string, string> = {
+  Ethereum: "border-[#627eea]/30 text-[#627eea]",
+  Arbitrum: "border-[#28a0f0]/30 text-[#28a0f0]",
+  Bitcoin: "border-[#f7931a]/30 text-[#f7931a]",
+  Unichain: "border-[#ff007a]/30 text-[#ff007a]",
+  Solana: "border-[#9945ff]/30 text-[#9945ff]",
+  Zcash: "border-[#f4b728]/30 text-[#f4b728]",
+}
+
+function ChainBadge({ chain }: { chain: string }) {
+  const cls = CHAIN_COLORS[chain] ?? "border-white/10 text-neutral-400"
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <span className={`text-[10px] mono px-1.5 py-0.5 rounded border bg-white/[0.02] ${cls}`}>
+      {chain}
+    </span>
+  )
+}
+
+function IncidentCard({ i, index }: { i: IncidentSummary; index: number }) {
+  const clickable = i.status === "full"
+  const isVulnerability = i.loss_usd === 0
+
+  const glowClass = isVulnerability ? "neon-card-cyan" : i.status === "stub" ? "" : "neon-card"
+
+  const inner = (
+    <div
+      className={`neon-card ${glowClass} h-full p-5 animate-slide-up ${
+        !clickable ? "opacity-50 cursor-default" : "cursor-pointer"
+      }`}
+      style={{ animationDelay: `${index * 80}ms`, animationFillMode: "both" }}
+    >
+      {/* Header row */}
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="mono text-[10px] tracking-wider text-neutral-500 uppercase">
+          {i.date_label}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <span
+          className={`text-[9px] mono px-2 py-0.5 rounded-md ${
+            i.status === "full"
+              ? "badge-active"
+              : i.status === "ongoing"
+              ? "badge-critical"
+              : "badge-pending"
+          }`}
+        >
+          {i.status === "full" ? "● FULL TRAIL" : i.status === "ongoing" ? "● ONGOING" : "○ PENDING"}
+        </span>
+      </div>
+
+      {/* Title */}
+      <h3 className="text-base font-semibold text-white leading-snug mb-2">
+        {i.name}
+      </h3>
+
+      {/* Loss amount */}
+      <div className="flex items-end justify-between gap-3 mb-3">
+        <div>
+          <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider mb-0.5">
+            {i.loss_usd > 0 ? "Total Loss" : "Impact"}
+          </div>
+          <div className={`data-value text-2xl ${isVulnerability ? "text-[#00d4ff]" : "text-[#ff2255]"}`}>
+            {i.loss_label ?? fmtUsd(i.loss_usd)}
+          </div>
         </div>
-      </main>
+        <div className="text-right max-w-[160px]">
+          <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider mb-0.5">Vector</div>
+          <div className="text-[11px] text-neutral-400 leading-tight">{i.attack_vector}</div>
+        </div>
+      </div>
+
+      {/* Summary */}
+      <p className="text-xs text-neutral-500 leading-relaxed mb-3 line-clamp-2">
+        {i.short_summary}
+      </p>
+
+      {/* Chain badges */}
+      <div className="flex flex-wrap gap-1.5 mb-3">
+        {i.chains.map((c) => (
+          <ChainBadge key={c} chain={c} />
+        ))}
+      </div>
+
+      {/* Bottom: tags + attribution */}
+      <div className="flex items-center justify-between pt-2 border-t border-white/[0.04]">
+        <div className="flex gap-1 flex-wrap">
+          {i.tags.slice(0, 3).map((t) => (
+            <span key={t} className="text-[9px] px-1.5 py-0.5 rounded bg-white/[0.03] text-neutral-600 mono">
+              {t}
+            </span>
+          ))}
+          {i.tags.length > 3 && (
+            <span className="text-[9px] text-neutral-600 mono">+{i.tags.length - 3}</span>
+          )}
+        </div>
+        {i.attribution && (
+          <div className="text-[9px] text-neutral-600 mono truncate max-w-[120px]">
+            {i.attribution}
+          </div>
+        )}
+      </div>
     </div>
-  );
+  )
+
+  if (!clickable) return inner
+  return <Link href={`/incident/${i.slug}`}>{inner}</Link>
+}
+
+export default function HomePage() {
+  const totalLoss = INCIDENTS.reduce((s, i) => s + i.loss_usd, 0)
+  const fullTrails = INCIDENTS.filter((i) => i.status === "full").length
+  const chains = [...new Set(INCIDENTS.flatMap((i) => i.chains))]
+
+  return (
+    <div className="min-h-screen">
+      {/* ─── Hero ─── */}
+      <div className="relative overflow-hidden">
+        {/* Glow orbs */}
+        <div className="absolute top-0 left-1/3 w-[600px] h-[300px] bg-[#00ff88]/[0.03] rounded-full blur-[120px]" />
+        <div className="absolute top-10 right-1/4 w-[400px] h-[250px] bg-[#00d4ff]/[0.02] rounded-full blur-[100px]" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00ff88]/20 to-transparent" />
+
+        <div className="relative max-w-[1400px] mx-auto px-4 md:px-6 pt-12 pb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+            {/* Left: headline */}
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="h-px w-8 bg-[#00ff88]/40" />
+                <span className="mono text-[10px] tracking-[0.2em] text-[#00ff88] uppercase">
+                  Intelligence Platform
+                </span>
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                Crypto Exploit{" "}
+                <span className="gradient-text-green">Trail Mapper</span>
+              </h1>
+              <p className="mt-3 text-sm text-neutral-500 max-w-lg leading-relaxed">
+                Open a hack to see a chronological journey, USD-weighted fund flows,
+                live wallet balances, and protocol damage — all driven by real on-chain data.
+              </p>
+            </div>
+
+            {/* Right: stat cards */}
+            <div className="flex gap-3 flex-wrap">
+              <div className="neon-card-static px-4 py-3 stat-accent-green">
+                <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider">Tracked</div>
+                <div className="data-value text-xl text-white mt-0.5">{INCIDENTS.length}</div>
+                <div className="text-[10px] text-neutral-600 mono">{fullTrails} full trails</div>
+              </div>
+              <div className="neon-card-static px-4 py-3 stat-accent-red">
+                <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider">Value at Risk</div>
+                <div className="data-value text-xl text-[#ff2255] mt-0.5">{fmtUsd(totalLoss)}</div>
+                <div className="text-[10px] text-neutral-600 mono">confirmed losses</div>
+              </div>
+              <div className="neon-card-static px-4 py-3 stat-accent-cyan">
+                <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider">Chains</div>
+                <div className="data-value text-xl text-white mt-0.5">{chains.length}</div>
+                <div className="text-[10px] text-neutral-600 mono">networks affected</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Divider glow */}
+        <div className="glow-line-green mx-auto max-w-[1400px]" />
+      </div>
+
+      {/* ─── Incident Grid ─── */}
+      <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-8">
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#00ff88]" />
+            <span className="mono text-xs text-neutral-400 tracking-wider uppercase">
+              Active Incidents
+            </span>
+          </div>
+          <div className="mono text-[10px] text-neutral-600">
+            {INCIDENTS.length} total · {fullTrails} mapped
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {INCIDENTS.map((i, idx) => (
+            <IncidentCard key={i.id} i={i} index={idx} />
+          ))}
+        </div>
+      </div>
+
+      {/* ─── Footer ─── */}
+      <footer className="border-t border-white/[0.04] mt-8">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-4 text-[11px] text-neutral-600 mono">
+            <span>© 2026 HackTrail</span>
+            <span className="text-neutral-700">·</span>
+            <span>Open-source crypto exploit intelligence</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://github.com/Sarcastinatooor/hack-trail"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] text-neutral-600 hover:text-[#00ff88] mono transition-colors"
+            >
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
 }
