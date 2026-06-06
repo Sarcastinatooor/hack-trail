@@ -112,7 +112,231 @@ type FlowResp = {
 
 type ImpactResp = Record<string, unknown>
 
+function ZecFlowExplainer() {
+  return (
+    <div className="space-y-6 animate-slide-up">
+      {/* Turnstile Visualizer */}
+      <div className="neon-card-static p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[200px] h-[100px] bg-[#00d4ff]/[0.02] rounded-full blur-[60px]" />
+        
+        <h3 className="text-sm font-semibold text-white mb-4 mono flex items-center gap-2">
+          <span className="text-[#00d4ff]">◉</span> Public Accounting Boundary: The Turnstile
+        </h3>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center justify-center my-6">
+          {/* Transparent Side */}
+          <div className="neon-card p-4 text-center border-white/[0.04]">
+            <div className="text-2xl mb-1">⟠</div>
+            <div className="mono text-xs text-[#00d4ff] font-semibold">Public Ledger</div>
+            <div className="text-[10px] text-neutral-500 mt-1">Transparent & Sapling Pools</div>
+            <div className="text-[11px] text-neutral-400 mt-2 bg-white/[0.02] py-1 px-2 rounded inline-block mono">
+              Rest of Chain
+            </div>
+          </div>
+
+          {/* Turnstile Gate */}
+          <div className="flex flex-col items-center justify-center py-2">
+            <div className="w-full flex items-center justify-center gap-1.5">
+              <div className="h-px flex-1 bg-gradient-to-r from-[#00d4ff]/20 to-[#00ff88]/60" />
+              <div className="mono text-[10px] bg-white/[0.03] border border-white/[0.08] px-2.5 py-1 rounded-full text-[#00ff88] flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] animate-pulse" />
+                TURNSTILE
+              </div>
+              <div className="h-px flex-1 bg-gradient-to-r from-[#00ff88]/60 to-[#8b5cf6]/20" />
+            </div>
+            <div className="text-[10px] text-neutral-500 mt-2 text-center max-w-[200px] leading-tight">
+              Tracks net inflows/outflows. Prevents more withdrawals than deposits.
+            </div>
+          </div>
+
+          {/* Orchard Pool */}
+          <div className="neon-card p-4 text-center border-white/[0.04] neon-card-purple">
+            <div className="text-2xl mb-1">⚛</div>
+            <div className="mono text-xs text-[#8b5cf6] font-semibold">Orchard Pool</div>
+            <div className="text-[10px] text-neutral-500 mt-1">Shielded Zero-Knowledge Pool</div>
+            <div className="text-[11px] text-neutral-400 mt-2 bg-white/[0.02] py-1 px-2 rounded inline-block mono">
+              Shielded Balances
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[#ff2255]/[0.05] border border-[#ff2255]/20 rounded-lg p-4 text-xs text-neutral-400 leading-relaxed">
+          <strong className="text-white mono uppercase block mb-1 text-[10px] tracking-wider text-[#ff2255]">
+            ⚠️ Solvency Guardrail Rule
+          </strong>
+          Zcash nodes automatically reject any block that would make the public Orchard pool balance negative. 
+          Even if an attacker minted infinite fake Orchard notes inside the shielded pool, they could 
+          only withdraw ZEC up to the amount that honest users previously deposited.
+        </div>
+      </div>
+
+      {/* Accounting Table */}
+      <div className="neon-card-static p-6">
+        <h3 className="text-sm font-semibold text-white mb-3 mono">
+          Orchard Balance Accounting Formula
+        </h3>
+        <p className="text-xs text-neutral-400 mb-4 leading-relaxed">
+          The turnstile operates by tracking the public variable <code className="mono text-[#00d4ff] bg-white/[0.04] px-1 py-0.5 rounded">valueBalanceOrchard</code> on every transaction:
+          <br />
+          <code className="block mt-2 bg-white/[0.02] p-2.5 rounded text-center text-white mono text-xs">
+            New Orchard Balance = Old Balance - valueBalanceOrchard
+          </code>
+        </p>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-white/[0.06] text-neutral-500 mono text-[10px] uppercase tracking-wider">
+                <th className="pb-2">Action</th>
+                <th className="pb-2">valueBalanceOrchard Value</th>
+                <th className="pb-2 text-right">Effect on Orchard Pool Balance</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.04] text-neutral-400 mono">
+              <tr>
+                <td className="py-3 text-white">Deposit ZEC into Orchard</td>
+                <td className="py-3 text-[#ff2255]">-10 ZEC</td>
+                <td className="py-3 text-[#00ff88] text-right">Goes UP (+10 ZEC)</td>
+              </tr>
+              <tr>
+                <td className="py-3 text-white">Withdraw ZEC from Orchard</td>
+                <td className="py-3 text-[#00ff88]">+10 ZEC</td>
+                <td className="py-3 text-[#ff2255] text-right">Goes DOWN (-10 ZEC)</td>
+              </tr>
+              <tr>
+                <td className="py-3 text-white">Transfer within Orchard</td>
+                <td className="py-3 text-neutral-500">0 ZEC</td>
+                <td className="py-3 text-neutral-500 text-right">No Change</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Bottom Line Card */}
+      <div className="neon-card-static p-5 bg-[#00ff88]/[0.02] border-[#00ff88]/10">
+        <div className="flex gap-3">
+          <div className="text-[#00ff88] text-lg">★</div>
+          <div className="text-xs text-neutral-400 leading-relaxed">
+            <strong className="text-white mono uppercase block mb-1 text-[10px] tracking-wider text-[#00ff88]">
+              Bottom Line
+            </strong>
+            The turnstile strictly protects the total Zcash supply. It guarantees that any soundness bug 
+            remains **contained** within the Orchard pool itself. The main hypothetical failure mode is 
+            **Orchard pool insolvency** (where honest claimants might find themselves unable to withdraw if 
+            pool funds are fully depleted by a counterfeiter), not unlimited chain-wide inflation.
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ZecWalletsExplainer() {
+  return (
+    <div className="space-y-6 animate-slide-up">
+      {/* Address Shielding Notice */}
+      <div className="neon-card-static p-5">
+        <div className="flex items-start gap-3">
+          <div className="text-[#00d4ff] text-lg">ℹ</div>
+          <div className="text-xs text-neutral-400 leading-relaxed">
+            <strong className="text-white mono uppercase block mb-1 text-[10px] tracking-wider text-[#00d4ff]">
+              Shielded Ledger Privacy
+            </strong>
+            Zcash uses zk-SNARKs (specifically the halo2 proving system in Orchard) to encrypt addresses and 
+            transaction amounts. Because individual balances are cryptographically shielded from public view, 
+            **no individual attacker EOAs or compromised wallet addresses can be publicly tracked.**
+          </div>
+        </div>
+      </div>
+
+      {/* Who is at risk? */}
+      <div className="neon-card-static p-6">
+        <h3 className="text-sm font-semibold text-white mb-4 mono flex items-center gap-2">
+          <span className="text-[#ff2255]">⚡</span> Solvency Risk Distribution Matrix
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Orchard Holders */}
+          <div className="neon-card p-4 border-l-2 border-l-[#ff2255] border-white/[0.04] hover:border-l-[#ff2255]">
+            <span className="mono text-[10px] text-[#ff2255] font-semibold block mb-1">A. ORCHARD HOLDERS</span>
+            <div className="text-sm font-semibold text-white mb-2">Direct Solvency Risk</div>
+            <p className="text-xs text-neutral-500 leading-relaxed">
+              If a counterfeiter created fake Orchard notes, they would compete with honest notes for the 
+              same pool backing. In the worst case, honest Orchard holders could be diluted or crowded out 
+              from withdrawing.
+            </p>
+          </div>
+
+          {/* Sapling Holders */}
+          <div className="neon-card p-4 border-l-2 border-l-[#f59e0b] border-white/[0.04] hover:border-l-[#f59e0b]">
+            <span className="mono text-[10px] text-[#f59e0b] font-semibold block mb-1">B. SAPLING HOLDERS</span>
+            <div className="text-sm font-semibold text-white mb-2">Indirect Spillover Risk</div>
+            <p className="text-xs text-neutral-500 leading-relaxed">
+              The Sapling shielded pool is cryptographically independent. The only risk is if an attacker 
+              withdrew fake Orchard ZEC into public pools and then deposited them into Sapling before the 
+              vulnerability was patched.
+            </p>
+          </div>
+
+          {/* Transparent Holders */}
+          <div className="neon-card p-4 border-l-2 border-l-[#00d4ff] border-white/[0.04] hover:border-l-[#00d4ff]">
+            <span className="mono text-[10px] text-[#00d4ff] font-semibold block mb-1">C. PUBLIC HOLDERS</span>
+            <div className="text-sm font-semibold text-white mb-2">Market Confidence Risk</div>
+            <p className="text-xs text-neutral-500 leading-relaxed">
+              No direct theft of transparent coins is possible. The primary risks are systemic: market 
+              panic, exchange deposit halts, governance fork drama, and overall protocol reputation loss.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Why a new pool starts clean */}
+      <div className="neon-card-static p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[200px] h-[100px] bg-[#00ff88]/[0.02] rounded-full blur-[60px]" />
+        
+        <h3 className="text-sm font-semibold text-white mb-3 mono">
+          Pool Isolation: Starting Clean under NU6.2
+        </h3>
+        
+        <p className="text-xs text-neutral-400 leading-relaxed mb-4">
+          To fix the soundness bug and preserve privacy without forcing a retroactive audit of all shielded notes, 
+          the Zcash network performed an emergency pool migration:
+        </p>
+
+        <div className="space-y-3">
+          <div className="bg-white/[0.02] border border-white/[0.04] p-3 rounded-lg text-xs">
+            <span className="mono text-[10px] text-neutral-500 block mb-1">STEP 1: ISOLATE OLD POOL</span>
+            <p className="text-neutral-400">
+              The old Orchard shielded pool is quarantined. It contains all existing shielded notes, including 
+              potential hidden liabilities if the bug was ever exploited secretly.
+            </p>
+          </div>
+          <div className="bg-white/[0.02] border border-white/[0.04] p-3 rounded-lg text-xs">
+            <span className="mono text-[10px] text-[#00ff88] block mb-1">STEP 2: LAUNCH NEW POOL</span>
+            <p className="text-neutral-400">
+              The NU6.2 upgrade deploys a brand new shielded pool from scratch with a corrected halo2 circuit. 
+              The new pool starts with a balance of zero, guaranteed to contain no counterfeit liabilities.
+            </p>
+          </div>
+          <div className="bg-white/[0.02] border border-white/[0.04] p-3 rounded-lg text-xs">
+            <span className="mono text-[10px] text-[#00d4ff] block mb-1">STEP 3: TURNSTILE MIGRATION</span>
+            <p className="text-neutral-400">
+              Users migrate their old notes to the new pool. Funds cross the turnstile boundary, isolating 
+              old potential liabilities while keeping new shielded transactions secure and auditable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function FlowTab({ slug }: { slug: string }) {
+  if (slug === "zcash-orchard") {
+    return <ZecFlowExplainer />
+  }
+
   const { data, isLoading } = useQuery<FlowResp>({
     queryKey: ["flow", slug],
     queryFn: () => fetch(`/api/flow/${slug}`).then((r) => r.json()),
@@ -299,10 +523,14 @@ export default function IncidentPage({
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#00d4ff]" />
                 <span className="mono text-xs text-neutral-400 uppercase tracking-wider">
-                  Tracked Wallets
+                  {slug === "zcash-orchard" ? "Shielded Pool Solvency Risk Model" : "Tracked Wallets"}
                 </span>
               </div>
-              <WalletTracker slug={slug} />
+              {slug === "zcash-orchard" ? (
+                <ZecWalletsExplainer />
+              ) : (
+                <WalletTracker slug={slug} />
+              )}
             </div>
           )}
 

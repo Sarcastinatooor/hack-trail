@@ -122,7 +122,6 @@ const IMPACT_CONFIG: Record<string, {
     tvl: [],
     prices: [
       { key: 'zec_price', coinId: 'zcash' },
-      { key: 'btc_price', coinId: 'bitcoin' },
     ],
     from: 1779926400, // 2026-05-28 (Fixed: was 2025)
     to: 1780790400,   // 2026-06-07
