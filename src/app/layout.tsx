@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import Link from "next/link"
+import Image from "next/image"
 import { Providers } from "@/components/Providers"
 import "./globals.css"
 
@@ -26,12 +27,14 @@ function NavBar() {
       <div className="max-w-[1400px] mx-auto px-4 md:px-6 h-14 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#00ff88] to-[#00d4ff] flex items-center justify-center shadow-[0_0_20px_rgba(0,255,136,0.15)] group-hover:shadow-[0_0_30px_rgba(0,255,136,0.25)] transition-shadow">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#050507" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-              <path d="M2 17l10 5 10-5" />
-              <path d="M2 12l10 5 10-5" />
-            </svg>
+          <div className="w-7 h-7 relative flex items-center justify-center overflow-hidden rounded bg-black border border-white/[0.08] shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:border-[#00ff88]/30 group-hover:shadow-[0_0_20px_rgba(0,255,136,0.1)] transition-all duration-300">
+            <Image
+              src="/logo.png"
+              alt="HackTrail Logo"
+              fill
+              sizes="28px"
+              className="object-cover scale-[1.3] transition-transform duration-300 group-hover:scale-[1.4]"
+            />
           </div>
           <span className="text-sm font-bold tracking-wider text-white">
             HACK<span className="text-[#00ff88]">TRAIL</span>
