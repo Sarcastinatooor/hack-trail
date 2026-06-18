@@ -121,6 +121,9 @@ function IncidentCard({ i, index }: { i: IncidentSummary; index: number }) {
 }
 
 export default function HomePage() {
+  const latestIncidents = [...INCIDENTS].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  )
   const totalLoss = INCIDENTS.reduce((s, i) => s + i.loss_usd, 0)
   const fullTrails = INCIDENTS.filter((i) => i.status === "full").length
   const chains = [...new Set(INCIDENTS.flatMap((i) => i.chains))]
@@ -194,7 +197,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {INCIDENTS.map((i, idx) => (
+          {latestIncidents.map((i, idx) => (
             <IncidentCard key={i.id} i={i} index={idx} />
           ))}
         </div>
