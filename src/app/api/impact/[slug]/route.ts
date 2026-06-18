@@ -29,6 +29,31 @@ interface ImpactConfig {
   to: number
 }
 
+function lossConfig(
+  loss: number,
+  start: number,
+  to = start + 86400,
+  extraSeries: Array<{ key: string; data: Point[] }> = []
+): ImpactConfig {
+  return {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'cumulative_loss',
+        data: [
+          { ts: start - 86400, value: 0 },
+          { ts: start + 3600, value: loss },
+          { ts: to, value: loss },
+        ],
+      },
+      ...extraSeries,
+    ],
+    from: start - 86400,
+    to,
+  }
+}
+
 async function fetchDefiLlamaTvl(protocol: string, from: number, to: number): Promise<Point[]> {
   try {
     const res = await fetch(`https://api.llama.fi/protocol/${protocol}`, { next: { revalidate: 3600 } })
@@ -296,6 +321,58 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
     from: 1650067200,
     to: 1650240000,
   },
+  wazirx: lossConfig(235_000_000, 1721260800, 1721347200),
+  cetus: lossConfig(223_000_000, 1747872000, 1747958400, [
+    {
+      key: 'frozen_value',
+      data: [
+        { ts: 1747785600, value: 0 },
+        { ts: 1747882800, value: 162_000_000 },
+      ],
+    },
+    {
+      key: 'funds_escaped',
+      data: [
+        { ts: 1747785600, value: 0 },
+        { ts: 1747879200, value: 60_000_000 },
+      ],
+    },
+  ]),
+  'gala-games': lossConfig(216_000_000, 1716163200, 1716249600, [
+    {
+      key: 'attacker_profit',
+      data: [
+        { ts: 1716076800, value: 0 },
+        { ts: 1716166800, value: 21_800_000 },
+      ],
+    },
+  ]),
+  mixin: lossConfig(200_000_000, 1695427200, 1695600000),
+  bitmart: lossConfig(196_000_000, 1638576000, 1638662400),
+  wintermute: lossConfig(162_300_000, 1663632000, 1663642800, [
+    {
+      key: 'funds_escaped',
+      data: [
+        { ts: 1663545600, value: 0 },
+        { ts: 1663637400, value: 118_400_000 },
+      ],
+    },
+  ]),
+  compound: lossConfig(147_000_000, 1632873600, 1633305600),
+  'vulcan-forged': lossConfig(140_000_000, 1639353600, 1639440000),
+  'cream-finance': lossConfig(130_000_000, 1635292800, 1635379200),
+  multichain: lossConfig(126_300_000, 1688601600, 1688688000, [
+    {
+      key: 'frozen_value',
+      data: [
+        { ts: 1688515200, value: 0 },
+        { ts: 1688688000, value: 65_000_000 },
+      ],
+    },
+  ]),
+  badger: lossConfig(120_000_000, 1638403200, 1638411600),
+  'mango-markets': lossConfig(115_000_000, 1665446400, 1665532800),
+  'harmony-bridge': lossConfig(100_000_000, 1655942400, 1655992800),
 }
 
 export async function GET(

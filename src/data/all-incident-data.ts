@@ -1,5 +1,20 @@
 import { DRIFT_PROTOCOL_DATA } from "./drift-protocol"
 import {
+  BADGER_DATA,
+  BITMART_DATA,
+  CETUS_DATA,
+  COMPOUND_DATA,
+  CREAM_FINANCE_DATA,
+  GALA_GAMES_DATA,
+  HARMONY_BRIDGE_DATA,
+  MANGO_MARKETS_DATA,
+  MIXIN_DATA,
+  MULTICHAIN_DATA,
+  VULCAN_FORGED_DATA,
+  WAZIRX_DATA,
+  WINTERMUTE_DATA,
+} from "./expanded-incidents"
+import {
   BEANSTALK_DATA,
   BNB_BRIDGE_DATA,
   EULER_FINANCE_DATA,
@@ -23,4 +38,17 @@ export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
   "euler-finance": EULER_FINANCE_DATA,
   "nomad-bridge": NOMAD_BRIDGE_DATA,
   beanstalk: BEANSTALK_DATA,
+  wazirx: WAZIRX_DATA,
+  cetus: CETUS_DATA,
+  "gala-games": GALA_GAMES_DATA,
+  mixin: MIXIN_DATA,
+  bitmart: BITMART_DATA,
+  wintermute: WINTERMUTE_DATA,
+  compound: COMPOUND_DATA,
+  "vulcan-forged": VULCAN_FORGED_DATA,
+  "cream-finance": CREAM_FINANCE_DATA,
+  multichain: MULTICHAIN_DATA,
+  badger: BADGER_DATA,
+  "mango-markets": MANGO_MARKETS_DATA,
+  "harmony-bridge": HARMONY_BRIDGE_DATA,
 }

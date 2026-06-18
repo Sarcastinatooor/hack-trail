@@ -20,6 +20,9 @@ const NATIVE_SYMBOLS: Record<string, string> = {
   optimism: 'ETH',
   polygon: 'MATIC',
   unichain: 'ETH',
+  solana: 'SOL',
+  sui: 'SUI',
+  bitcoin: 'BTC',
 }
 
 async function getEthBalance(address: string, chain: string): Promise<number> {
