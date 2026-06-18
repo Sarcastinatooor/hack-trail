@@ -31,6 +31,17 @@ export const EVM_EXPLORERS: Record<string, string> = {
   unichain: "https://uniscan.xyz/tx/",
 }
 
+export const EVM_ADDRESS_EXPLORERS: Record<string, string> = {
+  ethereum: "https://etherscan.io/address/",
+  arbitrum: "https://arbiscan.io/address/",
+  base: "https://basescan.org/address/",
+  optimism: "https://optimistic.etherscan.io/address/",
+  polygon: "https://polygonscan.com/address/",
+  unichain: "https://uniscan.xyz/address/",
+}
+
+export const APPROVAL_SCAN_CHAINS = ["ethereum", "arbitrum"] as const
+
 const INCIDENT_DATA: Record<string, IncidentData> = {
   "kelp-dao": KELP_DAO_DATA,
   "zcash-orchard": ZCASH_ORCHARD_DATA,
@@ -50,6 +61,9 @@ export interface ExposureWatchAddress {
   label: string
   role: string
   severity: "critical" | "elevated" | "context"
+  confidence: "seed" | "curated" | "verified"
+  sourceLabel: string
+  notes: string
   tags: string[]
 }
 
@@ -91,6 +105,12 @@ function toWatchAddress(
     label: wallet.label ?? "Indexed exploit address",
     role,
     severity: roleSeverity(role),
+    confidence: "seed",
+    sourceLabel: "HackTrail incident dataset",
+    notes:
+      role === "attacker"
+        ? "Indexed as an incident-related attacker address. Replace seed records with sourced forensic addresses as the dataset matures."
+        : "Indexed as an incident-related protocol or victim address for context matching.",
     tags: incident.tags,
   }
 }
@@ -120,11 +140,15 @@ export function getExposureCoverage() {
   const watchlist = getExposureWatchlist()
   const coveredSlugs = new Set(watchlist.map((item) => item.incidentSlug))
   const chains = [...new Set(watchlist.map((item) => item.chain))]
+  const approvalChains = [...new Set([...chains, ...APPROVAL_SCAN_CHAINS])]
 
   return {
     watchlistCount: watchlist.length,
     chainCount: chains.length,
     chains: chains.map((chain) => EVM_CHAIN_LABELS[chain] ?? chain),
+    approvalChains: approvalChains.map((chain) => EVM_CHAIN_LABELS[chain] ?? chain),
+    verifiedCount: watchlist.filter((item) => item.confidence === "verified").length,
+    seededCount: watchlist.filter((item) => item.confidence === "seed").length,
     coveredIncidents: INCIDENTS.filter((incident) => coveredSlugs.has(incident.slug)),
     limitedIncidents: INCIDENTS.filter((incident) => !coveredSlugs.has(incident.slug)),
   }

@@ -3,8 +3,8 @@ import { getExposureCoverage } from "@/data/exposure"
 
 const NEXT_MODULES = [
   {
-    title: "Approval Risk Scanner",
-    body: "Detect stale token approvals to routers, bridges, vaults, and contracts linked to prior incident patterns.",
+    title: "Live Allowance Verification",
+    body: "Move from approval-event history to live allowance reads through RPC calls for each token/spender pair.",
   },
   {
     title: "Wallet Hygiene Timeline",
@@ -50,12 +50,25 @@ export default function IntelligencePage() {
                 <div className="mono text-[10px] text-neutral-600 uppercase">Incidents</div>
               </div>
             </div>
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+                <div className="data-value text-lg text-[#00ff88]">{coverage.verifiedCount}</div>
+                <div className="mono text-[10px] text-neutral-600 uppercase">Verified</div>
+              </div>
+              <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+                <div className="data-value text-lg text-[#f59e0b]">{coverage.seededCount}</div>
+                <div className="mono text-[10px] text-neutral-600 uppercase">Seeded</div>
+              </div>
+            </div>
             <div className="mt-4 flex flex-wrap gap-2">
               {coverage.chains.map((chain) => (
                 <span key={chain} className="mono text-[10px] rounded border border-[#00d4ff]/20 bg-[#00d4ff]/5 px-2 py-1 text-[#00d4ff]">
                   {chain}
                 </span>
               ))}
+            </div>
+            <div className="mt-3 text-[11px] text-neutral-600 leading-relaxed">
+              Approval scan chains: {coverage.approvalChains.join(", ")}
             </div>
             {coverage.limitedIncidents.length > 0 && (
               <p className="mt-4 text-xs text-neutral-500 leading-relaxed">

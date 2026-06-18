@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 
-type ExposureStatus = "clear" | "exposure_found" | "scan_limited"
+type ExposureStatus = "clear" | "exposure_found" | "approval_risk" | "scan_limited"
 
 interface ExposureMatch {
   incidentSlug: string
@@ -23,6 +23,25 @@ interface ExposureMatch {
   explorerUrl?: string
 }
 
+interface ApprovalAlert {
+  chainLabel: string
+  tokenAddress: string
+  spenderAddress: string
+  spenderLabel: string
+  spenderRole?: string
+  incidentSlug?: string
+  incidentName?: string
+  severity: "critical" | "elevated" | "context"
+  txHash: string
+  timestamp: number
+  allowanceLabel: string
+  reason: string
+  revokeUrl: string
+  explorerUrl?: string
+  tokenExplorerUrl?: string
+  spenderExplorerUrl?: string
+}
+
 interface ExposureReport {
   address: string
   checkedAt: string
@@ -30,10 +49,14 @@ interface ExposureReport {
   score: number
   summary: string
   matches: ExposureMatch[]
+  approvalAlerts: ApprovalAlert[]
   warnings: string[]
   coverage: {
     watchlistCount: number
     chains: string[]
+    approvalChains: string[]
+    verifiedCount: number
+    seededCount: number
     coveredIncidents: string[]
     limitedIncidents: string[]
   }
@@ -60,11 +83,12 @@ function formatUtc(ts: number) {
 
 function statusCopy(status?: ExposureStatus) {
   if (status === "exposure_found") return { label: "Exposure Found", color: "text-[#ff2255]", badge: "badge-critical" }
+  if (status === "approval_risk") return { label: "Approval Risk", color: "text-[#f59e0b]", badge: "badge-pending" }
   if (status === "scan_limited") return { label: "Scan Limited", color: "text-[#f59e0b]", badge: "badge-pending" }
   return { label: "No Direct Exposure", color: "text-[#00ff88]", badge: "badge-active" }
 }
 
-function SeverityBadge({ severity }: { severity: ExposureMatch["severity"] }) {
+function SeverityBadge({ severity }: { severity: ExposureMatch["severity"] | ApprovalAlert["severity"] }) {
   const cls = severity === "critical"
     ? "bg-[#ff2255]/10 text-[#ff2255] border-[#ff2255]/20"
     : severity === "elevated"
@@ -166,7 +190,7 @@ export function ExposureChecker() {
           </div>
           <div className="neon-card-static p-3 stat-accent-red">
             <div className="mono text-[10px] text-neutral-500 uppercase">Signal</div>
-            <div className="text-sm text-white mt-1">Direct tx history</div>
+            <div className="text-sm text-white mt-1">Tx + approvals</div>
           </div>
         </div>
 
@@ -210,9 +234,8 @@ export function ExposureChecker() {
 
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 text-[11px] leading-relaxed text-neutral-500">
           <span className="mono text-[#00d4ff]">Coverage note:</span>{" "}
-          this MVP checks direct EVM
-          interactions against HackTrail&apos;s current indexed watchlist. It is not a universal
-          compromise detector, approval scanner, or malware scanner yet.
+          this MVP checks direct EVM interactions and ERC-20 approval events on covered chains.
+          Approval history is not proof of current allowance; use the revoke link to verify live state.
         </div>
       </div>
 
@@ -249,6 +272,9 @@ export function ExposureChecker() {
                 <span className="mono text-[10px] rounded border border-white/[0.08] bg-white/[0.03] px-2 py-1 text-neutral-500">
                   {report.coverage.watchlistCount} addresses watched
                 </span>
+                <span className="mono text-[10px] rounded border border-white/[0.08] bg-white/[0.03] px-2 py-1 text-neutral-500">
+                  {report.approvalAlerts.length} approvals flagged
+                </span>
                 {report.coverage.chains.map((chain) => (
                   <span key={chain} className="mono text-[10px] rounded border border-[#00d4ff]/20 bg-[#00d4ff]/5 px-2 py-1 text-[#00d4ff]">
                     {chain}
@@ -259,6 +285,9 @@ export function ExposureChecker() {
 
             {report.matches.length > 0 ? (
               <div className="space-y-2">
+                <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider">
+                  Direct Incident Interactions
+                </div>
                 {report.matches.map((match) => (
                   <div key={`${match.chainLabel}-${match.txHash}-${match.watchedAddress}-${match.asset}`} className="neon-card p-3">
                     <div className="flex items-start justify-between gap-3">
@@ -306,6 +335,70 @@ export function ExposureChecker() {
                 </p>
               </div>
             )}
+
+            <div className="space-y-2">
+              <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider">
+                Approval Review
+              </div>
+              {report.approvalAlerts.length > 0 ? (
+                report.approvalAlerts.map((approval) => (
+                  <div key={`${approval.chainLabel}-${approval.txHash}-${approval.tokenAddress}-${approval.spenderAddress}`} className="neon-card p-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
+                          <SeverityBadge severity={approval.severity} />
+                          <span className="mono text-[10px] text-neutral-600">{approval.chainLabel}</span>
+                          <span className="mono text-[10px] text-neutral-700">{formatUtc(approval.timestamp)}</span>
+                        </div>
+                        <div className="text-sm font-semibold text-white">
+                          {approval.allowanceLabel} approval to {approval.spenderLabel}
+                        </div>
+                        <div className="mt-1 text-xs text-neutral-500 leading-relaxed">{approval.reason}</div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <div className={approval.severity === "critical" ? "text-[#ff2255]" : approval.severity === "elevated" ? "text-[#f59e0b]" : "text-[#00d4ff]"}>
+                          {approval.allowanceLabel === "Unlimited" ? "UNLIMITED" : "ALLOW"}
+                        </div>
+                        <div className="mono text-[10px] text-neutral-600">{shortAddr(approval.spenderAddress)}</div>
+                      </div>
+                    </div>
+                    <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-white/[0.04] pt-2">
+                      <div className="mono text-[10px] text-neutral-600">
+                        Token {shortAddr(approval.tokenAddress)}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3">
+                        {approval.incidentSlug && (
+                          <Link href={`/incident/${approval.incidentSlug}`} className="mono text-[10px] text-[#00ff88] hover:text-white transition-colors">
+                            INCIDENT
+                          </Link>
+                        )}
+                        <a href={approval.revokeUrl} target="_blank" rel="noopener noreferrer" className="mono text-[10px] text-[#ff2255] hover:text-white transition-colors">
+                          REVOKE
+                        </a>
+                        {approval.explorerUrl && (
+                          <a href={approval.explorerUrl} target="_blank" rel="noopener noreferrer" className="mono text-[10px] text-[#00d4ff] hover:text-white transition-colors">
+                            TX
+                          </a>
+                        )}
+                        {approval.spenderExplorerUrl && (
+                          <a href={approval.spenderExplorerUrl} target="_blank" rel="noopener noreferrer" className="mono text-[10px] text-neutral-500 hover:text-white transition-colors">
+                            SPENDER
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-lg border border-[#00ff88]/15 bg-[#00ff88]/5 p-4">
+                  <div className="mono text-[10px] text-[#00ff88] uppercase tracking-wider">No approval events flagged</div>
+                  <p className="mt-2 text-sm text-neutral-400 leading-relaxed">
+                    No non-zero ERC-20 approval events were found on the currently covered chains.
+                    You can still open Revoke.cash from any report to verify live allowances.
+                  </p>
+                </div>
+              )}
+            </div>
 
             {report.warnings.length > 0 && (
               <div className="rounded-lg border border-[#f59e0b]/20 bg-[#f59e0b]/5 p-3">
