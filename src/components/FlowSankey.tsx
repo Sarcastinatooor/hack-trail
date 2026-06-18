@@ -70,7 +70,10 @@ export function FlowSankey({ nodes, links }: { nodes: Node[]; links: Link[] }) {
       {
         type: "sankey",
         emphasis: { focus: "adjacency" },
-        nodeAlign: "left",
+        nodeAlign: "justify",
+        layoutIterations: 64,
+        nodeGap: 14,
+        nodeWidth: 16,
         draggable: true,
         lineStyle: { color: "gradient", curveness: 0.5, opacity: 0.3 },
         itemStyle: { borderWidth: 0 },
@@ -79,6 +82,8 @@ export function FlowSankey({ nodes, links }: { nodes: Node[]; links: Link[] }) {
           fontSize: 10,
           fontWeight: 500,
           fontFamily: "JetBrains Mono, monospace",
+          width: 160,
+          overflow: "truncate",
         },
         data: nodes.map((n) => ({
           name: n.name,
@@ -100,7 +105,7 @@ export function FlowSankey({ nodes, links }: { nodes: Node[]; links: Link[] }) {
           USD-Weighted Fund Flow
         </span>
       </div>
-      <ReactECharts option={option} style={{ height: 420 }} opts={{ renderer: "canvas" }} />
+      <ReactECharts option={option} style={{ height: 500 }} opts={{ renderer: "canvas" }} />
       {/* Legend */}
       <div className="flex flex-wrap gap-3 mt-3 pt-3 border-t border-white/[0.04]">
         {Object.entries(KIND_COLOR).map(([kind, color]) => (

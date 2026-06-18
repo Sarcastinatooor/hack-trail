@@ -11,7 +11,6 @@ const INCIDENTS: Record<string, IncidentData> = {
 }
 
 function buildSankey(hops: Hop[]) {
-  const nodesMap = new Map<string, { name: string; kind: string }>()
   const links: Array<{
     source: string
     target: string
@@ -23,20 +22,12 @@ function buildSankey(hops: Hop[]) {
     summary?: string
   }> = []
 
+  // Only build links from hops with actual USD value
   for (const hop of hops) {
-    const fromName = hop.from.label
-    const toName = hop.to.label
-    if (!nodesMap.has(fromName)) {
-      nodesMap.set(fromName, { name: fromName, kind: hop.from.kind })
-    }
-    if (!nodesMap.has(toName)) {
-      nodesMap.set(toName, { name: toName, kind: hop.to.kind })
-    }
-    // Only add links with USD value > 0 for meaningful Sankey
     if (hop.usd > 0) {
       links.push({
-        source: fromName,
-        target: toName,
+        source: hop.from.label,
+        target: hop.to.label,
         value: hop.usd,
         asset: hop.asset,
         chain: hop.chain,
@@ -44,6 +35,23 @@ function buildSankey(hops: Hop[]) {
         step: hop.step,
         summary: hop.summary,
       })
+    }
+  }
+
+  // Only include nodes that actually appear in links (no orphans)
+  const linkedNames = new Set<string>()
+  for (const l of links) {
+    linkedNames.add(l.source)
+    linkedNames.add(l.target)
+  }
+
+  const nodesMap = new Map<string, { name: string; kind: string }>()
+  for (const hop of hops) {
+    if (linkedNames.has(hop.from.label) && !nodesMap.has(hop.from.label)) {
+      nodesMap.set(hop.from.label, { name: hop.from.label, kind: hop.from.kind })
+    }
+    if (linkedNames.has(hop.to.label) && !nodesMap.has(hop.to.label)) {
+      nodesMap.set(hop.to.label, { name: hop.to.label, kind: hop.to.kind })
     }
   }
 
