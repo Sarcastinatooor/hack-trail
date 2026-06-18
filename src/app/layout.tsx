@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import Link from "next/link"
 import Image from "next/image"
+import { NavLinks } from "@/components/NavLinks"
 import { Providers } from "@/components/Providers"
 import "./globals.css"
 
@@ -41,13 +42,7 @@ function NavBar() {
           </span>
         </Link>
 
-        {/* Nav links */}
-        <div className="hidden md:flex items-center gap-6">
-          <Link href="/" className="nav-link nav-link-active">Incidents</Link>
-          <span className="nav-link cursor-default opacity-40">Intelligence</span>
-          <span className="nav-link cursor-default opacity-40">Analytics</span>
-          <span className="nav-link cursor-default opacity-40">Reports</span>
-        </div>
+        <NavLinks />
 
         {/* Right */}
         <div className="flex items-center gap-3">

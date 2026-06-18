@@ -333,14 +333,18 @@ function ZecWalletsExplainer() {
 }
 
 function FlowTab({ slug }: { slug: string }) {
-  if (slug === "zcash-orchard") {
-    return <ZecFlowExplainer />
-  }
+  const isZcashExplainer = slug === "zcash-orchard"
 
   const { data, isLoading } = useQuery<FlowResp>({
     queryKey: ["flow", slug],
     queryFn: () => fetch(`/api/flow/${slug}`).then((r) => r.json()),
+    enabled: !isZcashExplainer,
   })
+
+  if (isZcashExplainer) {
+    return <ZecFlowExplainer />
+  }
+
   if (isLoading)
     return <div className="h-[400px] neon-card-static animate-pulse" />
   if (!data) return null

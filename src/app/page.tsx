@@ -155,6 +155,20 @@ export default function HomePage() {
                 Open a hack to see a chronological journey, USD-weighted fund flows,
                 live wallet balances, and protocol damage — all driven by real on-chain data.
               </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <Link
+                  href="/intelligence"
+                  className="rounded-lg border border-[#00ff88]/25 bg-[#00ff88]/10 px-4 py-2.5 mono text-xs text-[#00ff88] transition-colors hover:bg-[#00ff88]/15"
+                >
+                  Check Wallet Exposure
+                </Link>
+                <Link
+                  href="/reports"
+                  className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 mono text-xs text-neutral-400 transition-colors hover:border-[#00d4ff]/20 hover:text-[#00d4ff]"
+                >
+                  Safety Playbooks
+                </Link>
+              </div>
             </div>
 
             {/* Right: stat cards */}
