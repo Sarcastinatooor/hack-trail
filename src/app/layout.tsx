@@ -51,14 +51,6 @@ function NavBar() {
 
         {/* Right */}
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/[0.06] bg-white/[0.02] text-xs text-neutral-500">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-            <span className="mono">Search...</span>
-            <kbd className="text-[10px] px-1 py-0.5 rounded bg-white/[0.04] border border-white/[0.08] text-neutral-600 ml-4">⌘K</kbd>
-          </div>
           <div className="flex items-center gap-1.5">
             <div className="pulse-dot bg-[#00ff88]" />
             <span className="text-[10px] mono text-neutral-500 hidden sm:inline">LIVE</span>
