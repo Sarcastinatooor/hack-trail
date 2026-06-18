@@ -32,18 +32,20 @@ function ChainBadge({ chain }: { chain: string }) {
 function IncidentCard({ i, index }: { i: IncidentSummary; index: number }) {
   const clickable = i.status === "full"
   const isVulnerability = i.loss_usd === 0
+  const metricValue = (i.loss_label ?? fmtUsd(i.loss_usd)).replace("price crash", "crash")
+  const metricSize = metricValue.length > 14 ? "text-[1.35rem]" : "text-2xl"
 
   const glowClass = isVulnerability ? "neon-card-cyan" : i.status === "stub" ? "" : "neon-card"
 
   const inner = (
     <div
-      className={`neon-card ${glowClass} h-full p-5 animate-slide-up ${
+      className={`neon-card ${glowClass} flex h-full min-h-[280px] flex-col p-5 animate-slide-up ${
         !clickable ? "opacity-50 cursor-default" : "cursor-pointer"
       }`}
       style={{ animationDelay: `${index * 80}ms`, animationFillMode: "both" }}
     >
       {/* Header row */}
-      <div className="flex items-start justify-between gap-3 mb-3">
+      <div className="mb-4 flex items-start justify-between gap-3">
         <div className="mono text-[10px] tracking-wider text-neutral-500 uppercase">
           {i.date_label}
         </div>
@@ -61,41 +63,41 @@ function IncidentCard({ i, index }: { i: IncidentSummary; index: number }) {
       </div>
 
       {/* Title */}
-      <h3 className="text-base font-semibold text-white leading-snug mb-2">
+      <h3 className="mb-4 min-h-[44px] text-base font-semibold text-white leading-snug line-clamp-2">
         {i.name}
       </h3>
 
       {/* Loss amount */}
-      <div className="flex items-end justify-between gap-3 mb-3">
-        <div>
+      <div className="mb-4 grid min-h-[68px] grid-cols-[minmax(0,1fr)_minmax(7rem,8rem)] items-end gap-4">
+        <div className="min-w-0">
           <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider mb-0.5">
             {i.loss_usd > 0 ? "Total Loss" : "Impact"}
           </div>
-          <div className={`data-value text-2xl ${isVulnerability ? "text-[#00d4ff]" : "text-[#ff2255]"}`}>
-            {i.loss_label ?? fmtUsd(i.loss_usd)}
+          <div className={`data-value leading-tight ${metricSize} ${isVulnerability ? "text-[#00d4ff]" : "text-[#ff2255]"}`}>
+            {metricValue}
           </div>
         </div>
-        <div className="text-right max-w-[160px]">
+        <div className="text-right">
           <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider mb-0.5">Vector</div>
-          <div className="text-[11px] text-neutral-400 leading-tight">{i.attack_vector}</div>
+          <div className="text-[11px] text-neutral-400 leading-tight line-clamp-3">{i.attack_vector}</div>
         </div>
       </div>
 
       {/* Summary */}
-      <p className="text-xs text-neutral-500 leading-relaxed mb-3 line-clamp-2">
+      <p className="mb-4 min-h-[40px] text-xs text-neutral-500 leading-relaxed line-clamp-2">
         {i.short_summary}
       </p>
 
       {/* Chain badges */}
-      <div className="flex flex-wrap gap-1.5 mb-3">
+      <div className="mb-4 flex min-h-[26px] flex-wrap content-start gap-1.5">
         {i.chains.map((c) => (
           <ChainBadge key={c} chain={c} />
         ))}
       </div>
 
       {/* Bottom: tags + attribution */}
-      <div className="flex items-center justify-between pt-2 border-t border-white/[0.04]">
-        <div className="flex gap-1 flex-wrap">
+      <div className="mt-auto flex min-h-[32px] items-center justify-between gap-3 border-t border-white/[0.04] pt-2">
+        <div className="flex min-w-0 flex-wrap gap-1">
           {i.tags.slice(0, 3).map((t) => (
             <span key={t} className="text-[9px] px-1.5 py-0.5 rounded bg-white/[0.03] text-neutral-600 mono">
               {t}
@@ -106,7 +108,7 @@ function IncidentCard({ i, index }: { i: IncidentSummary; index: number }) {
           )}
         </div>
         {i.attribution && (
-          <div className="text-[9px] text-neutral-600 mono truncate max-w-[120px]">
+          <div className="max-w-[120px] shrink-0 truncate text-[9px] text-neutral-600 mono">
             {i.attribution}
           </div>
         )}
