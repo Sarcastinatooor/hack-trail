@@ -26,6 +26,10 @@ const TAG_DOT: Record<string, string> = {
   "SOFT-FORK": "bg-[#00d4ff]",
   "HARD-FORK": "bg-[#00ff88]",
   "MARKET-IMPACT": "bg-[#ff2255]",
+  RECON: "bg-[#f59e0b]",
+  STAGING: "bg-[#ec4899]",
+  ATTRIBUTION: "bg-[#8b5cf6]",
+  LEGAL: "bg-[#f43f5e]",
 }
 
 const TAG_COLOR: Record<string, string> = {
@@ -46,6 +50,10 @@ const TAG_COLOR: Record<string, string> = {
   "SOFT-FORK": "text-[#00d4ff]",
   "HARD-FORK": "text-[#00ff88]",
   "MARKET-IMPACT": "text-[#ff2255]",
+  RECON: "text-[#f59e0b]",
+  STAGING: "text-[#ec4899]",
+  ATTRIBUTION: "text-[#8b5cf6]",
+  LEGAL: "text-[#f43f5e]",
 }
 
 const PHASE_BADGE: Record<string, string> = {
@@ -63,6 +71,13 @@ const PHASE_BADGE: Record<string, string> = {
   "hard-fork": "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/20",
   disclosure: "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
   "market-impact": "bg-[#ff2255]/10 text-[#ff2255] border-[#ff2255]/20",
+  "social-engineering": "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  staging: "bg-[#ec4899]/10 text-[#ec4899] border-[#ec4899]/20",
+  "multisig-compromise": "bg-[#ff2255]/10 text-[#ff2255] border-[#ff2255]/20",
+  "protocol-pause": "bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/20",
+  conversion: "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  "cross-chain-bridge": "bg-[#8b5cf6]/10 text-[#8b5cf6] border-[#8b5cf6]/20",
+  obfuscation: "bg-[#a855f7]/10 text-[#a855f7] border-[#a855f7]/20",
 }
 
 export function Timeline({

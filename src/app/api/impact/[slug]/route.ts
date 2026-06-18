@@ -126,6 +126,16 @@ const IMPACT_CONFIG: Record<string, {
     from: 1779926400, // 2026-05-28 (Fixed: was 2025)
     to: 1780790400,   // 2026-06-07
   },
+  'drift-protocol': {
+    tvl: [
+      { key: 'drift_tvl', protocol: 'drift-trade' },
+    ],
+    prices: [
+      { key: 'sol_price', coinId: 'solana' },
+    ],
+    from: 1774224000, // 2026-03-20
+    to: 1776643200,   // 2026-04-20
+  },
 }
 
 export async function GET(

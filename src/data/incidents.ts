@@ -47,7 +47,7 @@ export const INCIDENTS: IncidentSummary[] = [
     attribution: "UNC4736 / AppleJeus (DPRK)",
     short_summary:
       "Six-month social-engineering op harvested Security Council signatures via durable nonces, then drained 20+ tokens against wash-traded CarbonVote collateral in 12 minutes.",
-    status: "stub",
+    status: "full",
     tags: ["Solana", "multisig", "social-engineering"],
   },
 ]
