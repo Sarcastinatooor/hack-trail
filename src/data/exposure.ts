@@ -1,11 +1,10 @@
-import { DRIFT_PROTOCOL_DATA } from "./drift-protocol"
-import { KELP_DAO_DATA } from "./kelp-dao"
-import { ZCASH_ORCHARD_DATA } from "./zcash-orchard"
+import { INCIDENT_DATA_BY_SLUG } from "./all-incident-data"
 import { INCIDENTS } from "./incidents"
-import type { IncidentData, IncidentSummary, TrackedWallet } from "./types"
+import type { IncidentSummary, TrackedWallet } from "./types"
 
 export const EVM_CHAIN_IDS: Record<string, number> = {
   ethereum: 1,
+  bsc: 56,
   arbitrum: 42161,
   base: 8453,
   optimism: 10,
@@ -15,6 +14,7 @@ export const EVM_CHAIN_IDS: Record<string, number> = {
 
 export const EVM_CHAIN_LABELS: Record<string, string> = {
   ethereum: "Ethereum",
+  bsc: "BNB Chain",
   arbitrum: "Arbitrum",
   base: "Base",
   optimism: "Optimism",
@@ -22,8 +22,19 @@ export const EVM_CHAIN_LABELS: Record<string, string> = {
   unichain: "Unichain",
 }
 
+export const EVM_NATIVE_SYMBOLS: Record<string, string> = {
+  ethereum: "ETH",
+  bsc: "BNB",
+  arbitrum: "ETH",
+  base: "ETH",
+  optimism: "ETH",
+  polygon: "MATIC",
+  unichain: "ETH",
+}
+
 export const EVM_EXPLORERS: Record<string, string> = {
   ethereum: "https://etherscan.io/tx/",
+  bsc: "https://bscscan.com/tx/",
   arbitrum: "https://arbiscan.io/tx/",
   base: "https://basescan.org/tx/",
   optimism: "https://optimistic.etherscan.io/tx/",
@@ -33,6 +44,7 @@ export const EVM_EXPLORERS: Record<string, string> = {
 
 export const EVM_ADDRESS_EXPLORERS: Record<string, string> = {
   ethereum: "https://etherscan.io/address/",
+  bsc: "https://bscscan.com/address/",
   arbitrum: "https://arbiscan.io/address/",
   base: "https://basescan.org/address/",
   optimism: "https://optimistic.etherscan.io/address/",
@@ -40,13 +52,7 @@ export const EVM_ADDRESS_EXPLORERS: Record<string, string> = {
   unichain: "https://uniscan.xyz/address/",
 }
 
-export const APPROVAL_SCAN_CHAINS = ["ethereum", "arbitrum"] as const
-
-const INCIDENT_DATA: Record<string, IncidentData> = {
-  "kelp-dao": KELP_DAO_DATA,
-  "zcash-orchard": ZCASH_ORCHARD_DATA,
-  "drift-protocol": DRIFT_PROTOCOL_DATA,
-}
+export const APPROVAL_SCAN_CHAINS = ["ethereum", "arbitrum", "bsc", "polygon"] as const
 
 const SUMMARY_BY_SLUG = new Map(INCIDENTS.map((incident) => [incident.slug, incident]))
 
@@ -94,6 +100,10 @@ function toWatchAddress(
   if (!isSupportedEvmChain(chain) || !isEvmAddress(wallet.address)) return null
 
   const role = wallet.role ?? "watchlist"
+  const defaultNotes = role === "attacker"
+    ? "Indexed as an incident-related attacker address. Replace seed records with sourced forensic addresses as the dataset matures."
+    : "Indexed as an incident-related protocol or victim address for context matching."
+
   return {
     address: wallet.address,
     normalizedAddress: normalizeAddress(wallet.address),
@@ -105,12 +115,9 @@ function toWatchAddress(
     label: wallet.label ?? "Indexed exploit address",
     role,
     severity: roleSeverity(role),
-    confidence: "seed",
-    sourceLabel: "HackTrail incident dataset",
-    notes:
-      role === "attacker"
-        ? "Indexed as an incident-related attacker address. Replace seed records with sourced forensic addresses as the dataset matures."
-        : "Indexed as an incident-related protocol or victim address for context matching.",
+    confidence: wallet.confidence ?? "seed",
+    sourceLabel: wallet.sourceLabel ?? "HackTrail incident dataset",
+    notes: wallet.notes ?? defaultNotes,
     tags: incident.tags,
   }
 }
@@ -118,7 +125,7 @@ function toWatchAddress(
 export function getExposureWatchlist() {
   const watchlist = new Map<string, ExposureWatchAddress>()
 
-  for (const [slug, data] of Object.entries(INCIDENT_DATA)) {
+  for (const [slug, data] of Object.entries(INCIDENT_DATA_BY_SLUG)) {
     const incident = SUMMARY_BY_SLUG.get(slug)
     if (!incident) continue
 

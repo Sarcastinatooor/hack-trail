@@ -43,11 +43,16 @@ export interface TimelineEvent {
   chain?: string
 }
 
+export type AddressConfidence = "seed" | "curated" | "verified"
+
 export interface TrackedWallet {
   address: string
   chain: string
   label?: string
   role?: string
+  confidence?: AddressConfidence
+  sourceLabel?: string
+  notes?: string
 }
 
 export interface IncidentDetail {

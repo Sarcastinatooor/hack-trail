@@ -390,6 +390,13 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     eth_price: { title: "ETH Price", color: "#8b5cf6", unit: "$" },
     btc_price: { title: "BTC Price", color: "#f59e0b", unit: "$" },
     zec_price: { title: "ZEC Price", color: "#ff2255", unit: "$" },
+    cumulative_loss: { title: "Cumulative Loss", color: "#ff2255", unit: "$" },
+    bridge_gap: { title: "Bridge Backing Gap", color: "#ff2255", unit: "$" },
+    funds_escaped: { title: "Escaped Value", color: "#f59e0b", unit: "$" },
+    frozen_value: { title: "Frozen Value", color: "#00d4ff", unit: "$" },
+    protocol_tvl_static: { title: "Protocol TVL", color: "#00d4ff", unit: "$" },
+    top_exploiters: { title: "Top Exploiter Value", color: "#f59e0b", unit: "$" },
+    attacker_profit: { title: "Attacker Profit", color: "#f59e0b", unit: "$" },
   }
 
   return (

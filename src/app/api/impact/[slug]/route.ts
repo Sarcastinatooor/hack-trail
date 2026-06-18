@@ -21,6 +21,14 @@ function summarize(data: Point[]): Summary | null {
   return { peak, trough, latest: data[data.length - 1], first: data[0], drawdown }
 }
 
+interface ImpactConfig {
+  tvl: Array<{ key: string; protocol: string }>
+  prices: Array<{ key: string; coinId: string }>
+  staticSeries?: Array<{ key: string; data: Point[] }>
+  from: number
+  to: number
+}
+
 async function fetchDefiLlamaTvl(protocol: string, from: number, to: number): Promise<Point[]> {
   try {
     const res = await fetch(`https://api.llama.fi/protocol/${protocol}`, { next: { revalidate: 3600 } })
@@ -100,12 +108,7 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 }
 
 // Config per incident slug
-const IMPACT_CONFIG: Record<string, {
-  tvl: Array<{ key: string; protocol: string }>
-  prices: Array<{ key: string; coinId: string }>
-  from: number
-  to: number
-}> = {
+const IMPACT_CONFIG: Record<string, ImpactConfig> = {
   'kelp-dao': {
     tvl: [
       { key: 'aave_tvl', protocol: 'aave' },
@@ -136,6 +139,163 @@ const IMPACT_CONFIG: Record<string, {
     from: 1774224000, // 2026-03-20
     to: 1776643200,   // 2026-04-20
   },
+  'ronin-bridge': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'bridge_gap',
+        data: [
+          { ts: 1647907200, value: 0 },
+          { ts: 1647997200, value: 624_000_000 },
+          { ts: 1648512000, value: 624_000_000 },
+        ],
+      },
+    ],
+    from: 1647907200,
+    to: 1648598400,
+  },
+  'poly-network': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'cumulative_loss',
+        data: [
+          { ts: 1628467200, value: 0 },
+          { ts: 1628557200, value: 273_000_000 },
+          { ts: 1628560800, value: 611_000_000 },
+          { ts: 1628640000, value: 611_000_000 },
+        ],
+      },
+      {
+        key: 'frozen_value',
+        data: [
+          { ts: 1628467200, value: 0 },
+          { ts: 1628640000, value: 33_000_000 },
+        ],
+      },
+    ],
+    from: 1628467200,
+    to: 1628726400,
+  },
+  'bnb-bridge': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'cumulative_loss',
+        data: [
+          { ts: 1664995200, value: 0 },
+          { ts: 1665080760, value: 293_000_000 },
+          { ts: 1665088980, value: 586_000_000 },
+        ],
+      },
+      {
+        key: 'funds_escaped',
+        data: [
+          { ts: 1664995200, value: 0 },
+          { ts: 1665091800, value: 127_000_000 },
+          { ts: 1665100800, value: 127_000_000 },
+        ],
+      },
+    ],
+    from: 1664995200,
+    to: 1665187200,
+  },
+  wormhole: {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'bridge_gap',
+        data: [
+          { ts: 1643673600, value: 0 },
+          { ts: 1643760300, value: 326_000_000 },
+          { ts: 1643846400, value: 0 },
+        ],
+      },
+      {
+        key: 'funds_escaped',
+        data: [
+          { ts: 1643673600, value: 0 },
+          { ts: 1643763600, value: 254_000_000 },
+          { ts: 1643767200, value: 326_000_000 },
+        ],
+      },
+    ],
+    from: 1643673600,
+    to: 1643932800,
+  },
+  'euler-finance': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'protocol_tvl_static',
+        data: [
+          { ts: 1678579200, value: 264_000_000 },
+          { ts: 1678666200, value: 10_000_000 },
+          { ts: 1678752000, value: 10_000_000 },
+        ],
+      },
+      {
+        key: 'cumulative_loss',
+        data: [
+          { ts: 1678579200, value: 0 },
+          { ts: 1678666200, value: 197_000_000 },
+        ],
+      },
+    ],
+    from: 1678579200,
+    to: 1678838400,
+  },
+  'nomad-bridge': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'cumulative_loss',
+        data: [
+          { ts: 1659225600, value: 0 },
+          { ts: 1659315600, value: 47_000_000 },
+          { ts: 1659319200, value: 95_000_000 },
+          { ts: 1659324600, value: 190_000_000 },
+        ],
+      },
+      {
+        key: 'top_exploiters',
+        data: [
+          { ts: 1659225600, value: 0 },
+          { ts: 1659319200, value: 95_000_000 },
+        ],
+      },
+    ],
+    from: 1659225600,
+    to: 1659484800,
+  },
+  beanstalk: {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'cumulative_loss',
+        data: [
+          { ts: 1650067200, value: 0 },
+          { ts: 1650154800, value: 181_000_000 },
+        ],
+      },
+      {
+        key: 'attacker_profit',
+        data: [
+          { ts: 1650067200, value: 0 },
+          { ts: 1650155400, value: 76_000_000 },
+        ],
+      },
+    ],
+    from: 1650067200,
+    to: 1650240000,
+  },
 }
 
 export async function GET(
@@ -149,6 +309,11 @@ export async function GET(
   }
 
   const results: Record<string, unknown> = {}
+
+  for (const series of config.staticSeries ?? []) {
+    results[series.key] = series.data
+    results[`${series.key}_summary`] = summarize(series.data)
+  }
 
   // Fetch TVL data
   await Promise.all(

@@ -2,9 +2,22 @@ import { NextResponse } from 'next/server'
 
 const CHAIN_IDS: Record<string, number> = {
   ethereum: 1,
+  bsc: 56,
   arbitrum: 42161,
   base: 8453,
   optimism: 10,
+  polygon: 137,
+  unichain: 130,
+}
+
+const NATIVE_SYMBOLS: Record<string, string> = {
+  ethereum: 'ETH',
+  bsc: 'BNB',
+  arbitrum: 'ETH',
+  base: 'ETH',
+  optimism: 'ETH',
+  polygon: 'MATIC',
+  unichain: 'ETH',
 }
 
 export async function GET(
@@ -15,7 +28,9 @@ export async function GET(
   const { searchParams } = new URL(request.url)
   const chain = searchParams.get('chain') || 'ethereum'
   const limit = Math.min(Number(searchParams.get('limit')) || 50, 100)
-  const chainId = CHAIN_IDS[chain.toLowerCase()]
+  const normalizedChain = chain.toLowerCase()
+  const chainId = CHAIN_IDS[normalizedChain]
+  const nativeSymbol = NATIVE_SYMBOLS[normalizedChain] ?? 'ETH'
   const apiKey = process.env.ETHERSCAN_API_KEY || ''
 
   if (!chainId) {
@@ -43,7 +58,7 @@ export async function GET(
       from_address: tx.from,
       to_address: tx.to,
       amount: (parseFloat(tx.value) / 1e18).toFixed(6),
-      token_symbol: 'ETH',
+      token_symbol: nativeSymbol,
       timestamp: parseInt(tx.timeStamp),
       flow: tx.from.toLowerCase() === address.toLowerCase() ? 'out' : 'in',
     }))

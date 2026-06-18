@@ -5,6 +5,7 @@ import {
   EVM_CHAIN_IDS,
   EVM_CHAIN_LABELS,
   EVM_EXPLORERS,
+  EVM_NATIVE_SYMBOLS,
   getExposureCoverage,
   getExposureWatchlist,
   isEvmAddress,
@@ -180,7 +181,7 @@ function matchTx(
   if (!target) return null
 
   const direction = sameAddress(from, userAddress) ? "outgoing" : "incoming"
-  const tokenSymbol = tx.tokenSymbol || "ETH"
+  const tokenSymbol = tx.tokenSymbol || EVM_NATIVE_SYMBOLS[chain] || "ETH"
   const amount = kind === "token"
     ? formatTokenAmount(tx.value, tx.tokenDecimal)
     : formatTokenAmount(tx.value, "18")

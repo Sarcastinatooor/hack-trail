@@ -15,8 +15,17 @@ const CHAIN_COLORS: Record<string, string> = {
   Ethereum: "border-[#627eea]/30 text-[#627eea]",
   Arbitrum: "border-[#28a0f0]/30 text-[#28a0f0]",
   Bitcoin: "border-[#f7931a]/30 text-[#f7931a]",
+  "BNB Chain": "border-[#f3ba2f]/30 text-[#f3ba2f]",
+  BSC: "border-[#f3ba2f]/30 text-[#f3ba2f]",
   Unichain: "border-[#ff007a]/30 text-[#ff007a]",
   Solana: "border-[#9945ff]/30 text-[#9945ff]",
+  Polygon: "border-[#8247e5]/30 text-[#8247e5]",
+  Ronin: "border-[#1273ea]/30 text-[#1273ea]",
+  Fantom: "border-[#13b5ec]/30 text-[#13b5ec]",
+  Avalanche: "border-[#e84142]/30 text-[#e84142]",
+  Moonbeam: "border-[#b83f99]/30 text-[#b83f99]",
+  Evmos: "border-[#ed4e33]/30 text-[#ed4e33]",
+  Milkomeda: "border-[#00d4ff]/30 text-[#00d4ff]",
   Zcash: "border-[#f4b728]/30 text-[#f4b728]",
 }
 
@@ -202,7 +211,7 @@ export default function HomePage() {
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-[#00ff88]" />
             <span className="mono text-xs text-neutral-400 tracking-wider uppercase">
-              Active Incidents
+              Mapped Incidents
             </span>
           </div>
           <div className="mono text-[10px] text-neutral-600">
