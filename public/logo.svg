@@ -1,0 +1,59 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="trail" x1="25" y1="24" x2="104" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00FF88"/>
+      <stop offset="0.55" stop-color="#00D4FF"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="20" y1="18" x2="108" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00FF88" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#00D4FF" stop-opacity="0.78"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0 0 0 0 0 1 0 0 0 0 0.53 0 0 0 0.65 0"/>
+      <feBlend in="SourceGraphic" mode="screen"/>
+    </filter>
+  </defs>
+
+  <rect x="10" y="10" width="108" height="108" rx="24" fill="#050507"/>
+  <path
+    d="M64 18L100 32V58C100 82.5 85.5 101.5 64 110C42.5 101.5 28 82.5 28 58V32L64 18Z"
+    stroke="url(#shield)"
+    stroke-width="5"
+    stroke-linejoin="round"
+  />
+
+  <g filter="url(#glow)">
+    <path
+      d="M42 38V90M86 38V90"
+      stroke="url(#trail)"
+      stroke-width="8"
+      stroke-linecap="round"
+    />
+    <path
+      d="M42 66H56L64 54L72 74L86 58"
+      stroke="url(#trail)"
+      stroke-width="8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M48 40H80"
+      stroke="#E5FFF3"
+      stroke-opacity="0.9"
+      stroke-width="5"
+      stroke-linecap="round"
+    />
+    <path
+      d="M55 90H73"
+      stroke="#E5FFF3"
+      stroke-opacity="0.72"
+      stroke-width="5"
+      stroke-linecap="round"
+    />
+    <circle cx="42" cy="66" r="7" fill="#050507" stroke="#00FF88" stroke-width="5"/>
+    <circle cx="64" cy="54" r="7" fill="#050507" stroke="#00D4FF" stroke-width="5"/>
+    <circle cx="86" cy="58" r="7" fill="#050507" stroke="#8B5CF6" stroke-width="5"/>
+  </g>
+</svg>
