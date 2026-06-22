@@ -31,6 +31,8 @@ const CHAIN_COLORS: Record<string, string> = {
   Evmos: "border-[#ed4e33]/30 text-[#ed4e33]",
   Milkomeda: "border-[#00d4ff]/30 text-[#00d4ff]",
   Zcash: "border-[#f4b728]/30 text-[#f4b728]",
+  HyperEVM: "border-[#00ff88]/30 text-[#00ff88]",
+  "Hyperliquid L1": "border-[#00d4ff]/30 text-[#00d4ff]",
 }
 
 function ChainBadge({ chain }: { chain: string }) {

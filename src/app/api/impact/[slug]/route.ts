@@ -373,6 +373,60 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
   badger: lossConfig(120_000_000, 1638403200, 1638411600),
   'mango-markets': lossConfig(115_000_000, 1665446400, 1665532800),
   'harmony-bridge': lossConfig(100_000_000, 1655942400, 1655992800),
+  'altura-hyperevm': {
+    tvl: [{ key: 'altura_tvl', protocol: 'altura' }],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'altura_reserves',
+        data: [
+          { ts: 1781801183, value: 39_938_359.81 },
+          { ts: 1781840771, value: 40_512_378.77 },
+          { ts: 1781919963, value: 40_609_802.45 },
+          { ts: 1782038773, value: 35_509_155.91 },
+          { ts: 1782089183, value: 34_163_466.39 },
+          { ts: 1782126100, value: 33_773_613.2 },
+        ],
+      },
+      {
+        key: 'altura_supply',
+        data: [
+          { ts: 1781801183, value: 38_468_810.45 },
+          { ts: 1781840771, value: 39_047_045.95 },
+          { ts: 1781919963, value: 39_196_118.35 },
+          { ts: 1782038773, value: 33_865_851.54 },
+          { ts: 1782089183, value: 32_413_456.49 },
+          { ts: 1782126100, value: 32_419_547.27 },
+        ],
+      },
+      {
+        key: 'instant_redemptions',
+        data: [
+          { ts: 1781919963, value: 0 },
+          { ts: 1782075219, value: 8_500_000 },
+          { ts: 1782126100, value: 8_500_000 },
+        ],
+      },
+      {
+        key: 'morpho_idle_liquidity',
+        data: [
+          { ts: 1781919963, value: 0 },
+          { ts: 1782075219, value: 0 },
+          { ts: 1782126100, value: 0 },
+        ],
+      },
+      {
+        key: 'withdrawal_queue_outstanding',
+        data: [
+          { ts: 1781919963, value: 0 },
+          { ts: 1782075219, value: 1_550_000 },
+          { ts: 1782126100, value: 1_550_000 },
+        ],
+      },
+    ],
+    from: 1781801183,
+    to: 1782126100,
+  },
 }
 
 export async function GET(

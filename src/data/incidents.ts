@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "altura-hyperevm-2026-06",
+    slug: "altura-hyperevm",
+    name: "Altura HyperEVM Vault Redemption Liquidity Crisis",
+    victim: "Altura",
+    date: "2026-06-21",
+    date_label: "Jun 21, 2026",
+    loss_usd: 8_500_000,
+    loss_label: "$8.5M+ redeemed",
+    chains: ["HyperEVM", "Hyperliquid L1", "Ethereum"],
+    attack_vector: "MSY depeg-triggered redemption run + ALM mismatch",
+    attribution: "No confirmed exploit; orderly wind-down",
+    short_summary:
+      "Mainstreet/MSY depeg fear pushed users to test Altura's instant exits. The vault processed $8.5M+ USDT redemptions, then moved toward wind-down while reserves sat across RWA, exchange, custody and fully utilized Morpho liquidity buckets.",
+    status: "full",
+    tags: ["HyperEVM", "vault-run", "liquidity-crisis", "Morpho", "RWA"],
+  },
+  {
     id: "kelp-dao-rseth-2026-04",
     slug: "kelp-dao",
     name: "Kelp DAO rsETH Bridge Exploit",

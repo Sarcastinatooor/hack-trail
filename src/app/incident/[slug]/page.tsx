@@ -397,6 +397,12 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     protocol_tvl_static: { title: "Protocol TVL", color: "#00d4ff", unit: "$" },
     top_exploiters: { title: "Top Exploiter Value", color: "#f59e0b", unit: "$" },
     attacker_profit: { title: "Attacker Profit", color: "#f59e0b", unit: "$" },
+    altura_tvl: { title: "Altura TVL", color: "#00d4ff", unit: "$" },
+    altura_reserves: { title: "Altura Reserves", color: "#00ff88", unit: "$" },
+    altura_supply: { title: "Altura Supply", color: "#ff2255", unit: "$" },
+    instant_redemptions: { title: "Instant Redemptions", color: "#f59e0b", unit: "$" },
+    morpho_idle_liquidity: { title: "Morpho Idle Liquidity", color: "#ff2255", unit: "$" },
+    withdrawal_queue_outstanding: { title: "Queue Outstanding", color: "#8b5cf6", unit: "$" },
   }
 
   return (

@@ -12,7 +12,7 @@ interface WalletData {
   chain: string
   label?: string
   role?: string
-  balance_eth: number
+  balance_eth: number | null
   native_symbol?: string
   total_usd: number
 }
@@ -85,10 +85,16 @@ function WalletRow({ w, slug }: { w: WalletData; slug: string }) {
           </div>
         </div>
         <div className="text-right">
-          <div className="data-value text-sm text-neutral-200">
-            {w.balance_eth.toFixed(4)}{" "}
-            <span className="text-neutral-500 text-xs">{w.native_symbol ?? "ETH"}</span>
-          </div>
+          {w.balance_eth === null ? (
+            <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">
+              indexed
+            </div>
+          ) : (
+            <div className="data-value text-sm text-neutral-200">
+              {w.balance_eth.toFixed(4)}{" "}
+              <span className="text-neutral-500 text-xs">{w.native_symbol ?? "ETH"}</span>
+            </div>
+          )}
         </div>
         <span
           className={`text-neutral-600 transition-transform text-xs ${expanded ? "rotate-90" : ""}`}

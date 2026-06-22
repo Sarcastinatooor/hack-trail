@@ -1,4 +1,5 @@
 import { DRIFT_PROTOCOL_DATA } from "./drift-protocol"
+import { ALTURA_HYPEREVM_DATA } from "./altura-hyperevm"
 import {
   BADGER_DATA,
   BITMART_DATA,
@@ -28,6 +29,7 @@ import type { IncidentData } from "./types"
 import { ZCASH_ORCHARD_DATA } from "./zcash-orchard"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
+  "altura-hyperevm": ALTURA_HYPEREVM_DATA,
   "kelp-dao": KELP_DAO_DATA,
   "zcash-orchard": ZCASH_ORCHARD_DATA,
   "drift-protocol": DRIFT_PROTOCOL_DATA,

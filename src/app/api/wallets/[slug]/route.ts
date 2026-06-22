@@ -20,14 +20,15 @@ const NATIVE_SYMBOLS: Record<string, string> = {
   optimism: 'ETH',
   polygon: 'MATIC',
   unichain: 'ETH',
+  hyperevm: 'HYPE',
   solana: 'SOL',
   sui: 'SUI',
   bitcoin: 'BTC',
 }
 
-async function getEthBalance(address: string, chain: string): Promise<number> {
+async function getEthBalance(address: string, chain: string): Promise<number | null> {
   const chainId = CHAIN_IDS[chain.toLowerCase()]
-  if (!chainId) return 0
+  if (!chainId) return null
   const apiKey = process.env.ETHERSCAN_API_KEY || ''
   try {
     const res = await fetch(
