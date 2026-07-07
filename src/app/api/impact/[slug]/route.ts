@@ -134,6 +134,14 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 
 // Config per incident slug
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
+  'bonk-dao': {
+    tvl: [],
+    prices: [
+      { key: 'bonk_price', coinId: 'bonk' },
+    ],
+    from: 1781913600, // 2026-06-20
+    to: 1783641600,   // 2026-07-10
+  },
   'kelp-dao': {
     tvl: [
       { key: 'aave_tvl', protocol: 'aave' },

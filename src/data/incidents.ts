@@ -2,6 +2,22 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "bonk-dao-2026-07",
+    slug: "bonk-dao",
+    name: "BonkDAO Governance Treasury Takeover",
+    victim: "BonkDAO",
+    date: "2026-07-06",
+    date_label: "Jul 6, 2026",
+    loss_usd: 21_200_000,
+    chains: ["Solana"],
+    attack_vector: "Governance Quorum Takeover",
+    attribution: "Unknown (Governance Arbitrageur)",
+    short_summary:
+      "Attacker acquired 882.28B BONK ($4.4M) and voted 'Yes' on a Realms governance proposal to transfer 4.426T BONK ($21.2M) from the DAO treasury to their own wallet, capturing $16.8M in profit.",
+    status: "full",
+    tags: ["governance", "Realms", "Solana", "treasury"],
+  },
+  {
     id: "altura-hyperevm-2026-06",
     slug: "altura-hyperevm",
     name: "Altura HyperEVM Vault Redemption Liquidity Crisis",

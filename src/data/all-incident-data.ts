@@ -27,8 +27,10 @@ import {
 import { KELP_DAO_DATA } from "./kelp-dao"
 import type { IncidentData } from "./types"
 import { ZCASH_ORCHARD_DATA } from "./zcash-orchard"
+import { BONK_DAO_DATA } from "./bonk-dao"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
+  "bonk-dao": BONK_DAO_DATA,
   "altura-hyperevm": ALTURA_HYPEREVM_DATA,
   "kelp-dao": KELP_DAO_DATA,
   "zcash-orchard": ZCASH_ORCHARD_DATA,
