@@ -381,8 +381,55 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
   badger: lossConfig(120_000_000, 1638403200, 1638411600),
   'mango-markets': lossConfig(115_000_000, 1665446400, 1665532800),
   'harmony-bridge': lossConfig(100_000_000, 1655942400, 1655992800),
+  'ostium-olp': {
+    tvl: [
+      { key: 'ostium_tvl', protocol: 'ostium' },
+    ],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'olp_vault_usdc',
+        data: [
+          { ts: 1784073600, value: 34_300_000 },
+          { ts: 1784142227, value: 8_993_473 },
+        ],
+      },
+      {
+        key: 'visible_arkham_outflows',
+        data: [
+          { ts: 1784138400, value: 0 },
+          { ts: 1784139060, value: 6_290_000 },
+          { ts: 1784139600, value: 11_050_000 },
+          { ts: 1784140200, value: 15_540_000 },
+          { ts: 1784140800, value: 19_130_000 },
+          { ts: 1784141400, value: 21_820_000 },
+          { ts: 1784141820, value: 22_890_000 },
+        ],
+      },
+      {
+        key: 'largest_exploit_tx',
+        data: [
+          { ts: 1784138400, value: 0 },
+          { ts: 1784138700, value: 11_860_000 },
+          { ts: 1784142227, value: 11_860_000 },
+        ],
+      },
+      {
+        key: 'defillama_tvl_static',
+        data: [
+          { ts: 1784073600, value: 63_426_760 },
+          { ts: 1784142227, value: 37_835_852 },
+        ],
+      },
+    ],
+    from: 1784073600,
+    to: 1784160000,
+  },
   'altura-hyperevm': {
-    tvl: [{ key: 'altura_tvl', protocol: 'altura' }],
+    tvl: [
+      { key: 'mainstreet_tvl', protocol: 'mainstreet' },
+      { key: 'altura_tvl', protocol: 'altura' },
+    ],
     prices: [],
     staticSeries: [
       {
@@ -416,11 +463,27 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
         ],
       },
       {
+        key: 'total_withdrawal_pressure',
+        data: [
+          { ts: 1781919963, value: 0 },
+          { ts: 1782075219, value: 10_050_000 },
+          { ts: 1782126100, value: 10_050_000 },
+        ],
+      },
+      {
         key: 'morpho_idle_liquidity',
         data: [
           { ts: 1781919963, value: 0 },
           { ts: 1782075219, value: 0 },
           { ts: 1782126100, value: 0 },
+        ],
+      },
+      {
+        key: 'withdrawal_queue_total',
+        data: [
+          { ts: 1781919963, value: 0 },
+          { ts: 1782075219, value: 2_910_000 },
+          { ts: 1782126100, value: 2_910_000 },
         ],
       },
       {

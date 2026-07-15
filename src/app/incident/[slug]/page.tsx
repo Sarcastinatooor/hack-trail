@@ -332,6 +332,235 @@ function ZecWalletsExplainer() {
   )
 }
 
+function AlturaIncidentMatrix() {
+  const reserveBuckets = [
+    { name: "Inessa RWA", value: "$21.9M", detail: "largest reserve bucket; asset-level verification caveat" },
+    { name: "OKX", value: "$9.6M", detail: "venue balance, not instant redemption-contract liquidity" },
+    { name: "Cobo", value: "$1.27M", detail: "custody bucket dependent on operational movement" },
+    { name: "HyperEVM", value: "$524k", detail: "immediate on-chain bucket at dashboard snapshot" },
+    { name: "Ethereum", value: "$341k", detail: "on-chain bucket outside HyperEVM" },
+    { name: "Tauri Vault", value: "$102k", detail: "small DeFi reserve bucket" },
+    { name: "Hyperliquid", value: "$334", detail: "remaining venue bucket at dashboard snapshot" },
+  ]
+
+  const userChecks = [
+    "Altura / AVLT share exposure",
+    "Pending slow-redemption request status",
+    "Alpha USDT Prime vault exposure",
+    "Morpho AVLT-backed market exposure",
+    "Mainstreet / MSY exposure",
+    "USDT0 liquidity routes on HyperEVM",
+  ]
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+        <div className="neon-card-static p-4 stat-accent-red">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">1. Upstream trigger</div>
+          <div className="mt-1 text-sm font-semibold text-white">Mainstreet / MSY depeg fear</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            Mainstreet TVL fell from about $82.0M to about $74.2M. Even without direct Altura exposure,
+            users started testing whether nearby stable-vault liquidity could survive a run.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-amber">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">2. Liability run</div>
+          <div className="mt-1 text-sm font-semibold text-white">$10.05M+ exit pressure</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            Altura reportedly processed more than $8.5M USDT in instant redemptions, with another ~1.55M
+            AVLT still pending in the slow-redemption queue.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-cyan">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">3. Liquidity bottleneck</div>
+          <div className="mt-1 text-sm font-semibold text-white">Morpho / AVLT at 0 idle</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            The Alpha USDT Prime path was reported around $5.9M supplied, 100% utilized, and dependent on
+            repayment, new lenders, reallocation, or external capital.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-green">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">4. Exit queue</div>
+          <div className="mt-1 text-sm font-semibold text-white">223 open withdrawal requests</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            Dium&apos;s queue scan cited 2.91M AVLT queued, 1.31M claimed, 150k cancelled, and about 1.55M AVLT
+            still outstanding.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] gap-4">
+        <div className="neon-card-static p-5">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <div>
+              <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Reserve composition</div>
+              <h3 className="text-sm font-semibold text-white mt-1">Proof of reserves vs proof of liquidity</h3>
+            </div>
+            <a
+              href="https://accountable.altura.trade/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]"
+            >
+              Accountable source
+            </a>
+          </div>
+          <div className="space-y-2">
+            {reserveBuckets.map((bucket) => (
+              <div key={bucket.name} className="grid grid-cols-1 gap-1 rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2 sm:grid-cols-[110px_86px_minmax(0,1fr)] sm:gap-3">
+                <div className="mono text-[10px] text-neutral-300">{bucket.name}</div>
+                <div className="data-value text-xs text-white">{bucket.value}</div>
+                <div className="text-[11px] leading-relaxed text-neutral-500">{bucket.detail}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="neon-card-static p-5">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">User exposure checks</div>
+          <h3 className="text-sm font-semibold text-white mt-1 mb-3">What HackTrail should flag</h3>
+          <div className="space-y-2">
+            {userChecks.map((item) => (
+              <div key={item} className="flex items-center gap-2 text-xs text-neutral-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00ff88]" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+          <a
+            href="https://x.com/Not_A_De_Gen/status/2068799530276167876"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]"
+          >
+            Full incident analysis
+          </a>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function OstiumIncidentMatrix() {
+  const transferRows = [
+    { n: "01", value: "$6.29M", note: "largest visible payout after the 700k USDC scaled loop" },
+    { n: "02", value: "$4.76M", note: "second repeated transfer to executor 0x321D...BFD9" },
+    { n: "03", value: "$4.49M", note: "third transfer; first three total about $15.54M" },
+    { n: "04", value: "$3.59M", note: "continued capped-profit loop output" },
+    { n: "05", value: "$2.69M", note: "cumulative visible outflow about $21.82M" },
+    { n: "06", value: "$1.07M", note: "six visible Arkham rows total about $22.89M" },
+  ]
+
+  const watchList = [
+    { label: "OLP vault", address: "0x20D419a8e12C45f88fDA7c5760bb6923Cee27F98" },
+    { label: "Executor", address: "0x321df194646029e7a6193ea05573d4b9c398bfd9" },
+    { label: "Second wallet, same operator", address: "0xD1794196f0fc99c7f27970e661597d77d9a85869" },
+    { label: "PrivatePriceUpKeep", address: "0xb71ec9ebd8145dacacf6724363143cb5667a3d36" },
+    { label: "Verifier", address: "0xcCF233920e8cc9415ecF503b992881d69b6c47Ad" },
+  ]
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+        <div className="neon-card-static p-4 stat-accent-red">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">1. Trust break</div>
+          <div className="mt-1 text-sm font-semibold text-white">Compromised oracle signer</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            The verifier saw valid signatures, so it passed the reports as designed. The security failure was
+            signer integrity, not a failed signature check.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-amber">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">2. Atomic loop</div>
+          <div className="mt-1 text-sm font-semibold text-white">100x fabricated marks</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            The attacker packed a signed false price and a 100x trade into one call, opened at one fabricated
+            mark, closed at another, and let the vault pay capped max profit.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-cyan">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">3. Payout math</div>
+          <div className="mt-1 text-sm font-semibold text-white">$11.86M largest tx</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            A small probe returned roughly 8.99x collateral. The largest known Arbitrum transaction packed
+            five exploit loops into one tx.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-green">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">4. LP risk</div>
+          <div className="mt-1 text-sm font-semibold text-white">Daily settlement lag</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            Ostium docs say OLP price updates once per day. If redemptions clear before the loss is printed,
+            remaining LPs can inherit more of the realized damage.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(300px,0.8fr)] gap-4">
+        <div className="neon-card-static p-5">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <div>
+              <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Arkham-visible outflows</div>
+              <h3 className="text-sm font-semibold text-white mt-1">Six large transfers drive most of the damage</h3>
+            </div>
+            <div className="mono text-[10px] text-[#ff2255]">$22.89M total</div>
+          </div>
+          <div className="mb-3 rounded border border-[#00d4ff]/15 bg-[#00d4ff]/[0.03] px-3 py-2 text-[11px] leading-relaxed text-neutral-500">
+            Largest known transaction:
+            <a
+              href="https://arbiscan.io/tx/0x359f8c05b86a4409d60cfba02084334313fd94b19f74a294fb7fc4ea7d4870e0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-1 mono text-[#00d4ff] hover:text-[#00ff88]"
+            >
+              0x359f...7e0
+            </a>
+            {" "}for about $11.86M across five loops.
+          </div>
+          <div className="space-y-2">
+            {transferRows.map((row) => (
+              <div key={row.n} className="grid grid-cols-[42px_88px_minmax(0,1fr)] gap-3 rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2">
+                <div className="mono text-[10px] text-neutral-500">#{row.n}</div>
+                <div className="data-value text-xs text-[#ff2255]">{row.value}</div>
+                <div className="text-[11px] leading-relaxed text-neutral-500">{row.note}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="neon-card-static p-5">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Exposure watchlist</div>
+          <h3 className="text-sm font-semibold text-white mt-1 mb-3">Addresses HackTrail now checks</h3>
+          <div className="space-y-2">
+            {watchList.map((item) => (
+              <div key={item.address} className="rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2">
+                <div className="mono text-[10px] text-[#00d4ff]">{item.label}</div>
+                <div className="mt-1 break-all mono text-[10px] text-neutral-500">{item.address}</div>
+              </div>
+            ))}
+          </div>
+          <a
+            href="https://app.hypernative.xyz/risk-insights/explore/J5CYISWNXL4B"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]"
+          >
+            Hypernative detection
+          </a>
+          <a
+            href="https://docs.ostium.com/vault/overview"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-4 mt-4 inline-flex mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]"
+          >
+            Ostium vault mechanics
+          </a>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function FlowTab({ slug }: { slug: string }) {
   const isZcashExplainer = slug === "zcash-orchard"
 
@@ -397,12 +626,20 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     protocol_tvl_static: { title: "Protocol TVL", color: "#00d4ff", unit: "$" },
     top_exploiters: { title: "Top Exploiter Value", color: "#f59e0b", unit: "$" },
     attacker_profit: { title: "Attacker Profit", color: "#f59e0b", unit: "$" },
+    mainstreet_tvl: { title: "Mainstreet TVL", color: "#8b5cf6", unit: "$" },
     altura_tvl: { title: "Altura TVL", color: "#00d4ff", unit: "$" },
     altura_reserves: { title: "Altura Reserves", color: "#00ff88", unit: "$" },
     altura_supply: { title: "Altura Supply", color: "#ff2255", unit: "$" },
     instant_redemptions: { title: "Instant Redemptions", color: "#f59e0b", unit: "$" },
+    total_withdrawal_pressure: { title: "Total Exit Pressure", color: "#ff2255", unit: "$" },
     morpho_idle_liquidity: { title: "Morpho Idle Liquidity", color: "#ff2255", unit: "$" },
+    withdrawal_queue_total: { title: "Total Queued Withdrawals", color: "#f59e0b", unit: "$" },
     withdrawal_queue_outstanding: { title: "Queue Outstanding", color: "#8b5cf6", unit: "$" },
+    ostium_tvl: { title: "Ostium Protocol TVL", color: "#00d4ff", unit: "$" },
+    olp_vault_usdc: { title: "OLP Vault USDC", color: "#ff2255", unit: "$" },
+    visible_arkham_outflows: { title: "Arkham-Visible Outflows", color: "#f59e0b", unit: "$" },
+    largest_exploit_tx: { title: "Largest Exploit Tx", color: "#8b5cf6", unit: "$" },
+    defillama_tvl_static: { title: "DefiLlama TVL Snapshot", color: "#00ff88", unit: "$" },
   }
 
   return (
@@ -518,14 +755,18 @@ export default function IncidentPage({
         {/* Tab content */}
         <div className="animate-slide-up" key={tab}>
           {tab === "journey" && (
-            <div className="neon-card-static p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#00ff88]" />
-                <span className="mono text-xs text-neutral-400 uppercase tracking-wider">
-                  Chronological Event Trail
-                </span>
+            <div className="space-y-4">
+              {slug === "altura-hyperevm" && <AlturaIncidentMatrix />}
+              {slug === "ostium-olp" && <OstiumIncidentMatrix />}
+              <div className="neon-card-static p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#00ff88]" />
+                  <span className="mono text-xs text-neutral-400 uppercase tracking-wider">
+                    Chronological Event Trail
+                  </span>
+                </div>
+                <Timeline timeline={timeline} hops={hops} />
               </div>
-              <Timeline timeline={timeline} hops={hops} />
             </div>
           )}
 

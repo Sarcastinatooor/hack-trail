@@ -68,6 +68,8 @@ export async function GET(
         chain: w.chain,
         label: w.label,
         role: w.role,
+        notes: w.notes,
+        source_label: w.sourceLabel,
         balance_eth: balance,
         native_symbol: NATIVE_SYMBOLS[w.chain.toLowerCase()] ?? 'ETH',
         total_usd: 0, // Would need price * balance

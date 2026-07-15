@@ -12,6 +12,8 @@ interface WalletData {
   chain: string
   label?: string
   role?: string
+  notes?: string
+  source_label?: string
   balance_eth: number | null
   native_symbol?: string
   total_usd: number
@@ -49,7 +51,7 @@ function WalletRow({ w, slug }: { w: WalletData; slug: string }) {
     queryKey: ["transfers", w.address, w.chain],
     queryFn: () =>
       fetch(`/api/wallet/${w.address}/transfers?chain=${w.chain}&limit=20`).then((r) => r.json()),
-    enabled: expanded,
+    enabled: expanded && w.balance_eth !== null,
   })
 
   void slug
@@ -104,7 +106,19 @@ function WalletRow({ w, slug }: { w: WalletData; slug: string }) {
       </button>
       {expanded && (
         <div className="border-t border-white/[0.04] bg-white/[0.01]">
-          {isLoading ? (
+          {w.notes && (
+            <div className="border-b border-white/[0.04] p-3 text-xs leading-relaxed text-neutral-500">
+              <div className="mono mb-1 text-[9px] uppercase tracking-wider text-neutral-600">
+                {w.source_label ?? "HackTrail source"}
+              </div>
+              {w.notes}
+            </div>
+          )}
+          {w.balance_eth === null ? (
+            <div className="p-4 mono text-[11px] text-neutral-600 text-center">
+              Live transfer lookup for {w.chain} is not wired yet; address is indexed for exposure context.
+            </div>
+          ) : isLoading ? (
             <div className="p-4 mono text-[11px] text-neutral-600 text-center">Loading transfers…</div>
           ) : transfers?.data?.length ? (
             transfers.data.map((t, i) => <TransferRow key={i} t={t} />)

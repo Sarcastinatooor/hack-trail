@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "ostium-olp-2026-07",
+    slug: "ostium-olp",
+    name: "Ostium OLP Oracle Signer Drain",
+    victim: "Ostium OLP Vault",
+    date: "2026-07-15",
+    date_label: "Jul 15, 2026",
+    loss_usd: 25_300_000,
+    loss_label: "$25.3M vault drain",
+    chains: ["Arbitrum"],
+    attack_vector: "Compromised oracle signer + atomic 100x price spoof",
+    attribution: "Unknown; executor reportedly funded from CEX hot wallets",
+    short_summary:
+      "A compromised oracle signer path let executor 0x321D...BFD9 submit validly signed fabricated prices, loop 100x trades, and drain OLP from $34.3M to $8.99M USDC. Largest known tx pulled $11.86M across five loops.",
+    status: "full",
+    tags: ["Arbitrum", "oracle-signer", "perps", "OLP", "Kyber", "settlement-risk"],
+  },
+  {
     id: "bonk-dao-2026-07",
     slug: "bonk-dao",
     name: "BonkDAO Governance Treasury Takeover",
@@ -24,15 +41,15 @@ export const INCIDENTS: IncidentSummary[] = [
     victim: "Altura",
     date: "2026-06-21",
     date_label: "Jun 21, 2026",
-    loss_usd: 8_500_000,
-    loss_label: "$8.5M+ redeemed",
+    loss_usd: 10_050_000,
+    loss_label: "$10.05M+ exit pressure",
     chains: ["HyperEVM", "Hyperliquid L1", "Ethereum"],
     attack_vector: "MSY depeg-triggered redemption run + ALM mismatch",
-    attribution: "No confirmed exploit; orderly wind-down",
+    attribution: "No confirmed exploit; liquidity wind-down",
     short_summary:
-      "Mainstreet/MSY depeg fear pushed users to test Altura's instant exits. The vault processed $8.5M+ USDT redemptions, then moved toward wind-down while reserves sat across RWA, exchange, custody and fully utilized Morpho liquidity buckets.",
+      "Mainstreet/MSY depeg fear spread into Altura as users tested instant exits. Altura processed $8.5M+ USDT redemptions, with another ~1.55M AVLT still pending in queue across the Morpho/AVLT liquidity stack.",
     status: "full",
-    tags: ["HyperEVM", "vault-run", "liquidity-crisis", "Morpho", "RWA"],
+    tags: ["HyperEVM", "Mainstreet", "vault-run", "Morpho", "RWA", "queue-risk"],
   },
   {
     id: "kelp-dao-rseth-2026-04",
