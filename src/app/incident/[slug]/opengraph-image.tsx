@@ -20,6 +20,49 @@ function truncate(text: string, max: number) {
   return text.length > max ? `${text.slice(0, max - 3)}...` : text
 }
 
+function LogoMark({ size: markSize = 64 }: { size?: number }) {
+  return (
+    <svg width={markSize} height={markSize} viewBox="0 0 128 128" fill="none">
+      <defs>
+        <linearGradient id="og-trail" x1="25" y1="24" x2="104" y2="108" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#00FF88" />
+          <stop offset="0.55" stopColor="#00D4FF" />
+          <stop offset="1" stopColor="#8B5CF6" />
+        </linearGradient>
+        <linearGradient id="og-shield" x1="20" y1="18" x2="108" y2="112" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#00FF88" stopOpacity="0.95" />
+          <stop offset="1" stopColor="#00D4FF" stopOpacity="0.78" />
+        </linearGradient>
+      </defs>
+      <rect x="10" y="10" width="108" height="108" rx="24" fill="#050507" />
+      <path
+        d="M64 18L100 32V58C100 82.5 85.5 101.5 64 110C42.5 101.5 28 82.5 28 58V32L64 18Z"
+        stroke="url(#og-shield)"
+        strokeWidth="5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M42 38V90M86 38V90"
+        stroke="url(#og-trail)"
+        strokeWidth="8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M42 66H56L64 54L72 74L86 58"
+        stroke="url(#og-trail)"
+        strokeWidth="8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M48 40H80" stroke="#E5FFF3" strokeOpacity="0.9" strokeWidth="5" strokeLinecap="round" />
+      <path d="M55 90H73" stroke="#E5FFF3" strokeOpacity="0.72" strokeWidth="5" strokeLinecap="round" />
+      <circle cx="42" cy="66" r="7" fill="#050507" stroke="#00FF88" strokeWidth="5" />
+      <circle cx="64" cy="54" r="7" fill="#050507" stroke="#00D4FF" strokeWidth="5" />
+      <circle cx="86" cy="58" r="7" fill="#050507" stroke="#8B5CF6" strokeWidth="5" />
+    </svg>
+  )
+}
+
 export default async function OpenGraphImage({
   params,
 }: {
@@ -79,20 +122,18 @@ export default async function OpenGraphImage({
           <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
             <div
               style={{
-                width: 56,
-                height: 56,
-                borderRadius: 14,
-                border: "1px solid rgba(0,255,136,0.55)",
-                background: "rgba(0,255,136,0.08)",
+                width: 66,
+                height: 66,
+                borderRadius: 17,
+                border: "1px solid rgba(0,255,136,0.35)",
+                background: "rgba(0,0,0,0.55)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: 28,
-                fontWeight: 900,
-                color: "#00ff88",
+                boxShadow: "0 0 28px rgba(0,255,136,0.15)",
               }}
             >
-              H
+              <LogoMark />
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
               <div style={{ display: "flex", fontSize: 28, fontWeight: 900, letterSpacing: 2 }}>
