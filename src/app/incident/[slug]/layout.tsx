@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { INCIDENTS } from "@/data/incidents"
 
 const SITE_URL = "https://hack-trail.vercel.app"
+const OG_IMAGE_VERSION = "hacktrail-logo-v2"
 
 function truncate(text: string, max = 180) {
   return text.length > max ? `${text.slice(0, max - 3)}...` : text
@@ -25,7 +26,7 @@ export async function generateMetadata({
   const title = `${incident.name} | HackTrail`
   const description = truncate(incident.short_summary)
   const canonicalUrl = `${SITE_URL}/incident/${incident.slug}`
-  const imageUrl = `${canonicalUrl}/opengraph-image`
+  const imageUrl = `${canonicalUrl}/opengraph-image?v=${OG_IMAGE_VERSION}`
 
   return {
     title,
