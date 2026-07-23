@@ -29,8 +29,10 @@ import { OSTIUM_OLP_DATA } from "./ostium-olp"
 import type { IncidentData } from "./types"
 import { ZCASH_ORCHARD_DATA } from "./zcash-orchard"
 import { BONK_DAO_DATA } from "./bonk-dao"
+import { AFX_BRIDGE_DATA } from "./afx-bridge"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
+  "afx-bridge": AFX_BRIDGE_DATA,
   "ostium-olp": OSTIUM_OLP_DATA,
   "bonk-dao": BONK_DAO_DATA,
   "altura-hyperevm": ALTURA_HYPEREVM_DATA,

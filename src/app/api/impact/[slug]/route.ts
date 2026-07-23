@@ -381,6 +381,44 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
   badger: lossConfig(120_000_000, 1638403200, 1638411600),
   'mango-markets': lossConfig(115_000_000, 1665446400, 1665532800),
   'harmony-bridge': lossConfig(100_000_000, 1655942400, 1655992800),
+  'afx-bridge': {
+    tvl: [
+      { key: 'afx_bridge_tvl', protocol: 'afx-bridge' },
+    ],
+    prices: [
+      { key: 'eth_price', coinId: 'ethereum' },
+      { key: 'arb_price', coinId: 'arbitrum' },
+    ],
+    staticSeries: [
+      {
+        key: 'afx_bridge_tvl_static',
+        data: [
+          { ts: 1784678400, value: 24_336_104 },
+          { ts: 1784753399, value: 24_184_502 },
+          { ts: 1784755825, value: 34_502 },
+          { ts: 1784764749, value: 34_502 },
+        ],
+      },
+      {
+        key: 'cumulative_loss',
+        data: [
+          { ts: 1784753399, value: 0 },
+          { ts: 1784755825, value: 24_150_000 },
+          { ts: 1784770800, value: 24_150_000 },
+        ],
+      },
+      {
+        key: 'converted_eth_value',
+        data: [
+          { ts: 1784755825, value: 0 },
+          { ts: 1784764749, value: 24_150_000 },
+          { ts: 1784770800, value: 24_150_000 },
+        ],
+      },
+    ],
+    from: 1784678400,
+    to: 1784842200,
+  },
   'ostium-olp': {
     tvl: [
       { key: 'ostium_tvl', protocol: 'ostium' },
@@ -391,34 +429,35 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
         key: 'olp_vault_usdc',
         data: [
           { ts: 1784073600, value: 34_300_000 },
-          { ts: 1784142227, value: 8_993_473 },
+          { ts: 1784128700, value: 8_993_473 },
         ],
       },
       {
         key: 'visible_arkham_outflows',
         data: [
-          { ts: 1784138400, value: 0 },
-          { ts: 1784139060, value: 6_290_000 },
-          { ts: 1784139600, value: 11_050_000 },
-          { ts: 1784140200, value: 15_540_000 },
-          { ts: 1784140800, value: 19_130_000 },
-          { ts: 1784141400, value: 21_820_000 },
-          { ts: 1784141820, value: 22_890_000 },
+          { ts: 1784125103, value: 897.8008 },
+          { ts: 1784125128, value: 11_863_738.5828 },
+          { ts: 1784125177, value: 11_877_218.1892 },
+          { ts: 1784125312, value: 11_890_697.7956 },
+          { ts: 1784125345, value: 16_384_198.896 },
+          { ts: 1784125375, value: 19_978_999.5964 },
+          { ts: 1784125401, value: 22_675_099.8968 },
+          { ts: 1784125432, value: 23_753_539.4772 },
         ],
       },
       {
         key: 'largest_exploit_tx',
         data: [
-          { ts: 1784138400, value: 0 },
-          { ts: 1784138700, value: 11_860_000 },
-          { ts: 1784142227, value: 11_860_000 },
+          { ts: 1784125103, value: 0 },
+          { ts: 1784125128, value: 11_862_840.782 },
+          { ts: 1784128700, value: 11_862_840.782 },
         ],
       },
       {
         key: 'defillama_tvl_static',
         data: [
           { ts: 1784073600, value: 63_426_760 },
-          { ts: 1784142227, value: 37_835_852 },
+          { ts: 1784128700, value: 37_835_852 },
         ],
       },
     ],

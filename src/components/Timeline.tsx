@@ -37,11 +37,20 @@ const TAG_DOT: Record<string, string> = {
   LEGAL: "bg-[#f43f5e]",
   FUNDING: "bg-[#f59e0b]",
   ORACLE: "bg-[#ff2255]",
+  AUTHORIZATION: "bg-[#f59e0b]",
+  FINALIZATION: "bg-[#00d4ff]",
+  WITHDRAWAL: "bg-[#ff2255]",
+  BRIDGE: "bg-[#8b5cf6]",
+  TVL: "bg-[#00ff88]",
+  ALERT: "bg-[#00d4ff]",
+  CLARIFICATION: "bg-[#3b82f6]",
   PROBE: "bg-[#00d4ff]",
   DRAIN: "bg-[#ff2255]",
   SWAP: "bg-[#8b5cf6]",
   FANOUT: "bg-[#ec4899]",
+  SETTLEMENT: "bg-[#f59e0b]",
   "SETTLEMENT-RISK": "bg-[#f59e0b]",
+  "BRIDGE-OUT": "bg-[#8b5cf6]",
 }
 
 const TAG_COLOR: Record<string, string> = {
@@ -73,11 +82,20 @@ const TAG_COLOR: Record<string, string> = {
   LEGAL: "text-[#f43f5e]",
   FUNDING: "text-[#f59e0b]",
   ORACLE: "text-[#ff2255]",
+  AUTHORIZATION: "text-[#f59e0b]",
+  FINALIZATION: "text-[#00d4ff]",
+  WITHDRAWAL: "text-[#ff2255]",
+  BRIDGE: "text-[#8b5cf6]",
+  TVL: "text-[#00ff88]",
+  ALERT: "text-[#00d4ff]",
+  CLARIFICATION: "text-[#3b82f6]",
   PROBE: "text-[#00d4ff]",
   DRAIN: "text-[#ff2255]",
   SWAP: "text-[#8b5cf6]",
   FANOUT: "text-[#ec4899]",
+  SETTLEMENT: "text-[#f59e0b]",
   "SETTLEMENT-RISK": "text-[#f59e0b]",
+  "BRIDGE-OUT": "text-[#8b5cf6]",
 }
 
 const PHASE_BADGE: Record<string, string> = {
@@ -117,6 +135,10 @@ const PHASE_BADGE: Record<string, string> = {
   swap: "bg-[#8b5cf6]/10 text-[#8b5cf6] border-[#8b5cf6]/20",
   fanout: "bg-[#ec4899]/10 text-[#ec4899] border-[#ec4899]/20",
   funding: "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  authorization: "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  finalization: "bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/20",
+  withdrawal: "bg-[#ff2255]/10 text-[#ff2255] border-[#ff2255]/20",
+  "bridge-out": "bg-[#8b5cf6]/10 text-[#8b5cf6] border-[#8b5cf6]/20",
   "settlement-risk": "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
 }
 

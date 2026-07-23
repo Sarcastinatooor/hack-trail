@@ -20,10 +20,15 @@ interface Node {
 
 const KIND_COLOR: Record<string, string> = {
   bridge: "#ff2255",
+  bridge_contract: "#ff2255",
   attacker: "#f43f5e",
   lending: "#f59e0b",
   mixer: "#8b5cf6",
   protocol: "#00d4ff",
+  validator_set: "#f59e0b",
+  finalizer: "#00d4ff",
+  swap_route: "#8b5cf6",
+  l1_infrastructure: "#52525b",
   frozen: "#00ff88",
   market_trigger: "#ff2255",
   confidence: "#f59e0b",

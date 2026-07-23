@@ -2,21 +2,38 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "afx-bridge-2026-07",
+    slug: "afx-bridge",
+    name: "AFX Bridge Authorized Withdrawal Drain",
+    victim: "AFX Bridge",
+    date: "2026-07-22",
+    date_label: "Jul 22, 2026",
+    loss_usd: 24_150_000,
+    loss_label: "$24.15M USDC",
+    chains: ["Arbitrum", "Ethereum"],
+    attack_vector: "Authorized bridge withdrawal / validator-signature path",
+    attribution: "Unknown; funds reportedly swapped to 12,467.5 ETH",
+    short_summary:
+      "Blockaid detected an AFX-operated Arbitrum bridge exploit at 2026-07-22 21:30 UTC. A finalized withdrawal moved 24.15M native USDC from the AFX bridge contract to 0x2f29...FEefc; Offchain Labs clarified the native Arbitrum bridge was not exploited.",
+    status: "full",
+    tags: ["Arbitrum", "AFX", "bridge", "USDC", "signer-compromise", "custody"],
+  },
+  {
     id: "ostium-olp-2026-07",
     slug: "ostium-olp",
     name: "Ostium OLP Oracle Signer Drain",
     victim: "Ostium OLP Vault",
     date: "2026-07-15",
     date_label: "Jul 15, 2026",
-    loss_usd: 25_300_000,
-    loss_label: "$25.3M vault drain",
+    loss_usd: 23_753_539,
+    loss_label: "$23.75M verified payouts",
     chains: ["Arbitrum"],
-    attack_vector: "Compromised oracle signer + atomic 100x price spoof",
+    attack_vector: "Authorized signer-path abuse + atomic 100x price spoof",
     attribution: "Unknown; executor reportedly funded from CEX hot wallets",
     short_summary:
-      "A compromised oracle signer path let executor 0x321D...BFD9 submit validly signed fabricated prices, loop 100x trades, and drain OLP from $34.3M to $8.99M USDC. Largest known tx pulled $11.86M across five loops.",
+      "An authorized signer path appears to have accepted fabricated prices, letting executor 0x321D...BFD9 loop 100x trades and receive $23.7535M in verified OLP payouts. The vault's separate USDC balance drawdown was about $25.31M.",
     status: "full",
-    tags: ["Arbitrum", "oracle-signer", "perps", "OLP", "Kyber", "settlement-risk"],
+    tags: ["Arbitrum", "oracle-signer", "perps", "OLP", "Kyber", "settlement-accounting"],
   },
   {
     id: "bonk-dao-2026-07",

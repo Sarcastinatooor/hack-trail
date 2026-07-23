@@ -441,14 +441,147 @@ function AlturaIncidentMatrix() {
   )
 }
 
+function AfxIncidentMatrix() {
+  const evidenceRows = [
+    {
+      label: "Exploit tx",
+      value: "0x50d0...547b",
+      href: "https://arbiscan.io/tx/0x50d0b3ec6c3f5fce0f10abf81540bbb508f421494aa2b3480c4a264b0436547b",
+      note: "batchedFinalizeWithdrawals moved 24.15M USDC",
+    },
+    {
+      label: "AFX bridge",
+      value: "0xCb3B...2e67",
+      href: "https://arbiscan.io/address/0xCb3B9A3E5668AFE84DC7A864B36b845dCE062e67",
+      note: "victim custody bridge contract",
+    },
+    {
+      label: "Recipient",
+      value: "0x2f29...FEefc",
+      href: "https://arbiscan.io/address/0x2f2974fAbc54dbA33442261211c06BD20E0FEefc",
+      note: "received the finalized withdrawal",
+    },
+    {
+      label: "L1 reference",
+      value: "0x41cd...0b29",
+      href: "https://etherscan.io/tx/0x41cdf8853427622994440157729ea35fa87b0ce53affbc6980d0235cac300b29",
+      note: "Arbitrum batch submitter reference, not attacker custody",
+    },
+  ]
+
+  const watchList = [
+    { label: "AFX bridge contract", address: "0xCb3B9A3E5668AFE84DC7A864B36b845dCE062e67" },
+    { label: "Withdrawal recipient", address: "0x2f2974fAbc54dbA33442261211c06BD20E0FEefc" },
+    { label: "Finalizer caller", address: "0x5553EA7Bda594aDE7AFe91D279779a42b2B84208" },
+    { label: "Native Arbitrum USDC", address: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831" },
+  ]
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+        <div className="neon-card-static p-4 stat-accent-red">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">1. Affected rail</div>
+          <div className="mt-1 text-sm font-semibold text-white">AFX-operated bridge</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            The incident targeted AFX&apos;s own bridge/custody rail on Arbitrum. Offchain Labs publicly clarified
+            the native Arbitrum bridge was not exploited.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-amber">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">2. Trust path</div>
+          <div className="mt-1 text-sm font-semibold text-white">Authorized finalization</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            The withdrawal appears to have passed the bridge authorization path. Public tracker analysis says
+            five signatures from a seven-validator set were involved.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-cyan">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">3. Direct loss</div>
+          <div className="mt-1 text-sm font-semibold text-white">$24.15M native USDC</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            A single FinalizedWithdrawal event moved native Arbitrum USDC from the AFX bridge contract to
+            0x2f29...FEefc at 2026-07-22 21:30 UTC.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-green">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">4. Exit route</div>
+          <div className="mt-1 text-sm font-semibold text-white">Reported 12,467.5 ETH</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            Reports citing PeckShield say the funds were bridged to Ethereum, swapped into ETH, and traced to a
+            wallet abbreviated 0x6276...ebAC.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(300px,0.8fr)] gap-4">
+        <div className="neon-card-static p-5">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <div>
+              <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Transaction evidence</div>
+              <h3 className="text-sm font-semibold text-white mt-1">What the chain confirms today</h3>
+            </div>
+            <div className="mono text-[10px] text-[#ff2255]">$24.15M USDC</div>
+          </div>
+          <div className="space-y-2">
+            {evidenceRows.map((row) => (
+              <a
+                key={row.label}
+                href={row.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="grid grid-cols-1 gap-1 rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2 transition-colors hover:border-[#00d4ff]/20 sm:grid-cols-[105px_118px_minmax(0,1fr)] sm:gap-3"
+              >
+                <div className="mono text-[10px] text-neutral-500">{row.label}</div>
+                <div className="mono text-[10px] text-[#00d4ff]">{row.value}</div>
+                <div className="text-[11px] leading-relaxed text-neutral-500">{row.note}</div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="neon-card-static p-5">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Exposure watchlist</div>
+          <h3 className="text-sm font-semibold text-white mt-1 mb-3">Addresses HackTrail now checks</h3>
+          <div className="space-y-2">
+            {watchList.map((item) => (
+              <div key={item.address} className="rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2">
+                <div className="mono text-[10px] text-[#00d4ff]">{item.label}</div>
+                <div className="mt-1 break-all mono text-[10px] text-neutral-500">{item.address}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 flex flex-wrap gap-4">
+            <a
+              href="https://x.com/blockaid_/status/2080080240265621680"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]"
+            >
+              Blockaid alert
+            </a>
+            <a
+              href="https://defillama.com/protocol/afx-bridge"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]"
+            >
+              DefiLlama bridge TVL
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function OstiumIncidentMatrix() {
   const transferRows = [
-    { n: "01", value: "$6.29M", note: "largest visible payout after the 700k USDC scaled loop" },
-    { n: "02", value: "$4.76M", note: "second repeated transfer to executor 0x321D...BFD9" },
-    { n: "03", value: "$4.49M", note: "third transfer; first three total about $15.54M" },
-    { n: "04", value: "$3.59M", note: "continued capped-profit loop output" },
-    { n: "05", value: "$2.69M", note: "cumulative visible outflow about $21.82M" },
-    { n: "06", value: "$1.07M", note: "six visible Arkham rows total about $22.89M" },
+    { n: "01", value: "$6.291M", note: "largest payout inside the five-loop transaction" },
+    { n: "02", value: "$4.763M", note: "second-largest payout inside the same transaction" },
+    { n: "03", value: "$4.494M", note: "largest follow-on drain transaction" },
+    { n: "04", value: "$3.595M", note: "next scaled transaction paid the same executor" },
+    { n: "05", value: "$2.696M", note: "penultimate scaled drain transaction" },
+    { n: "06", value: "$1.078M", note: "final transaction before the verified drain ended" },
   ]
 
   const watchList = [
@@ -464,10 +597,10 @@ function OstiumIncidentMatrix() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
         <div className="neon-card-static p-4 stat-accent-red">
           <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">1. Trust break</div>
-          <div className="mt-1 text-sm font-semibold text-white">Compromised oracle signer</div>
+          <div className="mt-1 text-sm font-semibold text-white">Authorized signer path</div>
           <p className="mt-2 text-xs leading-relaxed text-neutral-500">
-            The verifier saw valid signatures, so it passed the reports as designed. The security failure was
-            signer integrity, not a failed signature check.
+            Onchain execution and Blockaid&apos;s report point to signer compromise or abuse. Ostium has not yet
+            published the postmortem needed to confirm the exact failure.
           </p>
         </div>
         <div className="neon-card-static p-4 stat-accent-amber">
@@ -488,10 +621,10 @@ function OstiumIncidentMatrix() {
         </div>
         <div className="neon-card-static p-4 stat-accent-green">
           <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">4. LP risk</div>
-          <div className="mt-1 text-sm font-semibold text-white">Daily settlement lag</div>
+          <div className="mt-1 text-sm font-semibold text-white">Settlement accounting</div>
           <p className="mt-2 text-xs leading-relaxed text-neutral-500">
-            Ostium docs say OLP price updates once per day. If redemptions clear before the loss is printed,
-            remaining LPs can inherit more of the realized damage.
+            Withdrawals usually take two to three days and settle at the OLP price then in effect. A request
+            does not lock the pre-drain price; the next settlement is the accounting watchpoint.
           </p>
         </div>
       </div>
@@ -500,10 +633,10 @@ function OstiumIncidentMatrix() {
         <div className="neon-card-static p-5">
           <div className="flex items-center justify-between gap-3 mb-4">
             <div>
-              <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Arkham-visible outflows</div>
-              <h3 className="text-sm font-semibold text-white mt-1">Six large transfers drive most of the damage</h3>
+              <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Verified OLP payouts</div>
+              <h3 className="text-sm font-semibold text-white mt-1">Six largest transfers account for $22.9169M</h3>
             </div>
-            <div className="mono text-[10px] text-[#ff2255]">$22.89M total</div>
+            <div className="mono text-[10px] text-[#ff2255]">$23.7535M total</div>
           </div>
           <div className="mb-3 rounded border border-[#00d4ff]/15 bg-[#00d4ff]/[0.03] px-3 py-2 text-[11px] leading-relaxed text-neutral-500">
             Largest known transaction:
@@ -637,9 +770,13 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     withdrawal_queue_outstanding: { title: "Queue Outstanding", color: "#8b5cf6", unit: "$" },
     ostium_tvl: { title: "Ostium Protocol TVL", color: "#00d4ff", unit: "$" },
     olp_vault_usdc: { title: "OLP Vault USDC", color: "#ff2255", unit: "$" },
-    visible_arkham_outflows: { title: "Arkham-Visible Outflows", color: "#f59e0b", unit: "$" },
+    visible_arkham_outflows: { title: "Verified OLP Payouts", color: "#f59e0b", unit: "$" },
     largest_exploit_tx: { title: "Largest Exploit Tx", color: "#8b5cf6", unit: "$" },
     defillama_tvl_static: { title: "DefiLlama TVL Snapshot", color: "#00ff88", unit: "$" },
+    afx_bridge_tvl: { title: "AFX Bridge TVL", color: "#00d4ff", unit: "$" },
+    afx_bridge_tvl_static: { title: "AFX Bridge Custody Estimate", color: "#ff2255", unit: "$" },
+    converted_eth_value: { title: "Reported ETH Conversion Value", color: "#8b5cf6", unit: "$" },
+    arb_price: { title: "ARB Price", color: "#00ff88", unit: "$" },
   }
 
   return (
@@ -757,6 +894,7 @@ export default function IncidentPage({
           {tab === "journey" && (
             <div className="space-y-4">
               {slug === "altura-hyperevm" && <AlturaIncidentMatrix />}
+              {slug === "afx-bridge" && <AfxIncidentMatrix />}
               {slug === "ostium-olp" && <OstiumIncidentMatrix />}
               <div className="neon-card-static p-5">
                 <div className="flex items-center gap-2 mb-4">
