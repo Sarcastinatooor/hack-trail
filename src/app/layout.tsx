@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Analytics } from "@vercel/analytics/next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import Link from "next/link"
 import Image from "next/image"
@@ -68,6 +69,7 @@ export default function RootLayout({
           <NavBar />
           <main className="bg-grid min-h-[calc(100vh-56px)]">{children}</main>
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
