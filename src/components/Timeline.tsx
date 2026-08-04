@@ -51,6 +51,12 @@ const TAG_DOT: Record<string, string> = {
   SETTLEMENT: "bg-[#f59e0b]",
   "SETTLEMENT-RISK": "bg-[#f59e0b]",
   "BRIDGE-OUT": "bg-[#8b5cf6]",
+  CONFIG: "bg-[#f59e0b]",
+  PATCH: "bg-[#00ff88]",
+  REVIEW: "bg-[#00d4ff]",
+  COVERAGE: "bg-[#00ff88]",
+  SEAL911: "bg-[#00d4ff]",
+  "SCAM-WARNING": "bg-[#ff2255]",
 }
 
 const TAG_COLOR: Record<string, string> = {
@@ -96,6 +102,12 @@ const TAG_COLOR: Record<string, string> = {
   SETTLEMENT: "text-[#f59e0b]",
   "SETTLEMENT-RISK": "text-[#f59e0b]",
   "BRIDGE-OUT": "text-[#8b5cf6]",
+  CONFIG: "text-[#f59e0b]",
+  PATCH: "text-[#00ff88]",
+  REVIEW: "text-[#00d4ff]",
+  COVERAGE: "text-[#00ff88]",
+  SEAL911: "text-[#00d4ff]",
+  "SCAM-WARNING": "text-[#ff2255]",
 }
 
 const PHASE_BADGE: Record<string, string> = {
@@ -140,6 +152,11 @@ const PHASE_BADGE: Record<string, string> = {
   withdrawal: "bg-[#ff2255]/10 text-[#ff2255] border-[#ff2255]/20",
   "bridge-out": "bg-[#8b5cf6]/10 text-[#8b5cf6] border-[#8b5cf6]/20",
   "settlement-risk": "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  configuration: "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  "exit-split": "bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/20",
+  "bridge-burn": "bg-[#8b5cf6]/10 text-[#8b5cf6] border-[#8b5cf6]/20",
+  coverage: "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/20",
+  tracing: "bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/20",
 }
 
 export function Timeline({

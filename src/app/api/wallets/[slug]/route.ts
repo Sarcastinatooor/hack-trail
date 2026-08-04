@@ -20,6 +20,7 @@ const NATIVE_SYMBOLS: Record<string, string> = {
   optimism: 'ETH',
   polygon: 'MATIC',
   unichain: 'ETH',
+  rise: 'RISE',
   hyperevm: 'HYPE',
   solana: 'SOL',
   sui: 'SUI',

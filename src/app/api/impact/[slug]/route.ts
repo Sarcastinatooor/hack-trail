@@ -381,6 +381,39 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
   badger: lossConfig(120_000_000, 1638403200, 1638411600),
   'mango-markets': lossConfig(115_000_000, 1665446400, 1665532800),
   'harmony-bridge': lossConfig(100_000_000, 1655942400, 1655992800),
+  'risex-xlp': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'risex_unauthorized_withdrawal',
+        data: [
+          { ts: 1785655318, value: 0 },
+          { ts: 1785741718, value: 673_011.56 },
+          { ts: 1785782834, value: 673_011.56 },
+        ],
+      },
+      {
+        key: 'risex_covered_amount',
+        data: [
+          { ts: 1785741718, value: 0 },
+          { ts: 1785744540, value: 0 },
+          { ts: 1785782834, value: 673_011.56 },
+        ],
+      },
+      {
+        key: 'risex_recovery_gap',
+        data: [
+          { ts: 1785655318, value: 0 },
+          { ts: 1785741718, value: 673_011.56 },
+          { ts: 1785744540, value: 673_011.56 },
+          { ts: 1785782834, value: 0 },
+        ],
+      },
+    ],
+    from: 1785655318,
+    to: 1785801600,
+  },
   'afx-bridge': {
     tvl: [
       { key: 'afx_bridge_tvl', protocol: 'afx-bridge' },

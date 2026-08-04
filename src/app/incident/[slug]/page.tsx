@@ -441,6 +441,149 @@ function AlturaIncidentMatrix() {
   )
 }
 
+function RisexIncidentMatrix() {
+  const evidenceRows = [
+    {
+      label: "Official disclosure",
+      value: "@risextrade",
+      href: "https://x.com/risextrade/status/2084350396609520105",
+      note: "RISEx says the RWA strategy withdrawal was patched and depositors were made whole",
+    },
+    {
+      label: "Exploit tx",
+      value: "0xc525...e987",
+      href: "https://explorer.risechain.com/tx/0xc52560bec154a3d5533a321bd9805305a5076194573ddb2fbb059059ace3e987",
+      note: "673,011.565895 USDC.e moved at 2026-08-03 07:21:58 UTC",
+    },
+    {
+      label: "Source",
+      value: "0x2C03...1818",
+      href: "https://explorer.risechain.com/address/0x2C03C7d7e2974C6599b6B108879109281ef3F818",
+      note: "apparent RWA strategy source contract in the transfer log",
+    },
+    {
+      label: "Recipient",
+      value: "0x04a7...10a5",
+      href: "https://explorer.risechain.com/address/0x04a7934245c9B804082e391Ee077c130d31B10a5",
+      note: "transaction target and recipient contract that split the funds into exit legs",
+    },
+  ]
+
+  const watchList = [
+    { label: "Transaction caller", address: "0xAAb85f96FeB6DaAc1E171e7e4B0118B16f1BB66d" },
+    { label: "RWA strategy source", address: "0x2C03C7d7e2974C6599b6B108879109281ef3F818" },
+    { label: "Recipient contract", address: "0x04a7934245c9B804082e391Ee077c130d31B10a5" },
+    { label: "RiseVault exit leg A", address: "0xdEc93a1d6dE0267d5cDF3b1342A49b105AE37EF8" },
+    { label: "RiseVault exit leg B", address: "0x776e385A599B71AF893f58B4b8f8a67A5d9d63e5" },
+    { label: "Bridged USDC.e", address: "0xe436820ba0C69702c1d3E601d421c0eF38262739" },
+  ]
+
+  const userChecks = [
+    "XLP depositor exposure and whether reimbursement is reflected in vault accounting",
+    "Direct interaction with the transaction caller, recipient contract, or exit-leg contracts",
+    "USDC.e approvals or transfers touching the RWA strategy source contract",
+    "Scam links claiming a recovery form, claim page, or wallet verification step",
+  ]
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+        <div className="neon-card-static p-4 stat-accent-red">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">1. Failure mode</div>
+          <div className="mt-1 text-sm font-semibold text-white">RWA strategy misconfig</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            RISEx says the issue was a misconfiguration present since July 13, not a novel attack or dependency
+            failure.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-amber">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">2. Withdrawal</div>
+          <div className="mt-1 text-sm font-semibold text-white">673,011.56 USDC.e</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            The cited RISE transaction moved the funds from the apparent strategy source to a recipient contract,
+            then split them through two RiseVault exit legs.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-cyan">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">3. Patch window</div>
+          <div className="mt-1 text-sm font-semibold text-white">47 minutes</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            RISEx says detection happened within minutes and the issue was patched by 08:09 UTC, after the 07:21
+            UTC withdrawal.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-green">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">4. Depositor status</div>
+          <div className="mt-1 text-sm font-semibold text-white">Made whole</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            RISEx says the full amount was covered by a portion of July fees and XLP depositor funds were not
+            affected by the event.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(300px,0.8fr)] gap-4">
+        <div className="neon-card-static p-5">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <div>
+              <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Verified evidence</div>
+              <h3 className="text-sm font-semibold text-white mt-1">Official statement plus RISE explorer tx</h3>
+            </div>
+            <div className="mono text-[10px] text-[#00ff88]">covered</div>
+          </div>
+          <div className="space-y-2">
+            {evidenceRows.map((row) => (
+              <a
+                key={row.label}
+                href={row.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="grid grid-cols-1 gap-1 rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2 transition-colors hover:border-[#00d4ff]/20 sm:grid-cols-[118px_118px_minmax(0,1fr)] sm:gap-3"
+              >
+                <div className="mono text-[10px] text-neutral-500">{row.label}</div>
+                <div className="mono text-[10px] text-[#00d4ff]">{row.value}</div>
+                <div className="text-[11px] leading-relaxed text-neutral-500">{row.note}</div>
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-4 rounded border border-[#ff2255]/15 bg-[#ff2255]/[0.03] px-3 py-2 text-[11px] leading-relaxed text-neutral-500">
+            User safety note: RISEx explicitly warned there is no recovery form or claim process. Any link asking
+            users to connect a wallet for this incident should be treated as hostile unless it comes from official
+            RISEx channels.
+          </div>
+        </div>
+
+        <div className="neon-card-static p-5">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Exposure watchlist</div>
+          <h3 className="text-sm font-semibold text-white mt-1 mb-3">Addresses HackTrail now checks</h3>
+          <div className="space-y-2">
+            {watchList.map((item) => (
+              <div key={item.address} className="rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2">
+                <div className="mono text-[10px] text-[#00d4ff]">{item.label}</div>
+                <div className="mt-1 break-all mono text-[10px] text-neutral-500">{item.address}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="neon-card-static p-5">
+        <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">User intelligence checks</div>
+        <h3 className="text-sm font-semibold text-white mt-1 mb-3">What this incident should help users verify</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {userChecks.map((item) => (
+            <div key={item} className="flex items-start gap-2 rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2 text-xs text-neutral-400">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#00ff88]" />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function AfxIncidentMatrix() {
   const evidenceRows = [
     {
@@ -777,6 +920,9 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     afx_bridge_tvl_static: { title: "AFX Bridge Custody Estimate", color: "#ff2255", unit: "$" },
     converted_eth_value: { title: "Reported ETH Conversion Value", color: "#8b5cf6", unit: "$" },
     arb_price: { title: "ARB Price", color: "#00ff88", unit: "$" },
+    risex_unauthorized_withdrawal: { title: "Unauthorized Withdrawal", color: "#ff2255", unit: "$" },
+    risex_covered_amount: { title: "Covered Amount", color: "#00ff88", unit: "$" },
+    risex_recovery_gap: { title: "Temporary Recovery Gap", color: "#f59e0b", unit: "$" },
   }
 
   return (
@@ -894,6 +1040,7 @@ export default function IncidentPage({
           {tab === "journey" && (
             <div className="space-y-4">
               {slug === "altura-hyperevm" && <AlturaIncidentMatrix />}
+              {slug === "risex-xlp" && <RisexIncidentMatrix />}
               {slug === "afx-bridge" && <AfxIncidentMatrix />}
               {slug === "ostium-olp" && <OstiumIncidentMatrix />}
               <div className="neon-card-static p-5">

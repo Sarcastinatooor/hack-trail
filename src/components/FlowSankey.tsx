@@ -56,6 +56,14 @@ const KIND_COLOR: Record<string, string> = {
   hot_wallet: "#f59e0b",
   retail_lp: "#00ff88",
   settlement_queue: "#f59e0b",
+  rwa_strategy: "#ff2255",
+  attacker_contract: "#f43f5e",
+  rise_vault: "#00d4ff",
+  usdc_adapter: "#8b5cf6",
+  protocol_guardrail: "#00ff88",
+  fee_reserve: "#f59e0b",
+  xlp_depositors: "#00ff88",
+  seal911: "#00d4ff",
 }
 
 export function FlowSankey({ nodes, links }: { nodes: Node[]; links: Link[] }) {

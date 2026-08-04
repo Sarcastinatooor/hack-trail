@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "risex-xlp-2026-08",
+    slug: "risex-xlp",
+    name: "RISEx XLP RWA Strategy Unauthorized Withdrawal",
+    victim: "RISEx XLP Vault",
+    date: "2026-08-03",
+    date_label: "Aug 3, 2026",
+    loss_usd: 673_011.56,
+    loss_label: "$673k USDC.e covered",
+    chains: ["RISE"],
+    attack_vector: "RWA strategy misconfiguration / unauthorized withdrawal",
+    attribution: "Unknown; SEAL 911 tracing underway",
+    short_summary:
+      "RISEx disclosed a 673,011.56 USDC unauthorized withdrawal from the RWA strategy associated with XLP. The team says it patched the July-13 misconfiguration by 08:09 UTC and made depositors whole from July fees.",
+    status: "full",
+    tags: ["RISE", "RISEx", "XLP", "RWA", "USDC.e", "misconfiguration", "SEAL911"],
+  },
+  {
     id: "afx-bridge-2026-07",
     slug: "afx-bridge",
     name: "AFX Bridge Authorized Withdrawal Drain",

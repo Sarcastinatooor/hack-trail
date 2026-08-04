@@ -26,12 +26,14 @@ import {
 } from "./historical-incidents"
 import { KELP_DAO_DATA } from "./kelp-dao"
 import { OSTIUM_OLP_DATA } from "./ostium-olp"
+import { RISEX_XLP_DATA } from "./risex-xlp"
 import type { IncidentData } from "./types"
 import { ZCASH_ORCHARD_DATA } from "./zcash-orchard"
 import { BONK_DAO_DATA } from "./bonk-dao"
 import { AFX_BRIDGE_DATA } from "./afx-bridge"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
+  "risex-xlp": RISEX_XLP_DATA,
   "afx-bridge": AFX_BRIDGE_DATA,
   "ostium-olp": OSTIUM_OLP_DATA,
   "bonk-dao": BONK_DAO_DATA,
