@@ -228,3 +228,228 @@ body {
 .stat-accent-cyan { border-left: 2px solid var(--neon-cyan); }
 .stat-accent-amber { border-left: 2px solid var(--neon-amber); }
 .stat-accent-purple { border-left: 2px solid var(--neon-purple); }
+
+/* ─── Incident intelligence index ─── */
+@keyframes incident-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes latest-signal {
+  0% { transform: translateX(-70%); opacity: 0; }
+  18%, 72% { opacity: 0.85; }
+  100% { transform: translateX(170%); opacity: 0; }
+}
+
+@keyframes overlay-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drawer-enter {
+  from { transform: translateX(24px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes command-enter {
+  from { transform: translateY(-8px) scale(0.985); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.incident-controls {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  background: rgba(8, 8, 11, 0.78);
+  padding: 12px;
+}
+
+.incident-filter-panel {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 12px;
+}
+
+.incident-intel-card {
+  --spot-x: 50%;
+  --spot-y: 50%;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 390px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 8px;
+  background: rgba(9, 9, 12, 0.88);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.incident-intel-card::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: radial-gradient(360px circle at var(--spot-x) var(--spot-y), rgba(0, 255, 136, 0.075), transparent 62%);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.incident-intel-card:hover,
+.incident-intel-card:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(0, 255, 136, 0.22);
+  background: rgba(11, 12, 14, 0.94);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2), 0 0 24px rgba(0, 255, 136, 0.025);
+}
+
+.incident-intel-card:hover::before,
+.incident-intel-card:focus-within::before {
+  opacity: 1;
+}
+
+.incident-card-enter {
+  animation: incident-enter 320ms ease-out var(--card-delay, 0ms) both;
+}
+
+.incident-card-latest {
+  border-color: rgba(0, 255, 136, 0.18);
+}
+
+.incident-card-latest::after {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 45%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.95), transparent);
+  content: "";
+  pointer-events: none;
+  animation: latest-signal 4.5s ease-in-out infinite;
+}
+
+.incident-card-main {
+  position: relative;
+  z-index: 1;
+  display: block;
+  flex: 1;
+  padding: 20px 20px 16px;
+  outline: none;
+}
+
+.incident-card-main:focus-visible::after {
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(0, 255, 136, 0.48);
+  border-radius: 5px;
+  content: "";
+  pointer-events: none;
+}
+
+.incident-status-mapped {
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  background: rgba(255, 255, 255, 0.025);
+  color: #71717a;
+}
+
+.incident-preview-button {
+  white-space: nowrap;
+  transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+}
+
+.incident-preview-button:hover,
+.incident-preview-button:focus-visible {
+  border-color: rgba(0, 212, 255, 0.24);
+  background: rgba(0, 212, 255, 0.06);
+  color: #00d4ff;
+  outline: none;
+}
+
+.incident-overlay,
+.incident-command-overlay {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: flex;
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(7px);
+  animation: overlay-enter 160ms ease-out both;
+}
+
+.incident-preview-drawer {
+  display: flex;
+  width: min(520px, 100%);
+  height: 100%;
+  margin-left: auto;
+  flex-direction: column;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  background: #08080b;
+  box-shadow: -28px 0 70px rgba(0, 0, 0, 0.42);
+  animation: drawer-enter 220ms ease-out both;
+}
+
+.incident-preview-scroll {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.incident-command-overlay {
+  align-items: flex-start;
+  justify-content: center;
+  padding: max(11vh, 72px) 16px 16px;
+}
+
+.incident-command {
+  width: min(640px, 100%);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(8, 8, 11, 0.985);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(0, 255, 136, 0.025);
+  animation: command-enter 180ms ease-out both;
+}
+
+@media (max-width: 639px) {
+  .incident-intel-card {
+    min-height: 382px;
+  }
+
+  .incident-card-main {
+    padding: 18px 18px 14px;
+  }
+
+  .incident-preview-drawer {
+    height: min(88vh, 760px);
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    border-left: 0;
+    border-radius: 12px 12px 0 0;
+    animation-name: incident-enter;
+  }
+
+  .incident-command-overlay {
+    padding-top: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .incident-card-enter,
+  .incident-card-latest::after,
+  .incident-overlay,
+  .incident-preview-drawer,
+  .incident-command {
+    animation: none;
+  }
+
+  .incident-intel-card,
+  .incident-intel-card::before {
+    transition: none;
+  }
+
+  .incident-intel-card:hover,
+  .incident-intel-card:focus-within {
+    transform: none;
+  }
+}

@@ -1,6 +1,7 @@
 import Link from "next/link"
+import { IncidentExplorer, type IncidentExplorerItem } from "@/components/IncidentExplorer"
+import { INCIDENT_DATA_BY_SLUG } from "@/data/all-incident-data"
 import { INCIDENTS } from "@/data/incidents"
-import type { IncidentSummary } from "@/data/types"
 
 function fmtUsd(n: number) {
   if (!isFinite(n) || n === 0) return "$0"
@@ -11,135 +12,24 @@ function fmtUsd(n: number) {
   return `$${n.toFixed(0)}`
 }
 
-const CHAIN_COLORS: Record<string, string> = {
-  Ethereum: "border-[#627eea]/30 text-[#627eea]",
-  Arbitrum: "border-[#28a0f0]/30 text-[#28a0f0]",
-  Bitcoin: "border-[#f7931a]/30 text-[#f7931a]",
-  "BNB Chain": "border-[#f3ba2f]/30 text-[#f3ba2f]",
-  BSC: "border-[#f3ba2f]/30 text-[#f3ba2f]",
-  Unichain: "border-[#ff007a]/30 text-[#ff007a]",
-  Solana: "border-[#9945ff]/30 text-[#9945ff]",
-  Polygon: "border-[#8247e5]/30 text-[#8247e5]",
-  Ronin: "border-[#1273ea]/30 text-[#1273ea]",
-  Fantom: "border-[#13b5ec]/30 text-[#13b5ec]",
-  Avalanche: "border-[#e84142]/30 text-[#e84142]",
-  Sui: "border-[#4da2ff]/30 text-[#4da2ff]",
-  Mixin: "border-[#00a8ff]/30 text-[#00a8ff]",
-  Harmony: "border-[#00aee9]/30 text-[#00aee9]",
-  Moonbeam: "border-[#b83f99]/30 text-[#b83f99]",
-  Moonriver: "border-[#f2b705]/30 text-[#f2b705]",
-  Evmos: "border-[#ed4e33]/30 text-[#ed4e33]",
-  Milkomeda: "border-[#00d4ff]/30 text-[#00d4ff]",
-  Zcash: "border-[#f4b728]/30 text-[#f4b728]",
-  RISE: "border-[#00ff88]/30 text-[#00ff88]",
-  HyperEVM: "border-[#00ff88]/30 text-[#00ff88]",
-  "Hyperliquid L1": "border-[#00d4ff]/30 text-[#00d4ff]",
-}
-
-function ChainBadge({ chain }: { chain: string }) {
-  const cls = CHAIN_COLORS[chain] ?? "border-white/10 text-neutral-400"
-  return (
-    <span className={`text-[10px] mono px-1.5 py-0.5 rounded border bg-white/[0.02] ${cls}`}>
-      {chain}
-    </span>
-  )
-}
-
-function IncidentCard({ i, index }: { i: IncidentSummary; index: number }) {
-  const clickable = i.status === "full"
-  const isVulnerability = i.loss_usd === 0
-  const metricValue = (i.loss_label ?? fmtUsd(i.loss_usd)).replace("price crash", "crash")
-  const metricSize = metricValue.length > 14 ? "text-[1.35rem]" : "text-2xl"
-
-  const glowClass = isVulnerability ? "neon-card-cyan" : i.status === "stub" ? "" : "neon-card"
-
-  const inner = (
-    <div
-      className={`neon-card ${glowClass} flex h-full min-h-[280px] flex-col p-5 animate-slide-up ${
-        !clickable ? "opacity-50 cursor-default" : "cursor-pointer"
-      }`}
-      style={{ animationDelay: `${index * 80}ms`, animationFillMode: "both" }}
-    >
-      {/* Header row */}
-      <div className="mb-4 flex items-start justify-between gap-3">
-        <div className="mono text-[10px] tracking-wider text-neutral-500 uppercase">
-          {i.date_label}
-        </div>
-        <span
-          className={`text-[9px] mono px-2 py-0.5 rounded-md ${
-            i.status === "full"
-              ? "badge-active"
-              : i.status === "ongoing"
-              ? "badge-critical"
-              : "badge-pending"
-          }`}
-        >
-          {i.status === "full" ? "● FULL TRAIL" : i.status === "ongoing" ? "● ONGOING" : "○ PENDING"}
-        </span>
-      </div>
-
-      {/* Title */}
-      <h3 className="mb-4 min-h-[44px] text-base font-semibold text-white leading-snug line-clamp-2">
-        {i.name}
-      </h3>
-
-      {/* Loss amount */}
-      <div className="mb-4 grid min-h-[68px] grid-cols-[minmax(0,1fr)_minmax(7rem,8rem)] items-end gap-4">
-        <div className="min-w-0">
-          <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider mb-0.5">
-            {i.loss_usd > 0 ? "Total Loss" : "Impact"}
-          </div>
-          <div className={`data-value leading-tight ${metricSize} ${isVulnerability ? "text-[#00d4ff]" : "text-[#ff2255]"}`}>
-            {metricValue}
-          </div>
-        </div>
-        <div className="text-right">
-          <div className="mono text-[10px] text-neutral-500 uppercase tracking-wider mb-0.5">Vector</div>
-          <div className="text-[11px] text-neutral-400 leading-tight line-clamp-3">{i.attack_vector}</div>
-        </div>
-      </div>
-
-      {/* Summary */}
-      <p className="mb-4 min-h-[40px] text-xs text-neutral-500 leading-relaxed line-clamp-2">
-        {i.short_summary}
-      </p>
-
-      {/* Chain badges */}
-      <div className="mb-4 flex min-h-[26px] flex-wrap content-start gap-1.5">
-        {i.chains.map((c) => (
-          <ChainBadge key={c} chain={c} />
-        ))}
-      </div>
-
-      {/* Bottom: tags + attribution */}
-      <div className="mt-auto flex min-h-[32px] items-center justify-between gap-3 border-t border-white/[0.04] pt-2">
-        <div className="flex min-w-0 flex-wrap gap-1">
-          {i.tags.slice(0, 3).map((t) => (
-            <span key={t} className="text-[9px] px-1.5 py-0.5 rounded bg-white/[0.03] text-neutral-600 mono">
-              {t}
-            </span>
-          ))}
-          {i.tags.length > 3 && (
-            <span className="text-[9px] text-neutral-600 mono">+{i.tags.length - 3}</span>
-          )}
-        </div>
-        {i.attribution && (
-          <div className="max-w-[120px] shrink-0 truncate text-[9px] text-neutral-600 mono">
-            {i.attribution}
-          </div>
-        )}
-      </div>
-    </div>
-  )
-
-  if (!clickable) return inner
-  return <Link href={`/incident/${i.slug}`}>{inner}</Link>
-}
-
 export default function HomePage() {
   const latestIncidents = [...INCIDENTS].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
+  const explorerIncidents: IncidentExplorerItem[] = latestIncidents.map((incident) => {
+    const trail = INCIDENT_DATA_BY_SLUG[incident.slug]
+    const eventCount = trail?.timeline.length ?? 0
+    const hopCount = trail?.hops.length ?? 0
+    const walletCount = trail?.tracked_wallets.length ?? 0
+
+    return {
+      ...incident,
+      eventCount,
+      hopCount,
+      walletCount,
+      evidenceCount: eventCount + hopCount + walletCount,
+    }
+  })
   const totalLoss = INCIDENTS.reduce((s, i) => s + i.loss_usd, 0)
   const fullTrails = INCIDENTS.filter((i) => i.status === "full").length
   const chains = [...new Set(INCIDENTS.flatMap((i) => i.chains))]
@@ -226,11 +116,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {latestIncidents.map((i, idx) => (
-            <IncidentCard key={i.id} i={i} index={idx} />
-          ))}
-        </div>
+        <IncidentExplorer incidents={explorerIncidents} />
       </div>
 
       {/* ─── Footer ─── */}
