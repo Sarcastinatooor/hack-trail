@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "kiichain-cosmos-evm-2026-08",
+    slug: "kiichain-cosmos-evm",
+    name: "KiiChain Cosmos-EVM Vesting Underflow Exploit",
+    victim: "KiiChain",
+    date: "2026-08-22",
+    date_label: "Aug 22, 2026",
+    loss_usd: 1_607_323.41,
+    loss_label: "148.33M KII drained",
+    chains: ["KiiChain", "BNB Chain"],
+    attack_vector: "Cosmos-EVM staking-precompile underflow + vesting-account exploit chain",
+    attribution: "Unknown; same exploit class also hit MANTRA and TAC",
+    short_summary:
+      "An 18-round Cosmos-EVM exploit drained 148.33M KII. KiiChain halted with 80.73M KII recoverable; 67.60M crossed Hyperlane to BSC, where 64.60M was sold for about $1.61M BUSD and 3M reached KuCoin.",
+    status: "ongoing",
+    tags: ["KiiChain", "Cosmos-EVM", "vesting", "underflow", "Hyperlane", "PancakeSwap", "KuCoin"],
+  },
+  {
     id: "risex-xlp-2026-08",
     slug: "risex-xlp",
     name: "RISEx XLP RWA Strategy Unauthorized Withdrawal",

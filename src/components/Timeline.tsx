@@ -57,6 +57,7 @@ const TAG_DOT: Record<string, string> = {
   COVERAGE: "bg-[#00ff88]",
   SEAL911: "bg-[#00d4ff]",
   "SCAM-WARNING": "bg-[#ff2255]",
+  EXCHANGE: "bg-[#00d4ff]",
 }
 
 const TAG_COLOR: Record<string, string> = {
@@ -108,6 +109,7 @@ const TAG_COLOR: Record<string, string> = {
   COVERAGE: "text-[#00ff88]",
   SEAL911: "text-[#00d4ff]",
   "SCAM-WARNING": "text-[#ff2255]",
+  EXCHANGE: "text-[#00d4ff]",
 }
 
 const PHASE_BADGE: Record<string, string> = {
@@ -157,6 +159,13 @@ const PHASE_BADGE: Record<string, string> = {
   "bridge-burn": "bg-[#8b5cf6]/10 text-[#8b5cf6] border-[#8b5cf6]/20",
   coverage: "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/20",
   tracing: "bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/20",
+  "vesting-setup": "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  "balance-underflow": "bg-[#ff2255]/10 text-[#ff2255] border-[#ff2255]/20",
+  "recovery-freeze": "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/20",
+  "bridge-mint": "bg-[#8b5cf6]/10 text-[#8b5cf6] border-[#8b5cf6]/20",
+  "dex-liquidation": "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  "exchange-deposit": "bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/20",
+  "chain-halt": "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/20",
 }
 
 export function Timeline({

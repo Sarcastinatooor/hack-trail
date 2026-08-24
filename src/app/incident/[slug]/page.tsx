@@ -332,6 +332,133 @@ function ZecWalletsExplainer() {
   )
 }
 
+function KiiChainIncidentMatrix() {
+  const bridgeMints = [
+    { time: "20:48:05", amount: "0.350M", tx: "0x6caefd4949158a4e46331ce1dc3403d7fba64bec838caa66dbbb3934e611849b" },
+    { time: "21:02:09", amount: "0.977M", tx: "0xe37ee850cde05e119c7cfa455289ce4bac9d5c3a2003e6a9beb566434e7b70a2" },
+    { time: "21:11:56", amount: "0.982M", tx: "0x7a67997a5df5344e96dcb53e5bce72782844bc12c6ee9f07667e17c7f37ec24d" },
+    { time: "21:21:59", amount: "0.992M", tx: "0x9660494f47834caf006f0e419c0ffa42bf028dcb534f4a9f20e232d6fb68935f" },
+    { time: "21:37:19", amount: "2.027M", tx: "0x00fec90476fb66e204d250410ff38a3186fad5d4861daaa576cefe9f7c5166d3" },
+    { time: "21:47:59", amount: "2.154M", tx: "0x73410626e061f24dd66485e6dbdc1068d7cb6a5240797d56870de1511989c29a" },
+    { time: "21:58:22", amount: "2.232M", tx: "0xfed50f909fefea898dfbf1bc839f6abe7d039de8fab427837bea263e9c9bd7e6" },
+    { time: "22:08:23", amount: "7.743M", tx: "0x33956fc8582ec345006ca3ed2d2fd8e755061b5fadffc51afc2cf17606c19f07" },
+    { time: "22:17:52", amount: "5.140M", tx: "0x5b3f60d5a49487dbc2e4380917a7ab689ebb2766ac13a8784aed4af368cf2ab1" },
+    { time: "22:27:31", amount: "45.000M", tx: "0x9bac8fb35865f2cd0fe80fd7789d07b765bd99e4fefd51a88944492dcc89a58e" },
+  ]
+
+  const watchList = [
+    { label: "Primary attacker", address: "0x0e7a96227fcf09f53d644ba6462d8c73993ef246" },
+    { label: "Secondary attacker", address: "0x631dc2c664ed6dc291b08b35382b807a61b1cd35" },
+    { label: "Helper with 42.18M KII", address: "0x8f37701914d60cee95ccaa39af959561045cf9e8" },
+    { label: "Helper with 38.55M KII", address: "0x77308955c6cbc4cdef2e53defc7d78a007f29739" },
+    { label: "KuCoin deposit on BSC", address: "0x4dc97f8b986a1f826c7196e3d413a8fe38a2fcf4" },
+  ]
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+        <div className="neon-card-static p-4 stat-accent-red">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">1. Exploit primitive</div>
+          <div className="mt-1 text-sm font-semibold text-white">Vesting balance underflow</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            A precomputed contract address was made into a vesting account. Delegating one wei beyond its
+            spendable balance underflowed the staking precompile&apos;s EVM write-back.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-amber">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">2. Drain scope</div>
+          <div className="mt-1 text-sm font-semibold text-white">148.33M KII / 18 rounds</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            KiiChain says two additional undisclosed Cosmos-EVM defects converted the mirrored underflow into
+            withdrawals of real victim balances. This was not an infinite token mint.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-green">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">3. Recoverable</div>
+          <div className="mt-1 text-sm font-semibold text-white">80.73M KII frozen</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            Direct halted-state balance checks across the five official blocklist addresses reconcile to
+            80,728,575.056116 KII, or 54.4% of the drain.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-cyan">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">4. Monetized path</div>
+          <div className="mt-1 text-sm font-semibold text-white">~1.61M BUSD realized</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            Of 67.60M KII bridged to BSC, 64.60M was sold through PancakeSwap. The remaining 3M reached a KuCoin
+            deposit address; freeze confirmation was pending in the report.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)] gap-4">
+        <div className="neon-card-static p-5">
+          <div className="flex items-start justify-between gap-3 mb-4">
+            <div>
+              <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Verified bridge trail</div>
+              <h3 className="text-sm font-semibold text-white mt-1">Ten BSC mints reconcile to 67.597997M KII</h3>
+            </div>
+            <div className="mono text-[10px] text-[#8b5cf6] whitespace-nowrap">Aug 22 UTC</div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {bridgeMints.map((row, index) => (
+              <a
+                key={row.tx}
+                href={`https://bscscan.com/tx/${row.tx}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="grid grid-cols-[28px_64px_72px_minmax(0,1fr)] items-center gap-2 rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2 transition-colors hover:border-[#8b5cf6]/25"
+              >
+                <div className="mono text-[9px] text-neutral-600">#{String(index + 1).padStart(2, "0")}</div>
+                <div className="mono text-[10px] text-neutral-500">{row.time}</div>
+                <div className="data-value text-[11px] text-[#8b5cf6]">{row.amount}</div>
+                <div className="truncate mono text-[9px] text-[#00d4ff]">{row.tx.slice(0, 10)}...</div>
+              </a>
+            ))}
+          </div>
+          <div className="mt-3 rounded border border-[#00d4ff]/15 bg-[#00d4ff]/[0.03] px-3 py-2 text-[11px] leading-relaxed text-neutral-500">
+            Reference exploit hash:
+            <span className="ml-1 mono text-[#00d4ff]">0xf45c...e840</span>. The official report labels it block
+            9,355,102; KiiChain&apos;s EVM RPC returns the same hash at block 9,355,107. The hash and execution path
+            match, so HackTrail preserves the five-block indexing discrepancy instead of silently choosing one.
+          </div>
+        </div>
+
+        <div className="neon-card-static p-5">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Exposure watchlist</div>
+          <h3 className="text-sm font-semibold text-white mt-1 mb-3">Addresses HackTrail now checks</h3>
+          <div className="space-y-2">
+            {watchList.map((item) => (
+              <div key={item.address} className="rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2">
+                <div className="mono text-[10px] text-[#00d4ff]">{item.label}</div>
+                <div className="mt-1 break-all mono text-[10px] text-neutral-500">{item.address}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+            <a
+              href="https://x.com/KiiChainio/status/2091721027583709214"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]"
+            >
+              Official postmortem
+            </a>
+            <a
+              href="https://bscscan.com/tx/0x052f022d803294c2fd5dddc3b09a5812f76d6f15193e30659a930c3b455ee748"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]"
+            >
+              3M KII KuCoin tx
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function AlturaIncidentMatrix() {
   const reserveBuckets = [
     { name: "Inessa RWA", value: "$21.9M", detail: "largest reserve bucket; asset-level verification caveat" },
@@ -923,6 +1050,10 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     risex_unauthorized_withdrawal: { title: "Unauthorized Withdrawal", color: "#ff2255", unit: "$" },
     risex_covered_amount: { title: "Covered Amount", color: "#00ff88", unit: "$" },
     risex_recovery_gap: { title: "Temporary Recovery Gap", color: "#f59e0b", unit: "$" },
+    kii_total_drained: { title: "Total KII Drained", color: "#ff2255", unit: "KII " },
+    kii_frozen_recoverable: { title: "KII Frozen / Recoverable", color: "#00ff88", unit: "KII " },
+    kii_bridged_bsc: { title: "KII Bridged to BSC", color: "#8b5cf6", unit: "KII " },
+    realized_busd: { title: "Realized BUSD Proceeds", color: "#f59e0b", unit: "$" },
   }
 
   return (
@@ -1040,6 +1171,7 @@ export default function IncidentPage({
           {tab === "journey" && (
             <div className="space-y-4">
               {slug === "altura-hyperevm" && <AlturaIncidentMatrix />}
+              {slug === "kiichain-cosmos-evm" && <KiiChainIncidentMatrix />}
               {slug === "risex-xlp" && <RisexIncidentMatrix />}
               {slug === "afx-bridge" && <AfxIncidentMatrix />}
               {slug === "ostium-olp" && <OstiumIncidentMatrix />}

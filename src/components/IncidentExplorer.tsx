@@ -27,6 +27,7 @@ const CHAIN_COLORS: Record<string, string> = {
   Bitcoin: "border-[#f7931a]/30 text-[#f7a744]",
   "BNB Chain": "border-[#f3ba2f]/30 text-[#f3c756]",
   BSC: "border-[#f3ba2f]/30 text-[#f3c756]",
+  KiiChain: "border-[#00ff88]/30 text-[#42ffa5]",
   Unichain: "border-[#ff007a]/30 text-[#ff4b9c]",
   Solana: "border-[#9945ff]/30 text-[#b577ff]",
   Polygon: "border-[#8247e5]/30 text-[#a174ec]",

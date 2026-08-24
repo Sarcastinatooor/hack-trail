@@ -134,6 +134,46 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 
 // Config per incident slug
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
+  'kiichain-cosmos-evm': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'kii_total_drained',
+        data: [
+          { ts: 1787431085, value: 0 },
+          { ts: 1787437603, value: 148_326_583.15 },
+          { ts: 1787540129, value: 148_326_583.15 },
+        ],
+      },
+      {
+        key: 'kii_frozen_recoverable',
+        data: [
+          { ts: 1787437603, value: 0 },
+          { ts: 1787439058, value: 80_728_575.06 },
+          { ts: 1787540129, value: 80_728_575.06 },
+        ],
+      },
+      {
+        key: 'kii_bridged_bsc',
+        data: [
+          { ts: 1787431685, value: 349_999.786624 },
+          { ts: 1787437651, value: 67_597_997.87 },
+          { ts: 1787540129, value: 67_597_997.87 },
+        ],
+      },
+      {
+        key: 'realized_busd',
+        data: [
+          { ts: 1787431685, value: 0 },
+          { ts: 1787437651, value: 1_607_323.41 },
+          { ts: 1787540129, value: 1_607_323.41 },
+        ],
+      },
+    ],
+    from: 1787431085,
+    to: 1787540129,
+  },
   'bonk-dao': {
     tvl: [],
     prices: [

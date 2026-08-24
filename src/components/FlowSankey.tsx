@@ -64,6 +64,13 @@ const KIND_COLOR: Record<string, string> = {
   fee_reserve: "#f59e0b",
   xlp_depositors: "#00ff88",
   seal911: "#00d4ff",
+  vesting_account: "#f59e0b",
+  helper_contract: "#f43f5e",
+  victim_wallets: "#00d4ff",
+  hyperlane: "#8b5cf6",
+  pancake_vault: "#f59e0b",
+  kucoin_deposit: "#00d4ff",
+  recovery_wallets: "#00ff88",
 }
 
 export function FlowSankey({ nodes, links }: { nodes: Node[]; links: Link[] }) {

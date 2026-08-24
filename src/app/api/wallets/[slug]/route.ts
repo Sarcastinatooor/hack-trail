@@ -25,6 +25,7 @@ const NATIVE_SYMBOLS: Record<string, string> = {
   solana: 'SOL',
   sui: 'SUI',
   bitcoin: 'BTC',
+  kiichain: 'KII',
 }
 
 async function getEthBalance(address: string, chain: string): Promise<number | null> {
