@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "moonwell-mamo-2026-08",
+    slug: "moonwell-mamo",
+    name: "Moonwell MAMO Oracle Manipulation Bad Debt",
+    victim: "Moonwell",
+    date: "2026-08-27",
+    date_label: "Aug 27, 2026",
+    loss_usd: 9_193_113.52,
+    loss_label: "$9.19M residual bad debt",
+    chains: ["Base"],
+    attack_vector: "Thin-liquidity MAMO oracle manipulation + over-borrow",
+    attribution: "Unknown operator; borrower 0x719e...919d",
+    short_summary:
+      "A borrower supplied 15.09M MAMO while its oracle price rose 38.2x, then borrowed cbBTC, USDC, wstETH, and WETH. After 595 liquidation calls, Moonwell's API showed $9.19M debt backed by only cents of collateral.",
+    status: "ongoing",
+    tags: ["Base", "Moonwell", "MAMO", "oracle-manipulation", "lending", "bad-debt", "cbBTC"],
+  },
+  {
     id: "kiichain-cosmos-evm-2026-08",
     slug: "kiichain-cosmos-evm",
     name: "KiiChain Cosmos-EVM Vesting Underflow Exploit",

@@ -32,8 +32,10 @@ import { ZCASH_ORCHARD_DATA } from "./zcash-orchard"
 import { BONK_DAO_DATA } from "./bonk-dao"
 import { AFX_BRIDGE_DATA } from "./afx-bridge"
 import { KIICHAIN_COSMOS_EVM_DATA } from "./kiichain-cosmos-evm"
+import { MOONWELL_MAMO_DATA } from "./moonwell-mamo"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
+  "moonwell-mamo": MOONWELL_MAMO_DATA,
   "kiichain-cosmos-evm": KIICHAIN_COSMOS_EVM_DATA,
   "risex-xlp": RISEX_XLP_DATA,
   "afx-bridge": AFX_BRIDGE_DATA,

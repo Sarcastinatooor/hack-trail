@@ -58,6 +58,11 @@ const TAG_DOT: Record<string, string> = {
   SEAL911: "bg-[#00d4ff]",
   "SCAM-WARNING": "bg-[#ff2255]",
   EXCHANGE: "bg-[#00d4ff]",
+  COLLATERAL: "bg-[#f59e0b]",
+  BORROW: "bg-[#ff2255]",
+  LIQUIDATION: "bg-[#00ff88]",
+  "BAD-DEBT": "bg-[#ff2255]",
+  SNAPSHOT: "bg-[#00d4ff]",
 }
 
 const TAG_COLOR: Record<string, string> = {
@@ -110,6 +115,11 @@ const TAG_COLOR: Record<string, string> = {
   SEAL911: "text-[#00d4ff]",
   "SCAM-WARNING": "text-[#ff2255]",
   EXCHANGE: "text-[#00d4ff]",
+  COLLATERAL: "text-[#f59e0b]",
+  BORROW: "text-[#ff2255]",
+  LIQUIDATION: "text-[#00ff88]",
+  "BAD-DEBT": "text-[#ff2255]",
+  SNAPSHOT: "text-[#00d4ff]",
 }
 
 const PHASE_BADGE: Record<string, string> = {
@@ -166,6 +176,12 @@ const PHASE_BADGE: Record<string, string> = {
   "dex-liquidation": "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
   "exchange-deposit": "bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/20",
   "chain-halt": "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/20",
+  "collateral-staging": "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  "collateral-supply": "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/20",
+  "oracle-manipulation": "bg-[#ff2255]/10 text-[#ff2255] border-[#ff2255]/20",
+  "over-borrow": "bg-[#ff2255]/10 text-[#ff2255] border-[#ff2255]/20",
+  "liquidation-race": "bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/20",
+  "bad-debt": "bg-[#ff2255]/10 text-[#ff2255] border-[#ff2255]/20",
 }
 
 export function Timeline({

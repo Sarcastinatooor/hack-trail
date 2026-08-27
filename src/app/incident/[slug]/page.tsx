@@ -332,6 +332,129 @@ function ZecWalletsExplainer() {
   )
 }
 
+function MoonwellMamoIncidentMatrix() {
+  const borrowRows = [
+    { asset: "cbBTC", borrowed: "71.3555", liquidated: "17.7612", residual: "$4.287M" },
+    { asset: "USDC", borrowed: "2.560M", liquidated: "215,841.55", residual: "$2.344M" },
+    { asset: "wstETH", borrowed: "368.0000", liquidated: "25.3079", residual: "$1.079M" },
+    { asset: "WETH", borrowed: "623.6003", liquidated: "38.5733", residual: "$1.483M" },
+  ]
+
+  const evidence = [
+    {
+      label: "Borrower",
+      value: "0x719e...919d",
+      href: "https://basescan.org/address/0x719eae70d4a83f35bf82a2740699f5db84be919d",
+    },
+    {
+      label: "Final MAMO supply",
+      value: "7.10M MAMO",
+      href: "https://basescan.org/tx/0x4cf9f1a10b416729fc55f264534efd170d2763cb114d6fa93d7023296b38cb55",
+    },
+    {
+      label: "Final USDC borrow",
+      value: "990,000 USDC",
+      href: "https://basescan.org/tx/0xee2b75648c288e0e57678a177d54aec2e8ecb8920842c72e8784186c18c88b18",
+    },
+    {
+      label: "First liquidation",
+      value: "09:30:45 UTC",
+      href: "https://basescan.org/tx/0x3099169ec60487f6f1aebe07399a3c867b2977bacf03828b839994ee4ef144fe",
+    },
+  ]
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+        <div className="neon-card-static p-4 stat-accent-amber">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">1. Collateral staged</div>
+          <div className="mt-1 text-sm font-semibold text-white">15.09M MAMO supplied</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            Three verified deposits placed almost three quarters of Moonwell&apos;s 20M MAMO supply cap into one
+            borrower account.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-red">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">2. Oracle distortion</div>
+          <div className="mt-1 text-sm font-semibold text-white">$0.0105 to $0.4025</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            The Moonwell oracle followed a roughly 38.2x MAMO market spike. No oracle-key compromise is presently
+            indicated.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-cyan">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">3. Liquid assets borrowed</div>
+          <div className="mt-1 text-sm font-semibold text-white">4 Moonwell markets</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            cbBTC, USDC, wstETH, and WETH were borrowed in a rising sequence as the artificial MAMO valuation
+            expanded account liquidity.
+          </p>
+        </div>
+        <div className="neon-card-static p-4 stat-accent-green">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">4. Liquidation outcome</div>
+          <div className="mt-1 text-sm font-semibold text-white">$9.19M left unbacked</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+            595 liquidation calls seized effectively all collateral, but Moonwell&apos;s API still recorded $9.193M
+            of residual debt.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)] gap-4">
+        <div className="neon-card-static p-5">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Debt reconciliation</div>
+          <h3 className="text-sm font-semibold text-white mt-1 mb-4">Borrowed, liquidated, and still outstanding</h3>
+          <div className="space-y-2">
+            {borrowRows.map((row) => (
+              <div key={row.asset} className="grid grid-cols-[70px_1fr_1fr_1fr] gap-2 rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2">
+                <div className="mono text-[10px] text-[#00d4ff]">{row.asset}</div>
+                <div>
+                  <div className="mono text-[8px] uppercase text-neutral-600">Borrowed</div>
+                  <div className="data-value text-[11px] text-neutral-300">{row.borrowed}</div>
+                </div>
+                <div>
+                  <div className="mono text-[8px] uppercase text-neutral-600">Repaid</div>
+                  <div className="data-value text-[11px] text-[#00ff88]">{row.liquidated}</div>
+                </div>
+                <div>
+                  <div className="mono text-[8px] uppercase text-neutral-600">Residual</div>
+                  <div className="data-value text-[11px] text-[#ff2255]">{row.residual}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 rounded border border-[#f59e0b]/15 bg-[#f59e0b]/[0.03] px-3 py-2 text-[11px] leading-relaxed text-neutral-500">
+            MIP-B48 approved a 50% collateral factor and 20M MAMO supply cap even though its risk analysis said only
+            about $200k of MAMO could be sold within the 7% liquidation bonus. That liquidity mismatch is central to
+            why liquidations could not make lenders whole.
+          </div>
+        </div>
+
+        <div className="neon-card-static p-5">
+          <div className="mono text-[10px] uppercase tracking-wider text-neutral-500">Verified evidence</div>
+          <h3 className="text-sm font-semibold text-white mt-1 mb-3">Onchain anchors</h3>
+          <div className="space-y-2">
+            {evidence.map((row) => (
+              <a key={row.label} href={row.href} target="_blank" rel="noopener noreferrer" className="block rounded border border-white/[0.04] bg-white/[0.02] px-3 py-2 hover:border-[#00d4ff]/25">
+                <div className="mono text-[9px] uppercase text-neutral-600">{row.label}</div>
+                <div className="mt-1 mono text-[10px] text-[#00d4ff]">{row.value}</div>
+              </a>
+            ))}
+          </div>
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+            <a href="https://github.com/moonwell-fi/moonwell-contracts-v2/blob/main/proposals/mips/mip-b48/MIP-B48.md" target="_blank" rel="noopener noreferrer" className="mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]">
+              MIP-B48 risk analysis
+            </a>
+            <a href="https://x.com/exvulsec/status/2092912846036402674" target="_blank" rel="noopener noreferrer" className="mono text-[10px] text-[#00d4ff] hover:text-[#00ff88]">
+              ExVul alert
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function KiiChainIncidentMatrix() {
   const bridgeMints = [
     { time: "20:48:05", amount: "0.350M", tx: "0x6caefd4949158a4e46331ce1dc3403d7fba64bec838caa66dbbb3934e611849b" },
@@ -1054,6 +1177,9 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     kii_frozen_recoverable: { title: "KII Frozen / Recoverable", color: "#00ff88", unit: "KII " },
     kii_bridged_bsc: { title: "KII Bridged to BSC", color: "#8b5cf6", unit: "KII " },
     realized_busd: { title: "Realized BUSD Proceeds", color: "#f59e0b", unit: "$" },
+    mamo_oracle_price: { title: "MAMO Oracle Price", color: "#ff2255", unit: "$" },
+    moonwell_bad_debt: { title: "Residual Moonwell Bad Debt", color: "#ff2255", unit: "$" },
+    liquidation_calls: { title: "Liquidation Calls", color: "#00ff88", unit: "" },
   }
 
   return (
@@ -1170,6 +1296,7 @@ export default function IncidentPage({
         <div className="animate-slide-up" key={tab}>
           {tab === "journey" && (
             <div className="space-y-4">
+              {slug === "moonwell-mamo" && <MoonwellMamoIncidentMatrix />}
               {slug === "altura-hyperevm" && <AlturaIncidentMatrix />}
               {slug === "kiichain-cosmos-evm" && <KiiChainIncidentMatrix />}
               {slug === "risex-xlp" && <RisexIncidentMatrix />}

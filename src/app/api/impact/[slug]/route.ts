@@ -134,6 +134,49 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 
 // Config per incident slug
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
+  'moonwell-mamo': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'mamo_oracle_price',
+        data: [
+          { ts: 1787819265, value: 0.01054105 },
+          { ts: 1787821979, value: 0.013731 },
+          { ts: 1787822179, value: 0.02447745 },
+          { ts: 1787822257, value: 0.04792164 },
+          { ts: 1787822371, value: 0.08386082 },
+          { ts: 1787822411, value: 0.08807216 },
+          { ts: 1787822589, value: 0.147712 },
+          { ts: 1787822691, value: 0.21225187 },
+          { ts: 1787822759, value: 0.26814965 },
+          { ts: 1787822909, value: 0.32120926 },
+          { ts: 1787822971, value: 0.40248571 },
+          { ts: 1787823013, value: 0.39844045 },
+          { ts: 1787823347, value: 0.03864363 },
+          { ts: 1787825130, value: 0.01464564 },
+        ],
+      },
+      {
+        key: 'moonwell_bad_debt',
+        data: [
+          { ts: 1787823013, value: 0 },
+          { ts: 1787823985, value: 9_193_113.52 },
+          { ts: 1787825130, value: 9_193_113.52 },
+        ],
+      },
+      {
+        key: 'liquidation_calls',
+        data: [
+          { ts: 1787823013, value: 0 },
+          { ts: 1787823045, value: 1 },
+          { ts: 1787823985, value: 595 },
+        ],
+      },
+    ],
+    from: 1787819265,
+    to: 1787825130,
+  },
   'kiichain-cosmos-evm': {
     tvl: [],
     prices: [],
