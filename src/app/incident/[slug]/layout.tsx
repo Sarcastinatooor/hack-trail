@@ -3,6 +3,8 @@ import { INCIDENTS } from "@/data/incidents"
 
 const SITE_URL = "https://hack-trail.vercel.app"
 const OG_IMAGE_VERSION = "hacktrail-logo-v2"
+const RISEX_OG_IMAGE_VERSION = "risex-forensic-card-v1"
+const MOONWELL_MAMO_OG_IMAGE_VERSION = "moonwell-mamo-forensic-card-v1"
 
 function truncate(text: string, max = 180) {
   return text.length > max ? `${text.slice(0, max - 3)}...` : text
@@ -26,7 +28,13 @@ export async function generateMetadata({
   const title = `${incident.name} | HackTrail`
   const description = truncate(incident.short_summary)
   const canonicalUrl = `${SITE_URL}/incident/${incident.slug}`
-  const imageUrl = `${canonicalUrl}/opengraph-image?v=${OG_IMAGE_VERSION}`
+  const imageVersion =
+    incident.slug === "risex-xlp"
+      ? RISEX_OG_IMAGE_VERSION
+      : incident.slug === "moonwell-mamo"
+        ? MOONWELL_MAMO_OG_IMAGE_VERSION
+        : OG_IMAGE_VERSION
+  const imageUrl = `${canonicalUrl}/opengraph-image?v=${imageVersion}`
 
   return {
     title,
