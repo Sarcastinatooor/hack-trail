@@ -139,16 +139,17 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
     prices: [],
     staticSeries: [
       {
-        key: 'cumulative_usdc_collected',
+        key: 'estimated_cumulative_extracted',
         data: [
           { ts: 1787935788, value: 0 },
           { ts: 1787936089, value: 1_779.973441 },
           { ts: 1787939703, value: 571_489.782056 },
+          { ts: 1787943480, value: 1_081_600 },
         ],
       },
     ],
     from: 1787935788,
-    to: 1787939703,
+    to: 1787945787,
   },
   'moonwell-mamo': {
     tvl: [],
