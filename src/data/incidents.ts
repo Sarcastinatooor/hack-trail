@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "avici-user-balance-drain-2026-08",
+    slug: "avici-user-drain",
+    name: "Avici User Collateral Account Drain",
+    victim: "Avici users",
+    date: "2026-08-28",
+    date_label: "Aug 28, 2026",
+    loss_usd: 571_489.78,
+    loss_label: "$571.5K+ USDC (live)",
+    chains: ["Solana"],
+    attack_vector: "Authorized withdrawal-path abuse; root cause under investigation",
+    attribution: "Unknown operator; collector FVNF...nCEj",
+    short_summary:
+      "A live operator is using Avici's Solana program to execute rapid WithdrawCollateralAsset calls from user collateral accounts. The collector held $571.5K USDC at 17:55 UTC and was still receiving funds; the authorization failure remains unconfirmed.",
+    status: "ongoing",
+    tags: ["Solana", "Avici", "USDC", "user-drain", "authorization", "live"],
+  },
+  {
     id: "moonwell-mamo-2026-08",
     slug: "moonwell-mamo",
     name: "Moonwell MAMO Oracle Manipulation Bad Debt",

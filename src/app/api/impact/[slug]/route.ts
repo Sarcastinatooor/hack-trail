@@ -134,6 +134,22 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 
 // Config per incident slug
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
+  'avici-user-drain': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'cumulative_usdc_collected',
+        data: [
+          { ts: 1787935788, value: 0 },
+          { ts: 1787936089, value: 1_779.973441 },
+          { ts: 1787939703, value: 571_489.782056 },
+        ],
+      },
+    ],
+    from: 1787935788,
+    to: 1787939703,
+  },
   'moonwell-mamo': {
     tvl: [],
     prices: [],
