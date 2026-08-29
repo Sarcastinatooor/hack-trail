@@ -210,6 +210,110 @@ function MoonwellMamoOpenGraphCard() {
   )
 }
 
+function AviciRainOpenGraphCard() {
+  const flowNodes = [
+    { eyebrow: "ROOT CAUSE", label: "Outdated Rain contract", color: "#ff315d" },
+    { eyebrow: "IMPACT", label: "1,685 users", color: "#f59e0b" },
+    { eyebrow: "CONTAINMENT", label: "Contract upgraded", color: "#00d4ff" },
+    { eyebrow: "RECOVERY", label: "Full refunds promised", color: "#00ff88" },
+  ]
+
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        background: "#050507",
+        color: "#f4f4f5",
+        fontFamily: "Arial, Helvetica, sans-serif",
+        padding: "38px 46px 28px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div style={{ position: "absolute", inset: 0, display: "flex", background: "radial-gradient(circle at 88% 18%, rgba(0,255,136,0.10), transparent 30%), radial-gradient(circle at 15% 86%, rgba(0,212,255,0.08), transparent 32%)" }} />
+      <div style={{ position: "absolute", inset: 0, display: "flex", opacity: 0.38, backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, display: "flex", background: "linear-gradient(90deg, #00ff88 0%, #00d4ff 46%, #8b5cf6 74%, #ff315d 100%)" }} />
+
+      <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <LogoMark size={62} />
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <div style={{ display: "flex", alignItems: "center", fontSize: 24, fontWeight: 900, letterSpacing: 1.5 }}>
+              <span>HACK</span><span style={{ color: "#00ff88" }}>TRAIL</span>
+            </div>
+            <div style={{ display: "flex", color: "#71717a", fontSize: 10, fontWeight: 800, letterSpacing: 3 }}>ON-CHAIN INCIDENT INTELLIGENCE</div>
+          </div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{ display: "flex", padding: "9px 14px", border: "1px solid rgba(139,92,246,0.38)", borderRadius: 6, color: "#a78bfa", background: "rgba(139,92,246,0.08)", fontSize: 11, fontWeight: 900, letterSpacing: 1.3 }}>SOLANA</div>
+          <div style={{ display: "flex", padding: "9px 14px", border: "1px solid rgba(0,255,136,0.35)", borderRadius: 6, color: "#00ff88", background: "rgba(0,255,136,0.07)", fontSize: 11, fontWeight: 900, letterSpacing: 1.3 }}>CONTAINED</div>
+        </div>
+      </div>
+
+      <div style={{ position: "relative", display: "flex", gap: 30, flex: 1, paddingTop: 20 }}>
+        <div style={{ display: "flex", flexDirection: "column", width: 710 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, color: "#a1a1aa", fontSize: 12, fontWeight: 800, letterSpacing: 1.4 }}>
+            <span style={{ color: "#ff5578" }}>RAIN CARD CONTRACT INCIDENT</span><span style={{ color: "#3f3f46" }}>/</span><span>AUG 28, 2026</span>
+          </div>
+          <div style={{ display: "flex", marginTop: 12, fontSize: 43, lineHeight: 1.04, fontWeight: 850, letterSpacing: -0.5 }}>Avici / Rain Solana Card Contract Drain</div>
+          <div style={{ display: "flex", marginTop: 12, color: "#a1a1aa", fontSize: 16, lineHeight: 1.4, maxWidth: 690 }}>An outdated Rain card contract enabled unauthorized withdrawals from separate Avici card-balance accounts.</div>
+
+          <div style={{ display: "flex", alignItems: "stretch", marginTop: 21, gap: 6 }}>
+            {flowNodes.map((node, index) => (
+              <div key={node.eyebrow} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div style={{ display: "flex", flexDirection: "column", width: 150, padding: "11px 11px", border: `1px solid ${node.color}55`, borderRadius: 7, background: `${node.color}0D` }}>
+                  <div style={{ display: "flex", color: node.color, fontSize: 8, fontWeight: 900, letterSpacing: 1.15 }}>{node.eyebrow}</div>
+                  <div style={{ display: "flex", marginTop: 5, color: "#e4e4e7", fontSize: 14, fontWeight: 800 }}>{node.label}</div>
+                </div>
+                {index < flowNodes.length - 1 ? <div style={{ display: "flex", color: "#52525b", fontSize: 16, fontWeight: 900 }}>&gt;</div> : null}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", width: 360, border: "1px solid rgba(255,49,93,0.34)", borderRadius: 8, background: "rgba(255,49,93,0.055)", padding: "20px 21px 17px" }}>
+          <div style={{ display: "flex", color: "#a1a1aa", fontSize: 10, fontWeight: 900, letterSpacing: 1.6 }}>CONFIRMED AVICI IMPACT</div>
+          <div style={{ display: "flex", color: "#ff315d", fontSize: 48, lineHeight: 1, fontWeight: 900, marginTop: 8 }}>$500,859.22</div>
+          <div style={{ display: "flex", color: "#71717a", fontSize: 12, marginTop: 7 }}>separate card balances only</div>
+          <div style={{ display: "flex", gap: 9, marginTop: 16 }}>
+            <div style={{ display: "flex", flexDirection: "column", flex: 1, border: "1px solid rgba(255,255,255,0.08)", borderRadius: 6, background: "rgba(255,255,255,0.025)", padding: "11px 10px" }}>
+              <div style={{ display: "flex", color: "#71717a", fontSize: 8, fontWeight: 900, letterSpacing: 1.1 }}>AFFECTED USERS</div>
+              <div style={{ display: "flex", color: "#f4f4f5", fontSize: 21, fontWeight: 850, marginTop: 4 }}>1,685</div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", flex: 1, border: "1px solid rgba(0,255,136,0.16)", borderRadius: 6, background: "rgba(0,255,136,0.035)", padding: "11px 10px" }}>
+              <div style={{ display: "flex", color: "#71717a", fontSize: 8, fontWeight: 900, letterSpacing: 1.1 }}>WALLET STATUS</div>
+              <div style={{ display: "flex", color: "#00ff88", fontSize: 18, fontWeight: 850, marginTop: 4 }}>SOL + EVM safe</div>
+            </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: 14, paddingTop: 12 }}>
+            <div style={{ display: "flex", color: "#71717a", fontSize: 9, fontWeight: 900, letterSpacing: 1.2 }}>REFUND STATUS</div>
+            <div style={{ display: "flex", color: "#00ff88", fontSize: 13, fontWeight: 850 }}>Full refund promised</div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", border: "1px solid rgba(245,158,11,0.22)", borderRadius: 7, background: "rgba(245,158,11,0.035)", padding: "10px 13px", marginTop: 7 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <span style={{ display: "flex", color: "#f59e0b", fontSize: 9, fontWeight: 900, letterSpacing: 1.3 }}>BROADER CAMPAIGN / ATTRIBUTED</span>
+          <span style={{ display: "flex", color: "#f4f4f5", fontSize: 16, fontWeight: 900 }}>~$1.02M</span>
+          <span style={{ display: "flex", color: "#71717a", fontSize: 11 }}>10,005 SOL + stables &gt; deBridge &gt; ~418 ETH &gt; reported Tornado route</span>
+        </div>
+        <div style={{ display: "flex", color: "#a1a1aa", fontSize: 10 }}>Tria related / Solayer Pay unaffected</div>
+      </div>
+
+      <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 12, marginTop: 11 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, color: "#71717a", fontSize: 10 }}>
+          <span style={{ color: "#a1a1aa", fontWeight: 800 }}>Rain: affected contract upgraded</span><span style={{ color: "#3f3f46" }}>/</span><span>No further unauthorized activity observed</span>
+        </div>
+        <div style={{ display: "flex", color: "#00ff88", fontSize: 13, fontWeight: 900 }}>hack-trail.vercel.app/incident/avici-user-drain</div>
+      </div>
+    </div>
+  )
+}
+
 function RisexOpenGraphCard() {
   const flowNodes = [
     { eyebrow: "SOURCE", label: "RWA strategy", color: "#ff315d" },
@@ -570,6 +674,10 @@ export default async function OpenGraphImage({
 
   if (slug === "moonwell-mamo") {
     return new ImageResponse(<MoonwellMamoOpenGraphCard />, size)
+  }
+
+  if (slug === "avici-user-drain") {
+    return new ImageResponse(<AviciRainOpenGraphCard />, size)
   }
 
   if (slug === "risex-xlp") {
