@@ -1,7 +1,7 @@
 import type { Hop, IncidentData, TimelineEvent, TrackedWallet } from "./types"
 
 const SOURCE =
-  "Solana mainnet finalized logs and balances, Avici's public acknowledgment, The Defiant's transaction review and live-tracker figures, and Avici product documentation; updated 2026-08-29"
+  "Solana mainnet finalized logs, Rain and Avici incident statements, Avici's reconciliation, Tria and Solayer Pay status updates, The Defiant's transaction review, and Onchain Lens fund-flow reporting; updated 2026-08-29"
 
 const TS = {
   collectorCreated: 1787935788,
@@ -12,6 +12,9 @@ const TS = {
   collectorSweep: 1787945194,
   relaySweep: 1787945624,
   bridgeExit: 1787945744,
+  rainContainment: 1787948760,
+  aviciReconciliation: 1787949840,
+  launderingReport: 1787964600,
 }
 
 const ADDRESSES = {
@@ -24,6 +27,7 @@ const ADDRESSES = {
   firstRelay: "7XigoEaHxpoHp819fnajGqsz329Lve9c2SXSq8KaFRVf",
   secondRelay: "Dn1qRqxgCY6XzNe3kMEbGmEPY24MQCD5W1uA8xeBPNch",
   debridgeProgram: "src5qyZHqTqecJV4aY6Cb6zDZLMDzrDKKezs22MPHr4",
+  reportedEthereumExit: "0x2cE21E4921d3Eb116526c3651Dac0257657338D5",
 }
 
 function tracked(
@@ -31,9 +35,10 @@ function tracked(
   label: string,
   role: string,
   notes: string,
-  confidence: TrackedWallet["confidence"] = "verified"
+  confidence: TrackedWallet["confidence"] = "verified",
+  chain = "solana"
 ): TrackedWallet {
-  return { address, chain: "solana", label, role, notes, confidence, sourceLabel: SOURCE }
+  return { address, chain, label, role, notes, confidence, sourceLabel: SOURCE }
 }
 
 const hops: Hop[] = [
@@ -71,10 +76,10 @@ const hops: Hop[] = [
     to: { label: "Collector wallet", kind: "attacker", address: ADDRESSES.collector },
     asset: "Repeated USDC and USDT withdrawals",
     amount: null,
-    usd: 1_081_600,
+    usd: 500_859.22,
     chain: "Solana",
     summary:
-      "The repeated sequence was SubmitSignatures, AddCollateralAdmin, then WithdrawCollateralAsset. A public tracker observed at least 125 distinct sending accounts; this is a lower bound, not a final victim count.",
+      "The repeated sequence was SubmitSignatures, AddCollateralAdmin, then WithdrawCollateralAsset. Avici later reconciled 1,685 affected users and $500,859.22 taken from its separate card-balance contract.",
   },
   {
     step: 4,
@@ -82,12 +87,12 @@ const hops: Hop[] = [
     ts: TS.peakSnapshot,
     from: { label: "Stolen USDC and USDT", kind: "attacker_proceeds" },
     to: { label: "Collector SOL balance", kind: "attacker", address: ADDRESSES.collector },
-    asset: "10,005.03 SOL plus about $11.6K stables",
+    asset: "10,005.03 SOL plus about $11.6K stables across the campaign",
     amount: 10_005.03,
-    usd: 1_081_600,
+    usd: 1_020_000,
     chain: "Solana",
     summary:
-      "The operator periodically swapped drained stablecoins into SOL. At 18:58 UTC the collector held 10,005.03 SOL, then worth about $1.07M, plus roughly $11.6K in USDC and USDT.",
+      "The operator periodically swapped drained stablecoins into SOL. At 18:58 UTC the collector held 10,005.03 SOL plus roughly $11.6K in stables. This broader balance included proceeds from other Rain programs and is not Avici's confirmed loss.",
   },
   {
     step: 5,
@@ -128,6 +133,19 @@ const hops: Hop[] = [
     summary:
       "The second relay converted SOL into USDC through Jupiter routes and invoked deBridge CreateOrderWithNonce flows. The destination-chain recipients require continued cross-chain tracing.",
   },
+  {
+    step: 8,
+    phase: "reported-laundering",
+    ts: TS.launderingReport,
+    from: { label: "deBridge destination flow", kind: "bridge" },
+    to: { label: "Reported Ethereum / Tornado path", kind: "mixer", address: ADDRESSES.reportedEthereumExit },
+    asset: "Approximately 418 ETH reported",
+    amount: 418,
+    usd: 1_020_000,
+    chain: "Ethereum",
+    summary:
+      "Onchain Lens reported that roughly $1.02M was bridged to Ethereum, converted into about 418 ETH, and deposited through a Tornado Cash-linked route at 0x2cE2...38D5. HackTrail marks this as third-party fund-flow attribution pending a complete public cross-chain order map.",
+  },
 ]
 
 const timeline: TimelineEvent[] = [
@@ -139,24 +157,27 @@ const timeline: TimelineEvent[] = [
   { ts: TS.collectorSweep, tag: "SWEEP", title: "Primary collector sends its final 886.942 SOL to 7Xigo...FRVf", chain: "Solana" },
   { ts: TS.relaySweep, tag: "RELAY", title: "7Xigo...FRVf forwards the balance to Dn1q...PNch", chain: "Solana" },
   { ts: TS.bridgeExit, tag: "EXIT", title: "Dn1q...PNch begins routing converted USDC through deBridge orders", chain: "Solana" },
+  { ts: TS.rainContainment, tag: "CONTAINED", title: "Rain says every program on the outdated Solana contract has been upgraded", chain: "Solana" },
+  { ts: TS.aviciReconciliation, tag: "REFUND", title: "Avici confirms 1,685 users, $500,859.22 affected, and full refunds", chain: "Solana" },
+  { ts: TS.launderingReport, tag: "LAUNDERING", title: "Onchain Lens reports roughly 418 ETH routed through a Tornado Cash-linked path", chain: "Ethereum" },
 ]
 
 export const AVICI_DRAIN_DATA: IncidentData = {
   incident: {
     id: "avici-user-balance-drain-2026-08",
-    name: "Avici User Collateral Account Drain",
+    name: "Avici / Rain Solana Card Contract Drain",
     victim: "Avici users",
     attacker_attribution: "Unknown operator; collector FVNF...nCEj",
     root_cause:
-      "The attacker traversed Avici's authorization layer rather than draining ordinary Solana wallets directly. The repeated path submitted Ed25519-verified signatures, registered a new administrator on a user's collateral account with AddCollateralAdmin, and then called WithdrawCollateralAsset to move USDC or USDT. At least 125 distinct sending accounts were observed and the attacker signed 14,672 transactions, including 2,344 failures. The collector peaked at 10,005.03 SOL plus about $11.6K in stables before being emptied through relay wallets and cross-chain deBridge orders. Avici acknowledged an issue affecting card-balance withdrawals and said it was working with relevant partners. The source of the accepted authorization remains unconfirmed: a postmortem is still needed to distinguish compromised signing infrastructure, leaked authorization material, replay weakness, or another access-control defect.",
-    loss_usd: 1_081_600,
+      "Rain identified a vulnerability in an outdated version of its Solana card contract used by Avici and a small number of other programs. The attacker traversed the contract's authorization path with Ed25519-verified SubmitSignatures calls, registered a new collateral administrator, and executed unauthorized USDC or USDT withdrawals. Avici reconciled $500,859.22 taken from 1,685 users' card balances and promised full refunds. Avici's self-custodial Solana and EVM wallets were separate and were not affected. Rain says all programs using the outdated contract were upgraded and no further unauthorized activity was observed. Tria reported and resolved a related Solana card-balance issue; Solayer Pay, KAST, and ether.fi said they were not affected. The broader attacker wallet reached roughly $1.02M in campaign proceeds, which should not be presented as Avici's loss. A detailed technical postmortem and refund-completion timetable remain pending.",
+    loss_usd: 500_859.22,
     start_ts: TS.firstWithdrawal,
     chains_touched: ["Solana"],
     stats: [
-      { label: "Estimated extracted", value: "$1.08M+", sub: "10,005 SOL + stables at peak", accent: "text-rose-300" },
-      { label: "Sending accounts", value: "125+", sub: "public-tracker lower bound", accent: "text-amber-300" },
-      { label: "Attacker transactions", value: "14,672", sub: "2,344 failed", accent: "text-sky-300" },
-      { label: "Primary collector", value: "$0", sub: "proceeds swept to relays", accent: "text-emerald-300" },
+      { label: "Confirmed Avici impact", value: "$500,859.22", sub: "card balances only", accent: "text-rose-300" },
+      { label: "Avici users affected", value: "1,685", sub: "official reconciliation", accent: "text-amber-300" },
+      { label: "Broader campaign", value: "~$1.02M", sub: "reported across Rain programs", accent: "text-sky-300" },
+      { label: "Refund status", value: "Full", sub: "promised; completion pending", accent: "text-emerald-300" },
     ],
   },
   hops,
@@ -167,6 +188,7 @@ export const AVICI_DRAIN_DATA: IncidentData = {
     tracked(ADDRESSES.firstRelay, "First SOL relay", "attacker", "Received the collector's final 886.942478746 SOL, then forwarded effectively all of it to Dn1q...PNch."),
     tracked(ADDRESSES.secondRelay, "Second relay / bridge executor", "attacker", "Received 886.942478386 SOL, converted proceeds through Jupiter, and created deBridge orders."),
     tracked(ADDRESSES.debridgeProgram, "deBridge order program", "infrastructure", "Cross-chain order program used in the exit path. Infrastructure address, not attacker-controlled.", "curated"),
+    tracked(ADDRESSES.reportedEthereumExit, "Reported Ethereum / Tornado route", "mixer-route", "Onchain Lens attributes roughly 418 ETH of campaign proceeds to this laundering route; cross-chain attribution remains third-party sourced.", "curated", "ethereum"),
     tracked(ADDRESSES.aviciProgram, "Avici Solana program", "victim-program", "Program emitting AddCollateralAdmin and WithdrawCollateralAsset instructions. Infrastructure address, not attacker-controlled."),
     tracked(ADDRESSES.globalState, "Avici global state", "infrastructure", "Read-only state account present in sampled withdrawal calls; not attacker-controlled.", "curated"),
     tracked(ADDRESSES.firstVictimOwner, "First verified affected owner", "victim", "Owned the collateral account drained in the first verified 1,779.973441 USDC transfer."),

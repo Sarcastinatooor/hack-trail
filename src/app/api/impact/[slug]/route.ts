@@ -144,12 +144,20 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
           { ts: 1787935788, value: 0 },
           { ts: 1787936089, value: 1_779.973441 },
           { ts: 1787939703, value: 571_489.782056 },
-          { ts: 1787943480, value: 1_081_600 },
+          { ts: 1787943480, value: 1_020_000 },
+        ],
+      },
+      {
+        key: 'confirmed_avici_card_loss',
+        data: [
+          { ts: 1787935788, value: 0 },
+          { ts: 1787949840, value: 500_859.22 },
+          { ts: 1787964600, value: 500_859.22 },
         ],
       },
     ],
     from: 1787935788,
-    to: 1787945787,
+    to: 1787964600,
   },
   'moonwell-mamo': {
     tvl: [],
