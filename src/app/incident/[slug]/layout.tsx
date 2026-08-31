@@ -6,6 +6,7 @@ const OG_IMAGE_VERSION = "hacktrail-logo-v2"
 const RISEX_OG_IMAGE_VERSION = "risex-forensic-card-v1"
 const MOONWELL_MAMO_OG_IMAGE_VERSION = "moonwell-mamo-forensic-card-v1"
 const AVICI_OG_IMAGE_VERSION = "avici-rain-forensic-card-v4"
+const TECTONIC_OG_IMAGE_VERSION = "tectonic-cronos-forensic-card-v1"
 
 function truncate(text: string, max = 180) {
   return text.length > max ? `${text.slice(0, max - 3)}...` : text
@@ -34,6 +35,8 @@ export async function generateMetadata({
       ? RISEX_OG_IMAGE_VERSION
       : incident.slug === "avici-user-drain"
         ? AVICI_OG_IMAGE_VERSION
+      : incident.slug === "tectonic-cronos"
+        ? TECTONIC_OG_IMAGE_VERSION
       : incident.slug === "moonwell-mamo"
         ? MOONWELL_MAMO_OG_IMAGE_VERSION
         : OG_IMAGE_VERSION
