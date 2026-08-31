@@ -34,9 +34,11 @@ import { AFX_BRIDGE_DATA } from "./afx-bridge"
 import { KIICHAIN_COSMOS_EVM_DATA } from "./kiichain-cosmos-evm"
 import { MOONWELL_MAMO_DATA } from "./moonwell-mamo"
 import { AVICI_DRAIN_DATA } from "./avici-drain"
+import { TECTONIC_CRONOS_DATA } from "./tectonic-cronos"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
   "avici-user-drain": AVICI_DRAIN_DATA,
+  "tectonic-cronos": TECTONIC_CRONOS_DATA,
   "moonwell-mamo": MOONWELL_MAMO_DATA,
   "kiichain-cosmos-evm": KIICHAIN_COSMOS_EVM_DATA,
   "risex-xlp": RISEX_XLP_DATA,

@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "tectonic-cronos-2026-08",
+    slug: "tectonic-cronos",
+    name: "Tectonic TONIC Price Manipulation Exploit",
+    victim: "Tectonic",
+    date: "2026-08-30",
+    date_label: "Aug 30, 2026",
+    loss_usd: 75_000_000,
+    loss_label: "$66M-$75M estimated / $6.29M bridged",
+    chains: ["Cronos", "Ethereum"],
+    attack_vector: "Thin-liquidity TONIC price manipulation + inflated collateral borrowing",
+    attribution: "Unknown; preliminary on-chain analysis by Weilin Li",
+    short_summary:
+      "Tectonic was exploited after TONIC was reportedly pushed about 100x and used as inflated collateral to borrow real assets. Cronos halted the chain; about $6.29M was reported bridged to Ethereum while most estimated affected value remained on Cronos.",
+    status: "ongoing",
+    tags: ["Cronos", "Tectonic", "TONIC", "oracle-manipulation", "lending", "chain-halt", "Ethereum"],
+  },
+  {
     id: "avici-user-balance-drain-2026-08",
     slug: "avici-user-drain",
     name: "Avici / Rain Solana Card Contract Drain",
