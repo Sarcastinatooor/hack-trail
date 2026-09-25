@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "magic-eden-nft-drain-2026-09",
+    slug: "magic-eden-nft-drain",
+    name: "Magic Eden NFT Approval Drain",
+    victim: "NFT holders across hundreds of wallets",
+    date: "2026-09-25",
+    date_label: "Sep 25, 2026",
+    loss_usd: 0,
+    loss_label: "3,832 NFTs / value unconfirmed",
+    chains: ["Ethereum"],
+    attack_vector: "Suspected NFT approval / marketplace contract drain",
+    attribution: "Collector 0x71cF...fe33 identified as whitehat by 0xQuit",
+    short_summary:
+      "CirrusNFT reported 3,832 NFTs moved from hundreds of wallets through a suspected Magic Eden contract path. 0xQuit identified the collector as a whitehat recovery wallet and said assets would be returned once the risk is contained.",
+    status: "ongoing",
+    tags: ["Ethereum", "NFT", "Magic Eden", "approval-drain", "whitehat", "recovery"],
+  },
+  {
     id: "tectonic-cronos-2026-08",
     slug: "tectonic-cronos",
     name: "Tectonic TONIC Price Manipulation Exploit",
