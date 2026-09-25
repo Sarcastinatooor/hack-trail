@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "bitget-wallet-infrastructure-2026-09",
+    slug: "bitget-wallet-infrastructure",
+    name: "Bitget Hot Wallet Infrastructure Drain",
+    victim: "Bitget hot and warm wallets",
+    date: "2026-09-24",
+    date_label: "Sep 24, 2026",
+    loss_usd: 350_000_000,
+    loss_label: "~$350M estimated / 8 chains",
+    chains: ["Ethereum", "Arbitrum", "Base", "Optimism", "BSC", "Avalanche", "XRP Ledger", "TRON"],
+    attack_vector: "Backend transaction-data spoofing + valid withdrawal signatures",
+    attribution: "Unknown; recipient address published by Blockaid",
+    short_summary:
+      "An attacker compromised a backend system inside Bitget's wallet infrastructure and spoofed transaction data, causing valid signatures for unauthorized transfers from hot and warm wallets across eight chains. Blockaid estimates approximately $350M drained and continues tracing the proceeds.",
+    status: "ongoing",
+    tags: ["Bitget", "exchange", "hot-wallet", "backend-compromise", "multi-chain", "Blockaid", "live-tracking"],
+  },
+  {
     id: "limit-break-payment-processor-2026-09",
     slug: "limit-break-payment-processor",
     name: "Limit Break Payment Processor V2 NFT Drain",

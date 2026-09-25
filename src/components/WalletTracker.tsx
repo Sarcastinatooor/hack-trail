@@ -54,7 +54,7 @@ function WalletRow({ w, slug }: { w: WalletData; slug: string }) {
     queryFn: () =>
       fetch(`/api/wallet/${w.address}/transfers?chain=${w.chain}&limit=40`, { cache: "no-store" }).then((r) => r.json()),
     enabled: expanded && w.balance_eth !== null,
-    refetchInterval: slug === "magic-eden-nft-drain" ? 30_000 : false,
+    refetchInterval: ["magic-eden-nft-drain", "bitget-wallet-infrastructure"].includes(slug) ? 30_000 : false,
   })
 
   void slug
@@ -138,7 +138,7 @@ export function WalletTracker({ slug }: { slug: string }) {
   const { data, isLoading, error, dataUpdatedAt, isFetching } = useQuery<{ data: WalletData[]; note?: string }>({
     queryKey: ["wallets", slug],
     queryFn: () => fetch(`/api/wallets/${slug}`, { cache: "no-store" }).then((r) => r.json()),
-    refetchInterval: slug === "magic-eden-nft-drain" ? 30_000 : false,
+    refetchInterval: ["magic-eden-nft-drain", "bitget-wallet-infrastructure"].includes(slug) ? 30_000 : false,
   })
 
   if (isLoading) {
