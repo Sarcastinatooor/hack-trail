@@ -36,11 +36,13 @@ import { MOONWELL_MAMO_DATA } from "./moonwell-mamo"
 import { AVICI_DRAIN_DATA } from "./avici-drain"
 import { TECTONIC_CRONOS_DATA } from "./tectonic-cronos"
 import { MAGIC_EDEN_NFT_DRAIN_DATA } from "./magic-eden-nft-drain"
+import { LIMIT_BREAK_PAYMENT_PROCESSOR_DATA } from "./limit-break-payment-processor"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
   "avici-user-drain": AVICI_DRAIN_DATA,
   "tectonic-cronos": TECTONIC_CRONOS_DATA,
   "magic-eden-nft-drain": MAGIC_EDEN_NFT_DRAIN_DATA,
+  "limit-break-payment-processor": LIMIT_BREAK_PAYMENT_PROCESSOR_DATA,
   "moonwell-mamo": MOONWELL_MAMO_DATA,
   "kiichain-cosmos-evm": KIICHAIN_COSMOS_EVM_DATA,
   "risex-xlp": RISEX_XLP_DATA,

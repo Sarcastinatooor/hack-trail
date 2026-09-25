@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "limit-break-payment-processor-2026-09",
+    slug: "limit-break-payment-processor",
+    name: "Limit Break Payment Processor V2 NFT Drain",
+    victim: "Limit Break NFT holders",
+    date: "2026-09-25",
+    date_label: "Sep 25, 2026",
+    loss_usd: 1_700_000,
+    loss_label: "~$1.7M estimated / ~3 txs",
+    chains: ["Ethereum"],
+    attack_vector: "NFT approval abuse + zero-price impersonated purchases",
+    attribution: "Blockaid-published addresses; one address has whitehat recovery context",
+    short_summary:
+      "Blockaid detected an ongoing Ethereum exploit affecting Limit Break Payment Processor V2. An attacker reportedly impersonated holders and bought approved NFTs at zero price, draining about $1.7M across roughly three transactions.",
+    status: "ongoing",
+    tags: ["Ethereum", "Limit Break", "NFT", "Payment Processor V2", "approval-drain", "zero-price", "Blockaid"],
+  },
+  {
     id: "magic-eden-nft-drain-2026-09",
     slug: "magic-eden-nft-drain",
     name: "Magic Eden NFT Approval Drain",
