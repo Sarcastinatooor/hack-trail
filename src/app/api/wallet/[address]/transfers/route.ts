@@ -38,20 +38,25 @@ export async function GET(
   }
 
   try {
-    // Fetch both normal txns and token transfers
-    const [txRes, tokenRes] = await Promise.all([
+    // Fetch native, fungible, and NFT movements so incident wallets can be monitored.
+    const [txRes, tokenRes, nftRes] = await Promise.all([
       fetch(
         `https://api.etherscan.io/v2/api?chainid=${chainId}&module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=${limit}&sort=desc&apikey=${apiKey}`,
         { next: { revalidate: 300 } }
       ),
       fetch(
         `https://api.etherscan.io/v2/api?chainid=${chainId}&module=account&action=tokentx&address=${address}&startblock=0&endblock=99999999&page=1&offset=${limit}&sort=desc&apikey=${apiKey}`,
-        { next: { revalidate: 300 } }
+        { cache: 'no-store' }
+      ),
+      fetch(
+        `https://api.etherscan.io/v2/api?chainid=${chainId}&module=account&action=tokennfttx&address=${address}&startblock=0&endblock=99999999&page=1&offset=${limit}&sort=desc&apikey=${apiKey}`,
+        { cache: 'no-store' }
       ),
     ])
 
     const txJson = await txRes.json()
     const tokenJson = await tokenRes.json()
+    const nftJson = await nftRes.json()
 
     const normalTxs = (txJson.status === '1' ? txJson.result : []).map((tx: Record<string, string>) => ({
       tx_hash: tx.hash,
@@ -73,8 +78,21 @@ export async function GET(
       flow: tx.from.toLowerCase() === address.toLowerCase() ? 'out' : 'in',
     }))
 
+    const nftTxs = (nftJson.status === '1' ? nftJson.result : []).map((tx: Record<string, string>) => ({
+      tx_hash: tx.hash,
+      from_address: tx.from,
+      to_address: tx.to,
+      amount: '1',
+      token_symbol: tx.tokenName || tx.tokenSymbol || 'NFT',
+      token_id: tx.tokenID,
+      asset_type: tx.tokenType || 'ERC-721',
+      contract_address: tx.contractAddress,
+      timestamp: parseInt(tx.timeStamp),
+      flow: tx.from.toLowerCase() === address.toLowerCase() ? 'out' : 'in',
+    }))
+
     // Merge and sort by timestamp desc
-    const all = [...normalTxs, ...tokenTxs]
+    const all = [...normalTxs, ...tokenTxs, ...nftTxs]
       .sort((a: { timestamp: number }, b: { timestamp: number }) => b.timestamp - a.timestamp)
       .slice(0, limit)
 

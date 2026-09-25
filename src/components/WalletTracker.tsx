@@ -27,6 +27,8 @@ interface Transfer {
   token_symbol: string
   timestamp: number
   flow: string
+  token_id?: string
+  asset_type?: string
 }
 
 function TransferRow({ t }: { t: Transfer }) {
@@ -39,7 +41,7 @@ function TransferRow({ t }: { t: Transfer }) {
       <span className="text-neutral-700">→</span>
       <span className="text-neutral-400">{shortAddr(t.to_address)}</span>
       <span className="ml-auto text-neutral-300">
-        {parseFloat(t.amount).toFixed(4)} <span className="text-neutral-500">{t.token_symbol}</span>
+        {t.token_id ? `#${t.token_id}` : parseFloat(t.amount).toFixed(4)} <span className="text-neutral-500">{t.token_symbol}</span>
       </span>
     </div>
   )
@@ -50,8 +52,9 @@ function WalletRow({ w, slug }: { w: WalletData; slug: string }) {
   const { data: transfers, isLoading } = useQuery<{ data: Transfer[] }>({
     queryKey: ["transfers", w.address, w.chain],
     queryFn: () =>
-      fetch(`/api/wallet/${w.address}/transfers?chain=${w.chain}&limit=20`).then((r) => r.json()),
+      fetch(`/api/wallet/${w.address}/transfers?chain=${w.chain}&limit=40`, { cache: "no-store" }).then((r) => r.json()),
     enabled: expanded && w.balance_eth !== null,
+    refetchInterval: slug === "magic-eden-nft-drain" ? 30_000 : false,
   })
 
   void slug
@@ -132,9 +135,10 @@ function WalletRow({ w, slug }: { w: WalletData; slug: string }) {
 }
 
 export function WalletTracker({ slug }: { slug: string }) {
-  const { data, isLoading, error } = useQuery<{ data: WalletData[]; note?: string }>({
+  const { data, isLoading, error, dataUpdatedAt, isFetching } = useQuery<{ data: WalletData[]; note?: string }>({
     queryKey: ["wallets", slug],
-    queryFn: () => fetch(`/api/wallets/${slug}`).then((r) => r.json()),
+    queryFn: () => fetch(`/api/wallets/${slug}`, { cache: "no-store" }).then((r) => r.json()),
+    refetchInterval: slug === "magic-eden-nft-drain" ? 30_000 : false,
   })
 
   if (isLoading) {
@@ -168,6 +172,12 @@ export function WalletTracker({ slug }: { slug: string }) {
 
   return (
     <div className="space-y-2">
+      {slug === "magic-eden-nft-drain" && (
+        <div className="flex items-center justify-between px-1 pb-1 mono text-[10px] uppercase tracking-wider text-neutral-600">
+          <span className="flex items-center gap-2"><span className={`h-1.5 w-1.5 rounded-full ${isFetching ? "bg-[#f59e0b]" : "bg-[#00ff88]"}`} /> Live NFT monitor · 30s</span>
+          <span>{dataUpdatedAt ? `Checked ${new Date(dataUpdatedAt).toLocaleTimeString()}` : "Connecting"}</span>
+        </div>
+      )}
       {data.data.map((w, i) => (
         <WalletRow key={i} w={w} slug={slug} />
       ))}
