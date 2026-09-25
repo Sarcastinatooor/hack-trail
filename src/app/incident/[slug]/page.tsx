@@ -8,6 +8,7 @@ import { ImpactChart } from "@/components/ImpactChart"
 import { Boundary } from "@/components/Boundary"
 import { Timeline } from "@/components/Timeline"
 import { WalletTracker } from "@/components/WalletTracker"
+import { MagicEdenSafetyPanel } from "@/components/MagicEdenSafetyPanel"
 import type { IncidentData } from "@/data/types"
 
 const ACCENT_MAP: Record<string, string> = {
@@ -1331,7 +1332,10 @@ export default function IncidentPage({
               {slug === "zcash-orchard" ? (
                 <ZecWalletsExplainer />
               ) : (
-                <WalletTracker slug={slug} />
+                <>
+                  {slug === "magic-eden-nft-drain" && <MagicEdenSafetyPanel />}
+                  <WalletTracker slug={slug} />
+                </>
               )}
             </div>
           )}
