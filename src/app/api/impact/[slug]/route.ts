@@ -134,6 +134,32 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 
 // Config per incident slug
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
+  'near-intents-deposit-notification': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'near_gross_payouts',
+        data: [
+          { ts: 1790812470, value: 0 },
+          { ts: 1790812470, value: 800_000 },
+          { ts: 1790828642, value: 2_000_000 },
+          { ts: 1790830242, value: 3_500_000 },
+          { ts: 1790833580, value: 3_830_000 },
+          { ts: 1790849306, value: 3_865_000 },
+        ],
+      },
+      {
+        key: 'near_reported_recovery',
+        data: [
+          { ts: 1790899200, value: 0 },
+          { ts: 1790899200, value: 3_800_000 },
+        ],
+      },
+    ],
+    from: 1790726400,
+    to: 1791417600,
+  },
   'avici-user-drain': {
     tvl: [],
     prices: [],

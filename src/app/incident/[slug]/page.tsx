@@ -1181,6 +1181,8 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     mamo_oracle_price: { title: "MAMO Oracle Price", color: "#ff2255", unit: "$" },
     moonwell_bad_debt: { title: "Residual Moonwell Bad Debt", color: "#ff2255", unit: "$" },
     liquidation_calls: { title: "Liquidation Calls", color: "#00ff88", unit: "" },
+    near_gross_payouts: { title: "Gross BSC Payouts", color: "#ff2255", unit: "$" },
+    near_reported_recovery: { title: "Team-Reported Recovery", color: "#00ff88", unit: "$" },
   }
 
   return (
