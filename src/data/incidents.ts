@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "near-intents-deposit-notification-2026-10",
+    slug: "near-intents-deposit-notification",
+    name: "NEAR Intents Deposit-Notification Exploit",
+    victim: "NEAR Intents",
+    date: "2026-09-29",
+    date_label: "Sep 29, 2026",
+    loss_usd: 3_865_000,
+    loss_label: "$3.865M gross payouts / recovery reported",
+    chains: ["NEAR", "BSC"],
+    attack_vector: "Asynchronous receipt failure + retained internal credit + refunded backing",
+    attribution: "Unknown; published BSC and NEAR addresses under bounded monitoring",
+    short_summary:
+      "A NEAR Intents deposit-notification accounting flaw could leave internal credit after a resolver failure while the backing was refunded separately. CertiK traced five BSC payouts totaling 3.865M USDT; the team reports containment, a fix, and approximately $3.8M returned. Net permanent loss is not independently established.",
+    status: "stub",
+    tags: ["NEAR", "NEAR Intents", "BSC", "accounting", "cross-contract", "refund", "recovery", "CertiK"],
+  },
+  {
     id: "bitget-wallet-infrastructure-2026-09",
     slug: "bitget-wallet-infrastructure",
     name: "Bitget Hot Wallet Infrastructure Drain",
