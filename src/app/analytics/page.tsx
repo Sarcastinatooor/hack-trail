@@ -59,7 +59,7 @@ export default function AnalyticsPage() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           <div className="neon-card-static p-4 stat-accent-red">
-            <div className="mono text-[10px] text-neutral-500 uppercase">Confirmed Losses</div>
+            <div className="mono text-[10px] text-neutral-500 uppercase">Reported impact estimates</div>
             <div className="data-value text-2xl text-[#ff2255] mt-1">{fmtUsd(totalLoss)}</div>
           </div>
           <div className="neon-card-static p-4 stat-accent-cyan">

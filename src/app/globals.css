@@ -1,5 +1,51 @@
 @import "tailwindcss";
 
+/* Shared workspace geometry, adapted from the reference's compact data views. */
+.workspace-sidebar { position: fixed; inset: 0 auto 0 0; width: 204px; z-index: 60; background: #08080b; border-right: 1px solid #ffffff12; padding: 24px 12px; display: flex; flex-direction: column; }
+.sidebar-brand { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 650; padding: 0 8px 30px; }
+.sidebar-brand span { color: #00ff88; }
+.sidebar-section { padding: 0 12px 12px; color: #71717a; font: 10px var(--font-mono); text-transform: uppercase; }
+.workspace-links { display: flex; flex-direction: column; gap: 5px; }
+.workspace-links .nav-link { display: block; padding: 11px 12px; font-size: 12px; border: 1px solid transparent; border-radius: 3px; color: #a1a1aa; }
+.workspace-links .nav-link-active { border-color: #00ff8840; color: #00ff88; background: #00ff8808; }
+.sidebar-bottom { margin-top: auto; padding: 16px 8px 0; border-top: 1px solid #ffffff12; color: #71717a; font-size: 10px; line-height: 2.5; }
+.workspace-main { margin-left: 204px; min-width: 0; }
+.screen-page { max-width: 1440px; padding: 32px; margin: auto; }
+.screen-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 28px; }
+.screen-heading h1 { font: 500 28px var(--font-sans); margin: 8px 0; }
+.screen-heading p { color: #a1a1aa; font-size: 13px; }
+.screen-eyebrow { display: block; font: 10px var(--font-mono); color: #a1a1aa; text-transform: uppercase; }
+.workspace-action { padding: 10px 14px; border: 1px solid #00ff8840; border-radius: 3px; color: #00ff88; font-size: 12px; }
+.screen-metrics { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); border: 1px solid #ffffff18; }
+.screen-metrics > div { padding: 20px; border-right: 1px solid #ffffff12; }
+.screen-metrics > div:last-child { border: 0; }
+.screen-metrics strong { display: block; margin: 10px 0; font: 500 28px var(--font-mono); color: #00ff88; }
+.screen-metrics small { color: #71717a; font-size: 11px; }
+.screen-destinations { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 18px; }
+.screen-destinations a { border: 1px solid #ffffff18; padding: 16px; transition: border-color 150ms; }
+.screen-destinations a:hover { border-color: #00d4ff60; }
+.screen-destinations a div { display: flex; justify-content: space-between; font-size: 13px; }
+.screen-destinations a p { color: #a1a1aa; font-size: 11px; margin-top: 10px; line-height: 1.6; }
+.incident-register { min-width: 760px; table-layout: fixed; }
+.incident-register th { padding: 12px; font: 10px var(--font-mono); color: #a1a1aa; background: #ffffff03; }
+.incident-register td { padding: 16px 12px; border-top: 1px solid #ffffff0d; vertical-align: top; overflow-wrap: anywhere; }
+.incident-register th:first-child { width: 34%; }.incident-register th:nth-child(2) { width: 12%; }.incident-register th:nth-child(3) { width: 14%; }.incident-register th:nth-child(4) { width: 25%; }.incident-register th:last-child { width: 5%; }
+.incident-register tr:hover td { background: #00ff8804; }
+.workspace-main .neon-card, .workspace-main .neon-card-static { border-radius: 4px; box-shadow: none; backdrop-filter: none; background: #ffffff02; }
+.workspace-main .neon-card:hover { box-shadow: none; background: #ffffff04; }
+.workspace-main h1 { font-size: 28px; letter-spacing: 0; }
+.workspace-main .text-neutral-600 { color: #8b8b96; }
+.workspace-main .text-neutral-700 { color: #71717a; }
+.workspace-main [class*="gradient-text"] { background: none; -webkit-text-fill-color: currentColor; color: #00ff88; }
+button:focus-visible, a:focus-visible, select:focus-visible { outline: 2px solid #00d4ff; outline-offset: 3px; }
+@media(max-width: 767px) {
+  .workspace-sidebar { position: static; width: 100%; padding: 12px 16px; border-right: 0; border-bottom: 1px solid #ffffff12; }
+  .sidebar-brand { padding-bottom: 12px; }.sidebar-section,.sidebar-bottom { display: none; }
+  .workspace-links { flex-direction: row; overflow-x: auto; gap: 3px; }.workspace-links .nav-link { padding: 9px; white-space: nowrap; }
+  .workspace-main { margin-left: 0; }.workspace-main > nav { display: none; }
+  .screen-page { padding: 24px 16px; }.screen-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }.screen-metrics > div { padding: 16px; border-bottom: 1px solid #ffffff12; }.screen-destinations { grid-template-columns: 1fr; }
+}
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;

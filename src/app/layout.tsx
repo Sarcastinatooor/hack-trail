@@ -43,7 +43,7 @@ function NavBar() {
           </span>
         </Link>
 
-        <NavLinks />
+        <span className="hidden sm:block mono text-[10px] text-neutral-500">Onchain security intelligence</span>
 
         {/* Right */}
         <div className="flex items-center gap-3">
@@ -66,8 +66,8 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark`}>
       <body className="min-h-screen bg-[#050507] text-neutral-200 antialiased">
         <Providers>
-          <NavBar />
-          <main className="bg-grid min-h-[calc(100vh-56px)]">{children}</main>
+          <aside className="workspace-sidebar" aria-label="Main navigation"><Link href="/" className="sidebar-brand"><Image src="/logo.svg" alt="" width={26} height={26} /> HACK<span>TRAIL</span></Link><div className="sidebar-section">Workspace</div><NavLinks /><div className="sidebar-bottom"><span className="text-[#00ff88]">●</span> Public incident intelligence<br /><a href="https://github.com/Sarcastinatooor/hack-trail" target="_blank" rel="noreferrer">Source repository ↗</a></div></aside>
+          <div className="workspace-main"><NavBar /><main className="min-h-[calc(100vh-56px)]">{children}</main></div>
         </Providers>
         <Analytics />
       </body>

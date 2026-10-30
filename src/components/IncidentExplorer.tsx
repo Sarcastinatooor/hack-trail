@@ -260,10 +260,10 @@ function PreviewDrawer({
           </h2>
           <div className="mt-2 text-xs text-neutral-500">Victim: <span className="text-neutral-300">{incident.victim}</span></div>
 
-          <div className="mt-6 grid grid-cols-2 gap-3">
+          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className={`rounded-lg border p-4 ${isVulnerability ? "border-[#00d4ff]/20 bg-[#00d4ff]/[0.04]" : "border-[#ff2255]/20 bg-[#ff2255]/[0.04]"}`}>
               <div className="mono text-[9px] uppercase tracking-wider text-neutral-600">{isVulnerability ? "Impact" : "Value affected"}</div>
-              <div className={`data-value mt-1 text-xl ${isVulnerability ? "text-[#00d4ff]" : "text-[#ff315d]"}`}>
+              <div className={`data-value mt-1 text-base leading-relaxed ${isVulnerability ? "text-[#00d4ff]" : "text-[#ff315d]"}`}>
                 {incident.loss_label ?? fmtUsd(incident.loss_usd)}
               </div>
             </div>
@@ -444,6 +444,7 @@ function CommandPalette({
 
 export function IncidentExplorer({ incidents }: { incidents: IncidentExplorerItem[] }) {
   const [chain, setChain] = useState("all")
+  const [view, setView] = useState<'table' | 'cards'>('table')
   const [year, setYear] = useState("all")
   const [vector, setVector] = useState("all")
   const [status, setStatus] = useState<IncidentStatus | "all">("all")
@@ -505,6 +506,7 @@ export function IncidentExplorer({ incidents }: { incidents: IncidentExplorerIte
       <div className="incident-controls mb-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
+            <div className="flex rounded border border-white/10 p-0.5">{(['table','cards'] as const).map((mode) => <button key={mode} aria-pressed={view === mode} onClick={() => setView(mode)} className={`px-3 py-2 text-xs capitalize ${view === mode ? 'bg-white/10 text-white' : 'text-neutral-500'}`}>{mode}</button>)}</div>
             <button
               type="button"
               onClick={() => setFiltersOpen((open) => !open)}
@@ -563,7 +565,9 @@ export function IncidentExplorer({ incidents }: { incidents: IncidentExplorerIte
         )}
       </div>
 
-      {visibleIncidents.length ? (
+      {visibleIncidents.length && view === 'table' ? (
+        <div className="overflow-x-auto border-y border-white/10"><table className="incident-register w-full text-left text-xs"><thead><tr><th>Incident / protocol</th><th>Date</th><th>Networks</th><th>Reported impact</th><th>Coverage</th><th><span className="sr-only">Preview</span></th></tr></thead><tbody>{visibleIncidents.map((incident) => <tr key={incident.id}><td><Link href={`/incident/${incident.slug}`} className="block font-medium text-neutral-200 hover:text-[#00ff88]">{incident.name}</Link><span className="mt-1 block text-[11px] text-neutral-500">{incident.attack_vector}</span></td><td className="whitespace-nowrap mono text-[10px] text-neutral-400">{incident.date_label}</td><td className="text-neutral-400">{incident.chains.slice(0,2).join(' / ')}{incident.chains.length>2 ? ` +${incident.chains.length-2}` : ''}</td><td className="text-[#ff2255]">{incident.loss_label ?? fmtUsd(incident.loss_usd)}</td><td><span className={incident.status==='ongoing' ? 'text-[#f59e0b]' : 'text-[#00ff88]'}>{incident.status==='ongoing' ? 'Ongoing' : incident.status==='full' ? 'Mapped' : 'Partial'}</span></td><td><button onClick={() => setPreview(incident)} className="px-2 py-2 text-[#00d4ff]" aria-label={`Preview ${incident.name}`}>↗</button></td></tr>)}</tbody></table></div>
+      ) : visibleIncidents.length ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {visibleIncidents.map((incident, index) => (
             <IncidentCard

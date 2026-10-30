@@ -14,13 +14,14 @@ export function NavLinks() {
   const pathname = usePathname()
 
   return (
-    <div className="hidden md:flex items-center gap-6">
+    <div className="workspace-links">
       {NAV_ITEMS.map((item) => {
-        const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+        const active = item.href === "/" ? pathname === "/" || pathname.startsWith('/incident/') : pathname.startsWith(item.href)
         return (
           <Link
             key={item.href}
             href={item.href}
+            aria-current={active ? 'page' : undefined}
             className={`nav-link ${active ? "nav-link-active" : ""}`}
           >
             {item.label}
