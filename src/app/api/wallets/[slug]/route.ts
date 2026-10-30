@@ -43,7 +43,7 @@ async function getEthBalance(address: string, chain: string): Promise<number | n
   try {
     const res = await fetch(
       `https://api.etherscan.io/v2/api?chainid=${chainId}&module=account&action=balance&address=${address}&tag=latest&apikey=${apiKey}`,
-      { next: { revalidate: 300 } }
+      { next: { revalidate: 300 }, signal: AbortSignal.timeout(5000) }
     )
     const json = await res.json()
     if (json.status === '1') {
@@ -60,16 +60,41 @@ async function getTokenHoldings(address: string, chain: string): Promise<TokenHo
   if (!chainId) return []
   const apiKey = process.env.ETHERSCAN_API_KEY || ''
   try {
+    if (chain.toLowerCase() === 'ethereum') {
+      const blockscout = await fetch(
+        `https://eth.blockscout.com/api/v2/addresses/${address}/token-balances`,
+        { next: { revalidate: 60 }, signal: AbortSignal.timeout(5000) }
+      )
+      const balances = await blockscout.json()
+      if (Array.isArray(balances) && balances.length) {
+        return balances
+          .map((item: { token?: { address_hash?: string; name?: string; symbol?: string; decimals?: string }; value?: string }) => {
+            const decimals = Number(item.token?.decimals || 0)
+            const raw = Number(item.value || 0)
+            return {
+              symbol: item.token?.symbol || 'TOKEN',
+              name: item.token?.name || item.token?.symbol || 'Token',
+              balance: decimals ? raw / 10 ** decimals : raw,
+              contract: item.token?.address_hash || '',
+              decimals,
+            }
+          })
+          .filter((token: TokenHolding) => token.contract && Number.isFinite(token.balance) && token.balance > 0)
+          .sort((a: TokenHolding, b: TokenHolding) => b.balance - a.balance)
+          .slice(0, 12)
+      }
+    }
+
     const res = await fetch(
       `https://api.etherscan.io/v2/api?chainid=${chainId}&module=account&action=tokentx&address=${address}&page=1&offset=10000&sort=asc&apikey=${apiKey}`,
-      { next: { revalidate: 60 } }
+      { next: { revalidate: 60 }, signal: AbortSignal.timeout(5000) }
     )
     const json = await res.json()
     if (!Array.isArray(json.result) || json.result.length === 0) {
       if (chain.toLowerCase() === 'ethereum') {
         const blockscout = await fetch(
           `https://eth.blockscout.com/api/v2/addresses/${address}/token-balances`,
-          { next: { revalidate: 60 } }
+          { next: { revalidate: 60 }, signal: AbortSignal.timeout(5000) }
         )
         const balances = await blockscout.json()
         if (Array.isArray(balances)) {
