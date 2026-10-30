@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { use, useState } from "react"
 import { FlowSankey } from "@/components/FlowSankey"
+import { AnimatedFundFlow } from "@/components/AnimatedFundFlow"
 import { ImpactChart } from "@/components/ImpactChart"
 import { Boundary } from "@/components/Boundary"
 import { Timeline } from "@/components/Timeline"
@@ -1104,6 +1105,14 @@ function FlowTab({ slug }: { slug: string }) {
   if (isLoading)
     return <div className="h-[400px] neon-card-static animate-pulse" />
   if (!data) return null
+  if (slug === "binance-hot-wallet-2026") {
+    return (
+      <div className="space-y-4">
+        <AnimatedFundFlow links={data.links} />
+        <FlowSankey nodes={data.nodes} links={data.links} />
+      </div>
+    )
+  }
   return <FlowSankey nodes={data.nodes} links={data.links} />
 }
 
