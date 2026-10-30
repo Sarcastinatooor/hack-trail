@@ -61,25 +61,47 @@ async function getTokenHoldings(address: string, chain: string): Promise<TokenHo
   const apiKey = process.env.ETHERSCAN_API_KEY || ''
   try {
     const res = await fetch(
-      `https://api.etherscan.io/v2/api?chainid=${chainId}&module=account&action=tokenlist&address=${address}&apikey=${apiKey}`,
+      `https://api.etherscan.io/v2/api?chainid=${chainId}&module=account&action=tokentx&address=${address}&page=1&offset=10000&sort=asc&apikey=${apiKey}`,
       { next: { revalidate: 60 } }
     )
     const json = await res.json()
-    if (json.status !== '1' || !Array.isArray(json.result)) return []
-    return json.result
-      .map((token: { TokenSymbol?: string; TokenName?: string; TokenQuantity?: string; TokenDivisor?: string; TokenAddress?: string }) => {
-        const decimals = Number(token.TokenDivisor || 0)
-        const raw = Number(token.TokenQuantity || 0)
-        return {
-          symbol: token.TokenSymbol || 'TOKEN',
-          name: token.TokenName || token.TokenSymbol || 'Token',
-          balance: decimals ? raw / 10 ** decimals : raw,
-          contract: token.TokenAddress || '',
-          decimals,
-        }
+    if (!Array.isArray(json.result)) return []
+
+    const balances = new Map<string, TokenHolding & { rawBalance: bigint }>()
+    for (const transfer of json.result as Array<{
+      contractAddress?: string
+      tokenSymbol?: string
+      tokenName?: string
+      tokenDecimal?: string
+      value?: string
+      from?: string
+      to?: string
+    }>) {
+      const contract = (transfer.contractAddress || '').toLowerCase()
+      if (!contract) continue
+      const decimals = Number(transfer.tokenDecimal || 0)
+      const value = BigInt(transfer.value || '0')
+      const existing = balances.get(contract) ?? {
+        symbol: transfer.tokenSymbol || 'TOKEN',
+        name: transfer.tokenName || transfer.tokenSymbol || 'Token',
+        balance: 0,
+        contract,
+        decimals,
+        rawBalance: BigInt(0),
+      }
+      if ((transfer.to || '').toLowerCase() === address.toLowerCase()) existing.rawBalance += value
+      if ((transfer.from || '').toLowerCase() === address.toLowerCase()) existing.rawBalance -= value
+      existing.balance = Number(existing.rawBalance) / 10 ** decimals
+      balances.set(contract, existing)
+    }
+
+    return [...balances.values()]
+      .filter((token) => token.rawBalance > BigInt(0) && Number.isFinite(token.balance) && token.balance > 0)
+      .sort((a, b) => b.balance - a.balance)
+      .map(({ rawBalance, ...token }) => {
+        void rawBalance
+        return token
       })
-      .filter((token: TokenHolding) => Number.isFinite(token.balance) && token.balance > 0)
-      .sort((a: TokenHolding, b: TokenHolding) => b.balance - a.balance)
       .slice(0, 12)
   } catch {
     return []
