@@ -65,7 +65,33 @@ async function getTokenHoldings(address: string, chain: string): Promise<TokenHo
       { next: { revalidate: 60 } }
     )
     const json = await res.json()
-    if (!Array.isArray(json.result)) return []
+    if (!Array.isArray(json.result) || json.result.length === 0) {
+      if (chain.toLowerCase() === 'ethereum') {
+        const blockscout = await fetch(
+          `https://eth.blockscout.com/api/v2/addresses/${address}/token-balances`,
+          { next: { revalidate: 60 } }
+        )
+        const balances = await blockscout.json()
+        if (Array.isArray(balances)) {
+          return balances
+            .map((item: { token?: { address_hash?: string; name?: string; symbol?: string; decimals?: string }; value?: string }) => {
+              const decimals = Number(item.token?.decimals || 0)
+              const raw = Number(item.value || 0)
+              return {
+                symbol: item.token?.symbol || 'TOKEN',
+                name: item.token?.name || item.token?.symbol || 'Token',
+                balance: decimals ? raw / 10 ** decimals : raw,
+                contract: item.token?.address_hash || '',
+                decimals,
+              }
+            })
+            .filter((token: TokenHolding) => token.contract && Number.isFinite(token.balance) && token.balance > 0)
+            .sort((a: TokenHolding, b: TokenHolding) => b.balance - a.balance)
+            .slice(0, 12)
+        }
+      }
+      return []
+    }
 
     const balances = new Map<string, TokenHolding & { rawBalance: bigint }>()
     for (const transfer of json.result as Array<{
