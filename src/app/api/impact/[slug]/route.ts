@@ -35,7 +35,7 @@ async function fetchPriceHistories(config: ImpactConfig): Promise<Record<string,
   const end = Math.min(config.to, now)
   if (end <= config.from) return {}
   // One batched request avoids per-token provider bursts and preserves hourly samples.
-  const period = Math.max(3600, Math.ceil((end - config.from) / (500 * 3600)) * 3600)
+  const period = Math.max(3600, Math.ceil((end - config.from) * config.prices.length / (480 * 3600)) * 3600)
   const coins = config.prices.map(({ coinId }) => `coingecko:${coinId}`).join(',')
   const span = Math.ceil((end - config.from) / period)
   try {
