@@ -29,6 +29,35 @@ interface ImpactConfig {
   to: number
 }
 
+async function fetchPriceHistories(config: ImpactConfig): Promise<Record<string, Point[]>> {
+  if (!config.prices.length) return {}
+  const now = Math.floor(Date.now() / 1000)
+  const end = Math.min(config.to, now)
+  if (end <= config.from) return {}
+  // One batched request avoids per-token provider bursts and preserves hourly samples.
+  const period = Math.max(3600, Math.ceil((end - config.from) / (500 * 3600)) * 3600)
+  const coins = config.prices.map(({ coinId }) => `coingecko:${coinId}`).join(',')
+  const span = Math.ceil((end - config.from) / period)
+  try {
+    const response = await fetch(
+      `https://coins.llama.fi/chart/${coins}?start=${config.from}&span=${span}&period=${period / 3600}h`,
+      { next: { revalidate: 300 }, signal: AbortSignal.timeout(10000) }
+    )
+    if (!response.ok) return {}
+    const body = await response.json()
+    return Object.fromEntries(config.prices.map(({ key, coinId }) => {
+      const samples = body.coins?.[`coingecko:${coinId}`]?.prices
+      const points: Point[] = Array.isArray(samples) ? samples
+        .map((sample: { timestamp: number; price: number }) => ({ ts: sample.timestamp, value: sample.price }))
+        .filter((point: Point) => Number.isFinite(point.ts) && Number.isFinite(point.value) && point.value > 0 && point.ts >= config.from && point.ts <= end)
+        .sort((a: Point, b: Point) => a.ts - b.ts) : []
+      return [key, points]
+    }))
+  } catch {
+    return {}
+  }
+}
+
 function lossConfig(
   loss: number,
   start: number,
@@ -797,9 +826,10 @@ export async function GET(
   )
 
   // Fetch price data
+  const histories = await fetchPriceHistories(config)
   for (let i = 0; i < config.prices.length; i += 2) {
     await Promise.all(config.prices.slice(i, i + 2).map(async ({ key, coinId }) => {
-      const data = await fetchCoinGeckoPrice(coinId, config.from, config.to)
+      const data = histories[key]?.length ? histories[key] : await fetchCoinGeckoPrice(coinId, config.from, config.to)
       results[key] = data
       results[`${key}_summary`] = summarize(data)
     }))
