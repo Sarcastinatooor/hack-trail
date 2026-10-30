@@ -1105,7 +1105,7 @@ function FlowTab({ slug }: { slug: string }) {
   if (isLoading)
     return <div className="h-[400px] neon-card-static animate-pulse" />
   if (!data) return null
-  if (slug === "binance-hot-wallet-2026") {
+  if (slug.includes("binance")) {
     return <AnimatedFundFlow links={data.links} />
   }
   return <FlowSankey nodes={data.nodes} links={data.links} />
