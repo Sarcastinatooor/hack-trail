@@ -135,8 +135,22 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 // Config per incident slug
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
   'binance-hot-wallet-2026': {
-    tvl: [],
-    prices: [],
+    tvl: [
+      { key: 'uniswap_tvl', protocol: 'uniswap' },
+      { key: 'aave_tvl', protocol: 'aave' },
+    ],
+    prices: [
+      { key: 'eth_price', coinId: 'ethereum' },
+      { key: 'btc_price', coinId: 'bitcoin' },
+      { key: 'ena_price', coinId: 'ethena' },
+      { key: 'arb_price', coinId: 'arbitrum' },
+      { key: 'avax_price', coinId: 'avalanche-2' },
+      { key: 'sol_price', coinId: 'solana' },
+      { key: 'xrp_price', coinId: 'ripple' },
+      { key: 'trx_price', coinId: 'tron' },
+      { key: 'uni_price', coinId: 'uniswap' },
+      { key: 'aave_price', coinId: 'aave' },
+    ],
     staticSeries: [
       {
         key: 'binance_gross_outflow',
@@ -152,6 +166,22 @@ const IMPACT_CONFIG: Record<string, ImpactConfig> = {
         data: [
           { ts: 1793304300, value: 0 },
           { ts: 1793320200, value: 2_700_000_000 },
+        ],
+      },
+      {
+        key: 'uniswap_route_notional',
+        data: [
+          { ts: 1793304300, value: 0 },
+          { ts: 1793308800, value: 325_000_000 },
+          { ts: 1793320200, value: 325_000_000 },
+        ],
+      },
+      {
+        key: 'aave_borrowed_eth',
+        data: [
+          { ts: 1793304300, value: 0 },
+          { ts: 1793312400, value: 19_760 },
+          { ts: 1793320200, value: 19_760 },
         ],
       },
     ],
