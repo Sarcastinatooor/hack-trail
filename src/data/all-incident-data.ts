@@ -39,6 +39,7 @@ import { MAGIC_EDEN_NFT_DRAIN_DATA } from "./magic-eden-nft-drain"
 import { LIMIT_BREAK_PAYMENT_PROCESSOR_DATA } from "./limit-break-payment-processor"
 import { BITGET_WALLET_INFRASTRUCTURE_DATA } from "./bitget-wallet-infrastructure"
 import { NEAR_INTENTS_DEPOSIT_NOTIFICATION_DATA } from "./near-intents-deposit-notification"
+import { BINANCE_HOT_WALLET_2026_DATA } from "./binance-hot-wallet-2026"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
   "avici-user-drain": AVICI_DRAIN_DATA,
@@ -47,6 +48,7 @@ export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
   "limit-break-payment-processor": LIMIT_BREAK_PAYMENT_PROCESSOR_DATA,
   "bitget-wallet-infrastructure": BITGET_WALLET_INFRASTRUCTURE_DATA,
   "near-intents-deposit-notification": NEAR_INTENTS_DEPOSIT_NOTIFICATION_DATA,
+  "binance-hot-wallet-2026": BINANCE_HOT_WALLET_2026_DATA,
   "moonwell-mamo": MOONWELL_MAMO_DATA,
   "kiichain-cosmos-evm": KIICHAIN_COSMOS_EVM_DATA,
   "risex-xlp": RISEX_XLP_DATA,

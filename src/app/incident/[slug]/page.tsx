@@ -1183,6 +1183,8 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     liquidation_calls: { title: "Liquidation Calls", color: "#00ff88", unit: "" },
     near_gross_payouts: { title: "Gross BSC Payouts", color: "#ff2255", unit: "$" },
     near_reported_recovery: { title: "Team-Reported Recovery", color: "#00ff88", unit: "$" },
+    binance_gross_outflow: { title: "Gross Binance Outflow", color: "#ff2255", unit: "$" },
+    binance_frozen_value: { title: "Frozen Onchain Value", color: "#00d4ff", unit: "$" },
   }
 
   return (

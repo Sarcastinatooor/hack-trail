@@ -2,6 +2,23 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "binance-hot-wallet-2026-10",
+    slug: "binance-hot-wallet-2026",
+    name: "Binance Multi-Chain Hot Wallet Drain",
+    victim: "Binance exchange hot wallets",
+    date: "2026-10-29",
+    date_label: "Oct 29, 2026",
+    loss_usd: 6_360_000_000,
+    loss_label: "~$6.3B-$6.36B gross impact / ~$2.7B frozen",
+    chains: ["Ethereum", "Bitcoin", "TRON", "XRP Ledger", "Solana", "Arbitrum", "Avalanche", "Optimism", "Base", "Polygon"],
+    attack_vector: "Hot-wallet signing infrastructure compromise + EIP-7702 delegation",
+    attribution: "TRM: TraderTraitor / North Korea-linked, high confidence; final Binance attribution pending",
+    short_summary:
+      "Binance reported a potential security incident after hot wallets sent billions across ten networks. TRM traced approximately $6.36B in gross transfers, including an EIP-7702 sweeper path on Ethereum, while issuers and Arbitrum froze approximately $2.7B. Binance says user funds are safe and will cover losses; its technical postmortem remains pending.",
+    status: "ongoing",
+    tags: ["Binance", "exchange", "hot-wallet", "EIP-7702", "multi-chain", "TraderTraitor", "freezes", "live-tracking"],
+  },
+  {
     id: "near-intents-deposit-notification-2026-10",
     slug: "near-intents-deposit-notification",
     name: "NEAR Intents Deposit-Notification Exploit",

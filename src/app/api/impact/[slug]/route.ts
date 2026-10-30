@@ -134,6 +134,30 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 
 // Config per incident slug
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
+  'binance-hot-wallet-2026': {
+    tvl: [],
+    prices: [],
+    staticSeries: [
+      {
+        key: 'binance_gross_outflow',
+        data: [
+          { ts: 1793304300, value: 0 },
+          { ts: 1793305463, value: 2_500_000_000 },
+          { ts: 1793315100, value: 5_780_000_000 },
+          { ts: 1793320200, value: 6_360_000_000 },
+        ],
+      },
+      {
+        key: 'binance_frozen_value',
+        data: [
+          { ts: 1793304300, value: 0 },
+          { ts: 1793320200, value: 2_700_000_000 },
+        ],
+      },
+    ],
+    from: 1793212800,
+    to: 1793481600,
+  },
   'near-intents-deposit-notification': {
     tvl: [],
     prices: [],
