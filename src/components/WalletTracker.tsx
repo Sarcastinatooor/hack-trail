@@ -108,8 +108,9 @@ function WalletRow({ w, slug }: { w: WalletData; slug: string }) {
             </div>
           )}
           {!!w.tokens?.length && (
-            <div className="mono text-[9px] text-neutral-500 mt-1">
-              {w.tokens.length} token{w.tokens.length === 1 ? "" : "s"}
+            <div className="mono mt-1 max-w-[260px] truncate text-[9px] text-neutral-500">
+              {w.tokens.slice(0, 3).map((token) => `${token.balance.toLocaleString(undefined, { maximumFractionDigits: 2 })} ${token.symbol}`).join(" · ")}
+              {w.tokens.length > 3 ? ` · +${w.tokens.length - 3} more` : ""}
             </div>
           )}
         </div>
