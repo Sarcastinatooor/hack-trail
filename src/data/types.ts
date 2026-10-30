@@ -24,6 +24,7 @@ export interface HopSide {
 }
 
 export interface Hop {
+  evidence?: { url: string; label: string; transaction?: string; scope: string }
   step: number
   phase: string
   ts: number

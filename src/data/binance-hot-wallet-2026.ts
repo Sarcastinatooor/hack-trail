@@ -53,6 +53,12 @@ const hops: Hop[] = [
   {
     step: 3,
     phase: "drain",
+    evidence: {
+      url: "https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history",
+      label: "TRM Labs investigation",
+      transaction: "0x53bd38b816c23e74134786c29a8c18d792777998a3b9326047b583100e88e2f3",
+      scope: "The transaction documents the Ethereum main sweep only. The $6.36B figure aggregates transfers across ten chains; it is not this transaction's value.",
+    },
     ts: TS.firstSweep,
     from: { label: "Binance hot wallets", kind: "victim_contract" },
     to: { label: "Main attacker collection address", kind: "attacker", address: ADDRESSES.collection },
@@ -77,6 +83,7 @@ const hops: Hop[] = [
   {
     step: 5,
     phase: "swap",
+    evidence: { url: "https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history", label: "TRM Labs swap tracing", scope: "Reported aggregate: approximately $325M USDT exchanged through UniswapX and other intent routes for approximately 122,300 ETH. A complete transaction list and exact per-swap timestamps are not indexed here." },
     ts: TS.freeze,
     from: { label: "Attacker collection address", kind: "attacker", address: ADDRESSES.collection },
     to: { label: "UniswapX + market makers", kind: "swap_route" },
@@ -89,6 +96,7 @@ const hops: Hop[] = [
   {
     step: 6,
     phase: "lending",
+    evidence: { url: "https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history", label: "TRM Labs Aave tracing", scope: "Reported position: $60M USDT collateral and approximately 19,760 ETH borrowed. The displayed USD amount is collateral, not proceeds or an additional loss. Exact transaction hash is not yet indexed." },
     ts: TS.freeze,
     from: { label: "Attacker split wallet", kind: "attacker" },
     to: { label: "Aave", kind: "lending" },

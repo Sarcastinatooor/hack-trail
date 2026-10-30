@@ -12,6 +12,9 @@ function buildSankey(hops: Hop[]) {
     phase?: string
     step?: number
     summary?: string
+    evidence?: Hop['evidence']
+    from_address?: string
+    to_address?: string
   }> = []
 
   // Only build links from hops with actual USD value
@@ -26,6 +29,9 @@ function buildSankey(hops: Hop[]) {
         phase: hop.phase,
         step: hop.step,
         summary: hop.summary,
+        evidence: hop.evidence,
+        from_address: hop.from.address,
+        to_address: hop.to.address,
       })
     }
   }

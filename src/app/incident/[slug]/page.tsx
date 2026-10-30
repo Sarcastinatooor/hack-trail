@@ -9,6 +9,7 @@ import { ImpactChart } from "@/components/ImpactChart"
 import { Boundary } from "@/components/Boundary"
 import { Timeline } from "@/components/Timeline"
 import { WalletTracker } from "@/components/WalletTracker"
+import { CurrentFundsMap } from "@/components/CurrentFundsMap"
 import { MagicEdenSafetyPanel } from "@/components/MagicEdenSafetyPanel"
 import type { IncidentData } from "@/data/types"
 
@@ -1363,7 +1364,7 @@ export default function IncidentPage({
               ) : (
                 <>
                   {slug === "magic-eden-nft-drain" && <MagicEdenSafetyPanel />}
-                  <WalletTracker slug={slug} />
+                  {slug === 'binance-hot-wallet-2026' ? <CurrentFundsMap slug={slug} /> : <WalletTracker slug={slug} />}
                 </>
               )}
             </div>
