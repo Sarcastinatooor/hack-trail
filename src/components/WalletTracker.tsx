@@ -17,6 +17,13 @@ interface WalletData {
   balance_eth: number | null
   native_symbol?: string
   total_usd: number
+  tokens?: Array<{
+    symbol: string
+    name: string
+    balance: number
+    contract: string
+    decimals: number
+  }>
 }
 
 interface Transfer {
@@ -100,6 +107,11 @@ function WalletRow({ w, slug }: { w: WalletData; slug: string }) {
               <span className="text-neutral-500 text-xs">{w.native_symbol ?? "ETH"}</span>
             </div>
           )}
+          {!!w.tokens?.length && (
+            <div className="mono text-[9px] text-neutral-500 mt-1">
+              {w.tokens.length} token{w.tokens.length === 1 ? "" : "s"}
+            </div>
+          )}
         </div>
         <span
           className={`text-neutral-600 transition-transform text-xs ${expanded ? "rotate-90" : ""}`}
@@ -115,6 +127,19 @@ function WalletRow({ w, slug }: { w: WalletData; slug: string }) {
                 {w.source_label ?? "HackTrail source"}
               </div>
               {w.notes}
+            </div>
+          )}
+          {!!w.tokens?.length && (
+            <div className="border-b border-white/[0.04] p-3">
+              <div className="mono mb-2 text-[9px] uppercase tracking-wider text-neutral-600">Token holdings</div>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {w.tokens.map((token) => (
+                  <div key={`${token.contract}-${token.symbol}`} className="rounded border border-white/[0.05] bg-white/[0.02] px-2 py-1.5">
+                    <div className="mono text-[10px] text-neutral-300">{token.symbol}</div>
+                    <div className="data-value text-xs text-neutral-200">{token.balance.toLocaleString(undefined, { maximumFractionDigits: 4 })}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           {w.balance_eth === null ? (

@@ -28,6 +28,14 @@ const NATIVE_SYMBOLS: Record<string, string> = {
   kiichain: 'KII',
 }
 
+interface TokenHolding {
+  symbol: string
+  name: string
+  balance: number
+  contract: string
+  decimals: number
+}
+
 async function getEthBalance(address: string, chain: string): Promise<number | null> {
   const chainId = CHAIN_IDS[chain.toLowerCase()]
   if (!chainId) return null
@@ -44,6 +52,37 @@ async function getEthBalance(address: string, chain: string): Promise<number | n
     return 0
   } catch {
     return 0
+  }
+}
+
+async function getTokenHoldings(address: string, chain: string): Promise<TokenHolding[]> {
+  const chainId = CHAIN_IDS[chain.toLowerCase()]
+  if (!chainId) return []
+  const apiKey = process.env.ETHERSCAN_API_KEY || ''
+  try {
+    const res = await fetch(
+      `https://api.etherscan.io/v2/api?chainid=${chainId}&module=account&action=tokenlist&address=${address}&apikey=${apiKey}`,
+      { next: { revalidate: 60 } }
+    )
+    const json = await res.json()
+    if (json.status !== '1' || !Array.isArray(json.result)) return []
+    return json.result
+      .map((token: { TokenSymbol?: string; TokenName?: string; TokenQuantity?: string; TokenDivisor?: string; TokenAddress?: string }) => {
+        const decimals = Number(token.TokenDivisor || 0)
+        const raw = Number(token.TokenQuantity || 0)
+        return {
+          symbol: token.TokenSymbol || 'TOKEN',
+          name: token.TokenName || token.TokenSymbol || 'Token',
+          balance: decimals ? raw / 10 ** decimals : raw,
+          contract: token.TokenAddress || '',
+          decimals,
+        }
+      })
+      .filter((token: TokenHolding) => Number.isFinite(token.balance) && token.balance > 0)
+      .sort((a: TokenHolding, b: TokenHolding) => b.balance - a.balance)
+      .slice(0, 12)
+  } catch {
+    return []
   }
 }
 
@@ -64,7 +103,10 @@ export async function GET(
 
   const results = await Promise.all(
     wallets.map(async (w: TrackedWallet) => {
-      const balance = await getEthBalance(w.address, w.chain)
+      const [balance, tokens] = await Promise.all([
+        getEthBalance(w.address, w.chain),
+        getTokenHoldings(w.address, w.chain),
+      ])
       return {
         address: w.address,
         chain: w.chain,
@@ -74,6 +116,7 @@ export async function GET(
         source_label: w.sourceLabel,
         balance_eth: balance,
         native_symbol: NATIVE_SYMBOLS[w.chain.toLowerCase()] ?? 'ETH',
+        tokens,
         total_usd: 0, // Would need price * balance
       }
     })
