@@ -1201,10 +1201,15 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
     aave_borrowed_eth: { title: "ETH Borrowed on Aave", color: "#f59e0b", unit: "ETH " },
   }
 
+  const titleForKey = (key: string) => {
+    const words = key.replace(/_price$/, "").split("_")
+    return words.map((word) => word.toUpperCase()).join(" ") + (key.endsWith("_price") ? " Price" : "")
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {chartKeys.map((key) => {
-        const config = CHART_CONFIG[key] ?? { title: key, color: "#00d4ff", unit: "$" }
+        const config = CHART_CONFIG[key] ?? { title: titleForKey(key), color: "#00d4ff", unit: "$" }
         const points = data[key] as Array<{ ts: number; value: number }>
         return (
           <Boundary key={key} label={config.title}>

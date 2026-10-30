@@ -64,7 +64,7 @@ export function ImpactChart({
     markLineData.push({
       xAxis: incidentTs * 1000,
       lineStyle: { color: "#ff2255", type: "dashed", width: 1.5, opacity: 0.6 },
-      label: { show: true, formatter: "INCIDENT", color: "#ff2255", fontSize: 9, fontFamily: "JetBrains Mono" },
+      label: { show: true, position: "insideStartTop", formatter: "INCIDENT", color: "#ff2255", fontSize: 9, fontFamily: "JetBrains Mono", padding: [0, 0, 6, 0] },
     })
   }
 
@@ -86,11 +86,12 @@ export function ImpactChart({
     title: {
       text: title,
       subtext: subtitle,
-      left: 0,
+      left: 4,
+      top: 0,
       textStyle: { color: "#f0f0f0", fontSize: 12, fontWeight: 600, fontFamily: "Inter" },
       subtextStyle: { color: "#52525b", fontSize: 10, fontFamily: "JetBrains Mono" },
     },
-    grid: { left: 55, right: 25, top: subtitle ? 58 : 38, bottom: 28 },
+    grid: { left: 52, right: 18, top: subtitle ? 48 : 30, bottom: 24, containLabel: false },
     tooltip: {
       trigger: "axis",
       backgroundColor: "#0a0a0f",
@@ -179,8 +180,8 @@ export function ImpactChart({
   }
 
   return (
-    <div className="neon-card-static p-4">
-      <ReactECharts option={option} style={{ height: 280 }} opts={{ renderer: "canvas" }} />
+    <div className="neon-card-static px-3 pb-2 pt-3">
+      <ReactECharts option={option} style={{ height: 250 }} opts={{ renderer: "canvas" }} />
     </div>
   )
 }
