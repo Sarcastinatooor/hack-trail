@@ -107,12 +107,22 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
     }
 
     const url = `${baseUrl}/coins/${coinId}/market_chart/range?vs_currency=usd&from=${clampedFrom}&to=${clampedTo}`
-    const res = await fetch(url, { headers, next: { revalidate: 3600 } })
+    let res = await fetch(url, { headers, next: { revalidate: 3600 }, signal: AbortSignal.timeout(8000) })
+    if (res.status === 429 || res.status >= 500) {
+      await new Promise((resolve) => setTimeout(resolve, 1200))
+      res = await fetch(url, { headers, cache: 'no-store', signal: AbortSignal.timeout(8000) })
+    }
 
     if (!res.ok) {
-      const text = await res.text()
-      console.error(`[CoinGecko] ${coinId}: HTTP ${res.status}`, text.slice(0, 200))
-      return []
+      const days = Math.min(365, Math.ceil((now - clampedFrom) / 86400) + 1)
+      const fallback = await fetch(`${baseUrl}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`, {
+        headers, next: { revalidate: 3600 }, signal: AbortSignal.timeout(8000),
+      })
+      if (!fallback.ok) return []
+      const history = await fallback.json()
+      return (history.prices || [])
+        .map(([ms, value]: [number, number]) => ({ ts: Math.floor(ms / 1000), value }))
+        .filter((point: Point) => point.ts >= clampedFrom && point.ts <= clampedTo)
     }
 
     const json = await res.json()
@@ -787,13 +797,13 @@ export async function GET(
   )
 
   // Fetch price data
-  await Promise.all(
-    config.prices.map(async ({ key, coinId }) => {
+  for (let i = 0; i < config.prices.length; i += 2) {
+    await Promise.all(config.prices.slice(i, i + 2).map(async ({ key, coinId }) => {
       const data = await fetchCoinGeckoPrice(coinId, config.from, config.to)
       results[key] = data
       results[`${key}_summary`] = summarize(data)
-    })
-  )
+    }))
+  }
 
   return NextResponse.json(results)
 }

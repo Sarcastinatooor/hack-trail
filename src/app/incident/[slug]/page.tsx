@@ -1112,9 +1112,13 @@ function FlowTab({ slug }: { slug: string }) {
 }
 
 function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; incidentTs?: number; contagionEndTs?: number }) {
-  const { data, isLoading } = useQuery<ImpactResp>({
+  const { data, isLoading, isFetching, refetch, error } = useQuery<ImpactResp>({
     queryKey: ["impact", slug],
-    queryFn: () => fetch(`/api/impact/${slug}`).then((r) => r.json()),
+    queryFn: async () => {
+      const response = await fetch(`/api/impact/${slug}`)
+      if (!response.ok) throw new Error("Impact data request failed")
+      return response.json()
+    },
   })
 
   if (isLoading)
@@ -1126,6 +1130,7 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
       </div>
     )
 
+  if (error) return <div className="neon-card-static p-4 text-sm text-neutral-400">Impact data could not load. <button onClick={() => refetch()} className="text-emerald-400">Retry</button></div>
   if (!data) return null
 
   const chartKeys = Object.keys(data).filter(
@@ -1207,7 +1212,8 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid min-w-0 grid-cols-1 md:grid-cols-2 gap-4">
+      {chartKeys.some((key) => !(data[key] as unknown[]).length) && <div className="col-span-full flex flex-wrap items-center justify-between gap-3 border border-amber-400/20 rounded p-3 text-xs text-neutral-400"><span>Some historical series are unavailable from the data provider.</span><button disabled={isFetching} onClick={() => refetch()} className="text-emerald-400 disabled:opacity-50">{isFetching ? "Retrying…" : "Retry missing data"}</button></div>}
       {chartKeys.map((key) => {
         const config = CHART_CONFIG[key] ?? { title: titleForKey(key), color: "#00d4ff", unit: "$" }
         const points = data[key] as Array<{ ts: number; value: number }>

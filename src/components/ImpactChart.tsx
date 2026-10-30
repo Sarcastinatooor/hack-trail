@@ -13,7 +13,7 @@ function fmtAxis(v: number, unit = "$") {
   if (a >= 1e9) return `${unit}${(v / 1e9).toFixed(1)}B`
   if (a >= 1e6) return `${unit}${(v / 1e6).toFixed(1)}M`
   if (a >= 1e3) return `${unit}${(v / 1e3).toFixed(1)}k`
-  return `${unit}${v.toFixed(2)}`
+  return `${unit}${v.toFixed(a < 1 ? 4 : 2)}`
 }
 
 interface Props {
@@ -64,7 +64,7 @@ export function ImpactChart({
     markLineData.push({
       xAxis: incidentTs * 1000,
       lineStyle: { color: "#ff2255", type: "dashed", width: 1.5, opacity: 0.6 },
-      label: { show: true, position: "insideStartTop", formatter: "INCIDENT", color: "#ff2255", fontSize: 9, fontFamily: "JetBrains Mono", padding: [0, 0, 6, 0] },
+      label: { show: false },
     })
   }
 
@@ -83,16 +83,10 @@ export function ImpactChart({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const option: any = {
     backgroundColor: "transparent",
-    title: {
-      text: title,
-      subtext: subtitle,
-      left: 4,
-      top: 0,
-      textStyle: { color: "#f0f0f0", fontSize: 12, fontWeight: 600, fontFamily: "Inter" },
-      subtextStyle: { color: "#52525b", fontSize: 10, fontFamily: "JetBrains Mono" },
-    },
-    grid: { left: 52, right: 18, top: subtitle ? 48 : 30, bottom: 24, containLabel: false },
+    useUTC: true,
+    grid: { left: 8, right: 16, top: 16, bottom: 8, containLabel: true },
     tooltip: {
+      confine: true,
       trigger: "axis",
       backgroundColor: "#0a0a0f",
       borderColor: "rgba(0, 255, 136, 0.1)",
@@ -115,11 +109,13 @@ export function ImpactChart({
     xAxis: {
       type: "time",
       axisLine: { lineStyle: { color: "rgba(255,255,255,0.06)" } },
-      axisLabel: { color: "#52525b", fontSize: 9, fontFamily: "JetBrains Mono" },
+      splitNumber: 4,
+      axisLabel: { hideOverlap: true, color: "#737373", fontSize: 9, fontFamily: "JetBrains Mono" },
       splitLine: { show: false },
     },
     yAxis: {
       type: "value",
+      splitNumber: 4,
       min: yMin,
       max: yMax,
       axisLine: { show: false },
@@ -152,6 +148,7 @@ export function ImpactChart({
           symbol: "circle",
           symbolSize: 5,
           label: {
+            show: false,
             fontSize: 9,
             color: "#e5e7eb",
             fontFamily: "JetBrains Mono",
@@ -180,8 +177,12 @@ export function ImpactChart({
   }
 
   return (
-    <div className="neon-card-static px-3 pb-2 pt-3">
-      <ReactECharts option={option} style={{ height: 250 }} opts={{ renderer: "canvas" }} />
+    <div className="neon-card-static min-w-0 overflow-hidden p-4">
+      <div className="flex flex-wrap items-start justify-between gap-2 pb-2">
+        <div className="min-w-0"><h3 className="text-sm font-semibold text-neutral-200">{title}</h3>{subtitle && <p className="mt-1 text-xs text-neutral-500">{subtitle}</p>}</div>
+        {highlightIncident && incidentTs && <span className="mono text-[9px] text-rose-400">Incident marker · UTC</span>}
+      </div>
+      <ReactECharts notMerge option={option} style={{ height: 240, width: "100%" }} opts={{ renderer: "canvas" }} />
     </div>
   )
 }
