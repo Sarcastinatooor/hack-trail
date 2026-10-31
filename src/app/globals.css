@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+.impact-panel { min-width: 0; padding: 20px; border: 1px solid #ffffff18; background: #ffffff02; }
+.impact-panel-header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.impact-panel h3 { font-size: 13px; font-weight: 500; }
+.impact-panel-header p { color: #85858f; font: 10px var(--font-mono); margin-top: 5px; }
+.impact-chart-actions { display: flex; gap: 8px; align-items: center; font: 10px var(--font-mono); }
+.impact-chart-actions > div { display: flex; border: 1px solid #ffffff18; }
+.impact-chart-actions button, .impact-chart-actions a { padding: 5px 8px; color: #85858f; }
+.impact-chart-actions a { border: 1px solid #ffffff18; font-size: 14px; line-height: 14px; }
+.impact-chart-actions button[aria-pressed="true"] { color: #00ff88; background: #00ff880a; outline: 1px solid #00ff8840; }
+.impact-chart-actions button:disabled { opacity: .3; cursor: not-allowed; }
+.impact-readout { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.impact-readout strong { font: 500 23px var(--font-mono); font-variant-numeric: tabular-nums; }
+.impact-readout span { font: 10px var(--font-mono); }.impact-readout small { font-size: 9px; }
+.impact-chart-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; border-top: 1px solid #ffffff0d; padding-top: 12px; color: #85858f; font: 9px var(--font-mono); }
+@media(max-width: 480px) { .impact-panel { padding: 14px; }.impact-panel-header { gap: 12px; }.impact-chart-actions { flex-wrap: wrap; } }
+@media(max-width: 480px) { .workspace-main .tab-bar { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0; padding: 4px; }.workspace-main .tab-btn { min-width: 0; justify-content: center; padding: 9px 4px; font-size: 11px; gap: 4px; } }
+
 /* Shared workspace geometry, adapted from the reference's compact data views. */
 .workspace-sidebar { position: fixed; inset: 0 auto 0 0; width: 204px; z-index: 60; background: #08080b; border-right: 1px solid #ffffff12; padding: 24px 12px; display: flex; flex-direction: column; }
 .sidebar-brand { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 650; padding: 0 8px 30px; }
