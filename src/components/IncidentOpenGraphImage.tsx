@@ -2,12 +2,10 @@ import { ImageResponse } from "next/og"
 import { INCIDENT_DATA_BY_SLUG } from "@/data/all-incident-data"
 import { INCIDENTS } from "@/data/incidents"
 
-export const alt = "HackTrail incident preview"
-export const size = {
+const size = {
   width: 1200,
   height: 630,
 }
-export const contentType = "image/png"
 
 function formatUsd(value: number) {
   if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(1)}B`
@@ -707,12 +705,7 @@ function RisexOpenGraphCard() {
   )
 }
 
-export default async function OpenGraphImage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
+export function renderIncidentImage(slug: string) {
   const summary = INCIDENTS.find((incident) => incident.slug === slug)
   const detail = INCIDENT_DATA_BY_SLUG[slug]
 
@@ -725,6 +718,38 @@ export default async function OpenGraphImage({
   const description = truncate(summary?.short_summary ?? detail?.incident.root_cause ?? "", 185)
   const stats = detail?.incident.stats.slice(0, 2) ?? []
   const tags = summary?.tags.slice(0, 5) ?? []
+
+  if (slug === "binance-hot-wallet-2026") {
+    return new ImageResponse(
+      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", padding: "40px 48px", background: "#050507", color: "#f4f4f5", fontFamily: "Arial, Helvetica, sans-serif", borderTop: "4px solid #00ff88" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <LogoMark size={64} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ display: "flex", fontSize: 28, fontWeight: 800 }}>HACK<span style={{ color: "#00ff88" }}>TRAIL</span></div>
+              <div style={{ fontSize: 12, color: "#a1a1aa" }}>ONCHAIN INCIDENT INTELLIGENCE</div>
+            </div>
+          </div>
+          <div style={{ display: "flex", color: "#ff5578", fontSize: 14, border: "1px solid #ff225550", padding: "10px 14px", borderRadius: 6 }}>INCIDENT REPORT</div>
+        </div>
+        <div style={{ display: "flex", color: "#a1a1aa", fontSize: 17, marginTop: 30 }}>OCT 29, 2026 · 10 NETWORKS</div>
+        <div style={{ display: "flex", flexDirection: "column", fontSize: 51, lineHeight: 1.12, fontWeight: 800, marginTop: 12 }}><span>Binance Multi-Chain</span><span>Hot Wallet Drain</span></div>
+        <div style={{ display: "flex", fontSize: 20, lineHeight: 1.4, color: "#a1a1aa", marginTop: 16 }}>Track the wallet trail, asset swaps, issuer freezes and market impact.</div>
+        <div style={{ display: "flex", gap: 16, marginTop: 28 }}>
+          {[
+            { label: "GROSS TRACED OUTFLOW", value: "~$6.36B", color: "#ff315d", note: "Not final net unrecovered loss" },
+            { label: "REPORTED FROZEN ONCHAIN", value: "~$2.7B", color: "#00d4ff", note: "Issuer and network response" },
+            { label: "NETWORKS AFFECTED", value: "10", color: "#00ff88", note: "Multi-chain wallet drain" },
+          ].map((stat) => <div key={stat.label} style={{ display: "flex", flexDirection: "column", flex: 1, padding: "18px 20px", border: "1px solid #ffffff24", borderRadius: 6 }}>
+            <div style={{ fontSize: 12, color: "#a1a1aa" }}>{stat.label}</div>
+            <div style={{ fontSize: 40, fontWeight: 800, color: stat.color, marginTop: 8 }}>{stat.value}</div>
+            <div style={{ fontSize: 13, color: "#a1a1aa", marginTop: 7 }}>{stat.note}</div>
+          </div>)}
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", paddingTop: 18, borderTop: "1px solid #ffffff24", fontSize: 15 }}><span style={{ color: "#a1a1aa" }}>Fund flow · Tracked wallets · Impact</span><span style={{ color: "#00ff88" }}>hack-trail.vercel.app</span></div>
+      </div>, size,
+    )
+  }
 
   if (slug === "moonwell-mamo") {
     return new ImageResponse(<MoonwellMamoOpenGraphCard />, size)

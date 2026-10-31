@@ -18,6 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hack-trail.vercel.app"),
   title: "HackTrail — Crypto Exploit Intelligence",
   description:
     "Real-time crypto exploit trail mapper. Chronological journey, USD-weighted fund flows, live wallet balances, and protocol damage — powered by on-chain data.",

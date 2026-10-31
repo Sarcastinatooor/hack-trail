@@ -40,7 +40,9 @@ export async function generateMetadata({
       : incident.slug === "moonwell-mamo"
         ? MOONWELL_MAMO_OG_IMAGE_VERSION
         : OG_IMAGE_VERSION
-  const imageUrl = `${canonicalUrl}/opengraph-image?v=${imageVersion}`
+  const imageUrl = incident.slug === "binance-hot-wallet-2026"
+    ? `${SITE_URL}/og/binance-hot-wallet-2026-v1.png`
+    : `${canonicalUrl}/opengraph-image?v=${imageVersion}`
 
   return {
     title,
