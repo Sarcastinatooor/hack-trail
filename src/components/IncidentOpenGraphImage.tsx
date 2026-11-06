@@ -711,7 +711,7 @@ export function renderIncidentImage(slug: string) {
 
   const name = summary?.name ?? "HackTrail Incident Intelligence"
   const victim = summary?.victim ?? detail?.incident.victim ?? "DeFi Incident"
-  const loss = summary?.loss_label ?? (summary ? formatUsd(summary.loss_usd) : "Exploit Intel")
+  const loss = summary?.observed_outflow_usd !== undefined ? formatUsd(summary.observed_outflow_usd) : summary?.loss_label ?? (summary ? formatUsd(summary.loss_usd) : "Exploit Intel")
   const date = summary?.date_label ?? "Live Intel"
   const chains = summary?.chains.join(" / ") ?? detail?.incident.chains_touched.join(" / ") ?? "Onchain"
   const vector = summary?.attack_vector ?? detail?.incident.root_cause ?? "On-chain exploit trail"
@@ -854,7 +854,7 @@ export function renderIncidentImage(slug: string) {
                 display: "flex",
               }}
             />
-            LIVE INCIDENT CARD
+            {detail?.incident.assessment === "suspected" ? "INCIDENT RESEARCH" : "LIVE INCIDENT CARD"}
           </div>
         </div>
 
@@ -881,7 +881,7 @@ export function renderIncidentImage(slug: string) {
                   letterSpacing: 2,
                 }}
               >
-                ACTIVE INCIDENT
+                {detail?.incident.assessment === "suspected" ? "UNDER INVESTIGATION" : "ACTIVE INCIDENT"}
               </div>
               <div style={{ color: "#8b949e", fontSize: 18, fontWeight: 700 }}>{date}</div>
               <div style={{ color: "#00d4ff", fontSize: 18, fontWeight: 800 }}>{chains}</div>
@@ -938,7 +938,7 @@ export function renderIncidentImage(slug: string) {
               }}
             >
               <div style={{ color: "#8b949e", fontSize: 13, letterSpacing: 2, fontWeight: 800 }}>
-                TOTAL LOSS
+                {summary?.observed_outflow_usd !== undefined ? "GROSS OUTFLOW / NET LOSS UNKNOWN" : "TOTAL LOSS"}
               </div>
               <div style={{ color: "#ff2255", fontSize: 44, fontWeight: 900, marginTop: 7 }}>
                 {loss}

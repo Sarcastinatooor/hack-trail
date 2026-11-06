@@ -116,7 +116,7 @@ function IncidentCard({
   latest: boolean
   onPreview: (incident: IncidentExplorerItem) => void
 }) {
-  const isVulnerability = incident.loss_usd === 0
+  const isVulnerability = incident.loss_usd === 0 && incident.observed_outflow_usd === undefined
   const metric = (incident.loss_label ?? fmtUsd(incident.loss_usd)).replace("price crash", "crash")
   const metricSize = metric.length > 19 ? "text-[1.15rem]" : metric.length > 13 ? "text-[1.35rem]" : "text-[1.6rem]"
   const delay = `${Math.min(index, 6) * 45}ms`
@@ -157,7 +157,7 @@ function IncidentCard({
           <div className="mt-4 grid min-h-[78px] grid-cols-[minmax(0,1.05fr)_minmax(7rem,0.95fr)] gap-4 border-y border-white/[0.045] py-3.5">
             <div className="min-w-0 self-center">
               <div className="mono text-[9px] uppercase tracking-[0.14em] text-neutral-600">
-                {isVulnerability ? "Potential impact" : "Value affected"}
+                {incident.observed_outflow_usd !== undefined ? "Verified gross outflow" : isVulnerability ? "Potential impact" : "Value affected"}
               </div>
               <div className={`data-value mt-1 break-words leading-[1.2] ${metricSize} ${isVulnerability ? "text-[#00d4ff]" : "text-[#ff315d]"}`}>
                 {metric}
@@ -221,7 +221,7 @@ function PreviewDrawer({
   onClose: () => void
 }) {
   const closeRef = useRef<HTMLButtonElement>(null)
-  const isVulnerability = incident.loss_usd === 0
+  const isVulnerability = incident.loss_usd === 0 && incident.observed_outflow_usd === undefined
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -262,7 +262,7 @@ function PreviewDrawer({
 
           <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className={`rounded-lg border p-4 ${isVulnerability ? "border-[#00d4ff]/20 bg-[#00d4ff]/[0.04]" : "border-[#ff2255]/20 bg-[#ff2255]/[0.04]"}`}>
-              <div className="mono text-[9px] uppercase tracking-wider text-neutral-600">{isVulnerability ? "Impact" : "Value affected"}</div>
+              <div className="mono text-[9px] uppercase tracking-wider text-neutral-600">{incident.observed_outflow_usd !== undefined ? "Verified gross outflow" : isVulnerability ? "Impact" : "Value affected"}</div>
               <div className={`data-value mt-1 text-base leading-relaxed ${isVulnerability ? "text-[#00d4ff]" : "text-[#ff315d]"}`}>
                 {incident.loss_label ?? fmtUsd(incident.loss_usd)}
               </div>

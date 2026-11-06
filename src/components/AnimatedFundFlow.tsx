@@ -19,7 +19,14 @@ interface Link {
 function money(value: number) {
   if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(2)}B`
   if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(0)}M`
-  return `$${(value / 1_000).toFixed(0)}K`
+  if (value >= 1_000) return `$${(value / 1_000).toFixed(value < 10_000 ? 1 : 0)}K`
+  return `$${value.toFixed(0)}`
+}
+
+function addressExplorer(chain: string | undefined, side: string) {
+  const networks = (chain ?? 'Ethereum').toLowerCase().split(' -> ')
+  const network = side === 'Source' ? networks[0] : networks.at(-1)
+  return network === 'arbitrum' ? 'https://arbiscan.io/address/' : 'https://etherscan.io/address/'
 }
 
 export function AnimatedFundFlow({ links }: { links: Link[] }) {
@@ -70,9 +77,9 @@ export function AnimatedFundFlow({ links }: { links: Link[] }) {
       <dialog ref={drawer} onClose={() => setSelected(null)} aria-labelledby="evidence-title" className="fixed inset-y-0 left-auto right-0 m-0 h-dvh max-h-dvh w-full max-w-lg overflow-y-auto border-l border-white/10 bg-[#0b0b0b] p-6 text-neutral-200 backdrop:bg-black/70">
         <div className="flex items-start justify-between gap-4"><h2 id="evidence-title" className="text-lg font-semibold">Transaction evidence</h2><button onClick={() => setSelected(null)} aria-label="Close evidence" className="rounded border border-white/10 px-3 py-1">×</button></div>
         {selected && <div className="mt-6 space-y-5 text-sm"><div><p className="text-neutral-500">Route</p><p className="mt-1">{selected.source} → {selected.target}</p></div><div className="grid grid-cols-2 gap-4"><div><p className="text-neutral-500">Asset</p><p>{selected.asset}</p></div><div><p className="text-neutral-500">Network</p><p>{selected.chain}</p></div></div><p className="leading-relaxed text-neutral-400">{selected.summary}</p>
-          {[['Source',selected.from_address],['Destination',selected.to_address]].map(([label,address]) => address && <div key={label}><p className="text-neutral-500">{label} address</p><a target="_blank" rel="noreferrer" href={`https://etherscan.io/address/${address}`} className="mt-1 block break-all font-mono text-xs text-emerald-300">{address} ↗</a></div>)}
+          {[['Source',selected.from_address],['Destination',selected.to_address]].map(([label,address]) => address && <div key={label}><p className="text-neutral-500">{label} address</p><a target="_blank" rel="noreferrer" href={`${addressExplorer(selected.chain, label!)}${address}`} className="mt-1 block break-all font-mono text-xs text-emerald-300">{address} ↗</a></div>)}
           <div className="border-y border-white/10 py-4 text-xs leading-relaxed text-amber-300">{selected.evidence?.scope ?? 'Published incident context. A transaction hash and complete route reconciliation have not been indexed for this step. Animation illustrates the report; it is not a live transfer signal.'}</div>
-          {selected.evidence?.transaction && <a href={`https://etherscan.io/tx/${selected.evidence.transaction}`} target="_blank" rel="noreferrer" className="block break-all text-xs text-emerald-300">Main sweep transaction: {selected.evidence.transaction} ↗</a>}
+          {selected.evidence?.transaction && <a href={`${addressExplorer(selected.chain, 'Source').replace('/address/', '/tx/')}${selected.evidence.transaction}`} target="_blank" rel="noreferrer" className="block break-all text-xs text-emerald-300">Transaction: {selected.evidence.transaction} ↗</a>}
           <a href={selected.evidence?.url ?? 'https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history'} target="_blank" rel="noreferrer" className="block text-emerald-300">{selected.evidence?.label ?? 'Read the published investigation'} ↗</a>
         </div>}
       </dialog>

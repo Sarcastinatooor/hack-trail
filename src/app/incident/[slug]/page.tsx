@@ -50,7 +50,7 @@ function StatCard({
 }
 
 function Header({ incident }: { incident: IncidentData["incident"] }) {
-  const isVulnerability = incident.loss_usd === 0
+  const isVulnerability = incident.loss_usd === 0 && incident.observed_outflow_usd === undefined
   return (
     <div className="neon-card-static p-5 relative overflow-hidden">
       {/* Glow */}
@@ -68,7 +68,7 @@ function Header({ incident }: { incident: IncidentData["incident"] }) {
                 isVulnerability ? "badge-info" : "badge-critical"
               }`}
             >
-              {isVulnerability ? "● VULNERABILITY" : "● ACTIVE INCIDENT"}
+              {incident.assessment === "suspected" ? "● UNDER INVESTIGATION" : isVulnerability ? "● VULNERABILITY" : "● ACTIVE INCIDENT"}
             </span>
             <span className="mono text-[10px] text-neutral-600">
               {new Date(incident.start_ts * 1000).toISOString().slice(0, 10)}
@@ -1106,7 +1106,7 @@ function FlowTab({ slug }: { slug: string }) {
   if (isLoading)
     return <div className="h-[400px] neon-card-static animate-pulse" />
   if (!data) return null
-  if (slug.includes("binance")) {
+  if (slug.includes("binance") || slug === "vargan-points-otc") {
     return <AnimatedFundFlow links={data.links} />
   }
   return <FlowSankey nodes={data.nodes} links={data.links} />
@@ -1150,6 +1150,8 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
   }
 
   const CHART_CONFIG: Record<string, { title: string; color: string; unit: string }> = {
+    vargan_escrow_outflow: { title: "Verified Escrow Outflow", color: "#f59e0b", unit: "USDC " },
+    vargan_routed_usdc: { title: "USDC Routed Onward", color: "#00d4ff", unit: "USDC " },
     aave_tvl: { title: "Aave TVL", color: "#00d4ff", unit: "$" },
     kelp_tvl: { title: "Kelp DAO TVL", color: "#ff2255", unit: "$" },
     aave_fees: { title: "Aave Daily Fees", color: "#f59e0b", unit: "$" },
@@ -1214,6 +1216,7 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
 
   return (
     <div className="grid min-w-0 grid-cols-1 md:grid-cols-2 gap-4">
+      {slug === "vargan-points-otc" && <p className="col-span-full border-b border-white/10 pb-4 text-xs leading-relaxed text-neutral-400">Historical transfer totals from verified November 6 receipts, not wallet balances, confirmed losses, or a live loss counter. The two series describe successive stages of the same funds and must not be added together. No causal token-price or Variational TVL impact has been established.</p>}
       {chartKeys.some((key) => !(data[key] as unknown[]).length) && <div className="col-span-full flex flex-wrap items-center justify-between gap-3 border border-amber-400/20 rounded p-3 text-xs text-neutral-400"><span>Some historical series are unavailable from the data provider.</span><button disabled={isFetching} onClick={() => refetch()} className="text-emerald-400 disabled:opacity-50">{isFetching ? "Retrying…" : "Retry missing data"}</button></div>}
       {chartKeys.map((key) => {
         const config = CHART_CONFIG[key] ?? { title: titleForKey(key), color: "#00d4ff", unit: "$" }
@@ -1227,6 +1230,8 @@ function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; inciden
               unit={config.unit}
               incidentTs={incidentTs}
               contagionEndTs={contagionEndTs}
+              subtitle={slug === "vargan-points-otc" ? "Verified transfer accumulation / Nov 6 snapshot / UTC" : undefined}
+              cumulative={slug === "vargan-points-otc"}
             />
           </Boundary>
         )
@@ -1310,6 +1315,15 @@ export default function IncidentPage({
         </div>
 
         {/* Tab bar */}
+        {data.limitations && <section aria-label="Evidence and limitations" className="border-y border-amber-400/20 py-4 text-xs leading-relaxed text-neutral-400">
+          <h2 className="mb-2 font-semibold text-amber-300">Evidence and limitations</h2>
+          <p>{data.limitations[0]}</p>
+          <details className="mt-3">
+            <summary className="cursor-pointer text-[#00d4ff]">Scope, sources and verification</summary>
+            <ul className="mt-3 list-disc space-y-2 pl-4">{data.limitations.slice(1).map((note) => <li key={note}>{note}</li>)}</ul>
+            <ul className="mt-4 grid gap-3 md:grid-cols-2">{data.sources?.map((source) => <li key={source.url} className="min-w-0"><a className="text-[#00d4ff] hover:underline" href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>{source.note && <p className="mt-1 break-words text-neutral-500">{source.note}</p>}</li>)}</ul>
+          </details>
+        </section>}
         <div className="tab-bar flex gap-1">
           {TABS.map((t) => (
             <button

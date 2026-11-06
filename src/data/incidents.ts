@@ -2,6 +2,16 @@ import { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: "vargan-points-otc-2026-11", slug: "vargan-points-otc",
+    name: "Vargan Points OTC - Suspected Exit Scam", victim: "Third-party OTC escrow participants",
+    date: "2026-11-06", date_label: "Nov 6, 2026", loss_usd: 0,
+    observed_outflow_usd: 511_118.320019, loss_label: "$511.12K gross outflow / net loss unknown",
+    chains: ["Arbitrum", "Ethereum"], attack_vector: "Suspected OTC escrow misuse / multisig signer risk",
+    attribution: "Intent and operator identity unverified",
+    short_summary: "Five verified USDC outflows from the desk's public 2-of-3 Safe total $511.12K. Eight onward LI.FI routes lead to Ethereum as ETH and DAI. Social reports describe an inaccessible operator account and Telegram group; net customer losses remain unknown. This is not an established Variational protocol exploit.",
+    status: "ongoing", tags: ["OTC", "escrow", "suspected-scam", "multisig", "points", "under-investigation"],
+  },
+  {
     id: "binance-hot-wallet-2026-10",
     slug: "binance-hot-wallet-2026",
     name: "Binance Multi-Chain Hot Wallet Drain",

@@ -40,8 +40,10 @@ import { LIMIT_BREAK_PAYMENT_PROCESSOR_DATA } from "./limit-break-payment-proces
 import { BITGET_WALLET_INFRASTRUCTURE_DATA } from "./bitget-wallet-infrastructure"
 import { NEAR_INTENTS_DEPOSIT_NOTIFICATION_DATA } from "./near-intents-deposit-notification"
 import { BINANCE_HOT_WALLET_2026_DATA } from "./binance-hot-wallet-2026"
+import { VARGAN_POINTS_OTC_DATA } from "./vargan-points-otc"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
+  "vargan-points-otc": VARGAN_POINTS_OTC_DATA,
   "avici-user-drain": AVICI_DRAIN_DATA,
   "tectonic-cronos": TECTONIC_CRONOS_DATA,
   "magic-eden-nft-drain": MAGIC_EDEN_NFT_DRAIN_DATA,

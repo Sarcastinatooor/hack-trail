@@ -228,7 +228,7 @@ export function Timeline({
                 <div className={`absolute inset-0 rounded-full ${dotColor} opacity-40 blur-[4px]`} />
               </div>
 
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col items-start gap-1 sm:flex-row sm:gap-4">
                 {/* Timestamp */}
                 <div className="min-w-[135px] mono text-[10px] text-neutral-600 pt-0.5 tabular-nums">
                   {fmtUTC(e.ts)}
@@ -248,10 +248,10 @@ export function Timeline({
                   </div>
                   <div className="text-[13px] text-neutral-300 leading-relaxed">{e.title}</div>
                   {e.kind === "hop" && "hop" in e && e.hop.usd > 0 && (
-                    <div className="mt-1 flex items-center gap-2 mono text-[10px] text-neutral-600">
+                    <div className="mt-1 flex flex-wrap items-center gap-2 mono text-[10px] text-neutral-600">
                       <span>{e.hop.asset}</span>
                       <span className="text-neutral-700">·</span>
-                      <span className="text-[#ff2255]">${(e.hop.usd / 1_000_000).toFixed(1)}M</span>
+                      <span className="text-[#ff2255]">{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", notation: "compact", maximumFractionDigits: 2 }).format(e.hop.usd)}</span>
                       <span className="text-neutral-700">·</span>
                       <span>{e.hop.chain}</span>
                     </div>

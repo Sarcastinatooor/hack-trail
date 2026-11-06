@@ -14,6 +14,7 @@ interface Props {
   highlightIncident?: boolean
   fitY?: boolean
   subtitle?: string
+  cumulative?: boolean
 }
 
 function compact(value: number, unit: string, precision = 2) {
@@ -24,13 +25,13 @@ function compact(value: number, unit: string, precision = 2) {
   return `${unit}${value.toFixed(precision)}`
 }
 
-export function ImpactChart({ title, data, color = '#00d4ff', unit = '$', incidentTs, contagionEndTs, highlightIncident = true, fitY = true, subtitle }: Props) {
+export function ImpactChart({ title, data, color = '#00d4ff', unit = '$', incidentTs, contagionEndTs, highlightIncident = true, fitY = true, subtitle, cumulative = false }: Props) {
   const [mode, setMode] = useState<'value' | 'percent'>('value')
   const [type, setType] = useState<'line' | 'bar'>('line')
   const points = useMemo(() => data.filter((p) => Number.isFinite(p.ts) && Number.isFinite(p.value)).toSorted((a,b) => a.ts-b.ts), [data])
   const first = points[0]
   const latest = points.at(-1)
-  const canNormalize = !!first && first.value !== 0
+  const canNormalize = !cumulative && !!first && first.value !== 0
   const percent = mode === 'percent' && canNormalize
   const plot = points.map((p) => ({ ts: p.ts, value: percent ? (p.value / first.value - 1) * 100 : p.value }))
   const min = plot.length ? Math.min(...plot.map((p) => p.value)) : 0
@@ -61,7 +62,7 @@ export function ImpactChart({ title, data, color = '#00d4ff', unit = '$', incide
       axisLine: { show: false }, axisTick: { show: false }, axisLabel: { hideOverlap: true, color: '#85858f', fontFamily: 'monospace', fontSize: 10, formatter: format },
       splitLine: { lineStyle: { color: '#ffffff09', width: 1 } },
     },
-    series: [{ type, name: title, smooth: false, showSymbol: false, symbolSize: 4,
+    series: [{ type, name: title, smooth: false, step: cumulative ? 'end' : false, showSymbol: false, symbolSize: 4,
       lineStyle: { color, width: 1.5 }, itemStyle: { color }, barMaxWidth: 14,
       emphasis: { focus: 'series' }, data: plot.map((p) => [p.ts*1000,p.value]),
       markLine: marker ? { silent: true, symbol: 'none', label: { show: false }, lineStyle: { color: '#ff2255', width: 1, type: 'dashed', opacity: 0.65 }, data: [{ xAxis: incidentTs*1000 }] } : undefined,
@@ -73,7 +74,7 @@ export function ImpactChart({ title, data, color = '#00d4ff', unit = '$', incide
       <div className="min-w-0"><h3>{title}</h3><p>{subtitle ?? 'Historical observations · UTC'}</p></div>
       <div className="impact-chart-actions">
         <div role="group" aria-label={`${title} chart type`}>{(['line','bar'] as const).map((value) => <button key={value} aria-pressed={type===value} onClick={() => setType(value)}>{value==='line' ? 'Line' : 'Bars'}</button>)}</div>
-        <div role="group" aria-label={`${title} units`}>{(['value','percent'] as const).map((value) => <button key={value} title={value==='percent' && !canNormalize ? 'Percentage change needs a nonzero starting value' : undefined} disabled={value==='percent' && !canNormalize} aria-pressed={mode===value} onClick={() => setMode(value)}>{value==='value' ? (unit.trim() || 'Value') : '%'}</button>)}</div>
+        <div role="group" aria-label={`${title} units`}>{(['value','percent'] as const).map((value) => <button key={value} title={value==='percent' && !canNormalize ? cumulative ? 'Percentage comparison is unavailable for cumulative transfer totals' : 'Percentage change needs a nonzero starting value' : undefined} disabled={value==='percent' && !canNormalize} aria-pressed={mode===value} onClick={() => setMode(value)}>{value==='value' ? (unit.trim() || 'Value') : '%'}</button>)}</div>
         <a aria-label={`Download ${title} CSV`} title="Download CSV" download={`${title.toLowerCase().replaceAll(' ','-')}.csv`} href={`data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`}>↓</a>
       </div>
     </header>

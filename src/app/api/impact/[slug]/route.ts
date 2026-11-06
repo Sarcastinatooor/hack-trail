@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { VARGAN_OUTFLOWS, VARGAN_BRIDGES } from '@/data/vargan-points-otc'
 
 interface Point {
   ts: number
@@ -173,6 +174,13 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 
 // Config per incident slug
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
+  'vargan-points-otc': {
+    tvl: [], prices: [], from: VARGAN_OUTFLOWS[0].ts, to: VARGAN_BRIDGES.at(-1)!.ts,
+    staticSeries: [
+      { key: 'vargan_escrow_outflow', data: VARGAN_OUTFLOWS.map((transfer, i) => ({ ts: transfer.ts, value: VARGAN_OUTFLOWS.slice(0, i + 1).reduce((sum, item) => sum + item.amount, 0) })) },
+      { key: 'vargan_routed_usdc', data: VARGAN_BRIDGES.map((transfer, i) => ({ ts: transfer.ts, value: VARGAN_BRIDGES.slice(0, i + 1).reduce((sum, item) => sum + item.amount, 0) })) },
+    ],
+  },
   'binance-hot-wallet-2026': {
     tvl: [
       { key: 'uniswap_tvl', protocol: 'uniswap' },

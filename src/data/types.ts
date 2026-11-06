@@ -8,6 +8,7 @@ export interface IncidentSummary {
   date: string
   date_label: string
   loss_usd: number
+  observed_outflow_usd?: number
   loss_label?: string
   chains: string[]
   attack_vector: string
@@ -63,6 +64,8 @@ export interface IncidentDetail {
   attacker_attribution: string
   root_cause: string
   loss_usd: number
+  observed_outflow_usd?: number
+  assessment?: "suspected"
   start_ts: number
   pause_ts?: number
   chains_touched: string[]
@@ -77,6 +80,8 @@ export interface StatItem {
 }
 
 export interface IncidentData {
+  sources?: { label: string; url: string; note?: string }[]
+  limitations?: string[]
   incident: IncidentDetail
   hops: Hop[]
   timeline: TimelineEvent[]
