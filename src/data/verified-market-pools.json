@@ -1,0 +1,648 @@
+{
+  "eth": {
+    "network": "eth",
+    "token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "symbol": "WETH",
+    "coinId": "weth",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2/pools",
+    "verifiedAt": "2026-11-15T07:19:06.860Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640",
+        "label": "WETH / USDC 0.05% / uniswap_v3",
+        "createdAt": "2021-12-29T12:35:14Z"
+      },
+      {
+        "pool": "0x4e68ccd3e89f51c3074ca5072bbac773960dfa36",
+        "label": "WETH / USDT 0.3% / uniswap_v3",
+        "createdAt": "2021-12-29T12:36:12Z"
+      }
+    ]
+  },
+  "usdc": {
+    "network": "eth",
+    "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "symbol": "USDC",
+    "coinId": "usd-coin",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48/pools",
+    "verifiedAt": "2026-11-15T07:19:09.913Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640",
+        "label": "WETH / USDC 0.05% / uniswap_v3",
+        "createdAt": "2021-12-29T12:35:14Z"
+      },
+      {
+        "pool": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+        "label": "USDC / WETH 0.3% / uniswap_v3",
+        "createdAt": "2021-12-29T13:21:42Z"
+      }
+    ]
+  },
+  "usdt": {
+    "network": "eth",
+    "token": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "symbol": "USDT",
+    "coinId": "tether",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0xdac17f958d2ee523a2206206994597c13d831ec7/pools",
+    "verifiedAt": "2026-11-15T07:19:12.732Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x4e68ccd3e89f51c3074ca5072bbac773960dfa36",
+        "label": "WETH / USDT 0.3% / uniswap_v3",
+        "createdAt": "2021-12-29T12:36:12Z"
+      },
+      {
+        "pool": "0x3416cf6c708da44db2624d63ea0aaef7113527c6",
+        "label": "USDC / USDT 0.01% / uniswap_v3",
+        "createdAt": "2021-12-29T12:38:24Z"
+      }
+    ]
+  },
+  "dai": {
+    "network": "eth",
+    "token": "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "symbol": "DAI",
+    "coinId": "dai",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0x6b175474e89094c44da98b954eedeac495271d0f/pools",
+    "verifiedAt": "2026-11-15T07:19:15.841Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x769db46f39c42ee7ad5f71f4167c47edd281e767",
+        "label": "DAI / WETH 0.3% / sushiswap-v3-ethereum",
+        "createdAt": "2023-11-13T07:21:59Z"
+      },
+      {
+        "pool": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
+        "label": "DAI / WETH / uniswap_v2",
+        "createdAt": "2021-10-11T01:35:52Z"
+      }
+    ]
+  },
+  "ena": {
+    "network": "eth",
+    "token": "0x57e114b691db790c35207b2e685d4a43181e6061",
+    "symbol": "ENA",
+    "coinId": "ethena",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0x57e114b691db790c35207b2e685d4a43181e6061/pools",
+    "verifiedAt": "2026-11-15T07:19:18.893Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xc3db44adc1fcdfd5671f555236eae49f4a8eea18",
+        "label": "ENA / WETH 0.3% / uniswap_v3",
+        "createdAt": "2024-04-02T09:27:47Z"
+      },
+      {
+        "pool": "0xc445b096f37cd1de304c61d8c368521974695f80",
+        "label": "ENA / USDC / metric-ethereum",
+        "createdAt": "2026-10-26T09:59:35Z"
+      }
+    ]
+  },
+  "arb": {
+    "network": "arbitrum",
+    "token": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "symbol": "ARB",
+    "coinId": "arbitrum",
+    "source": "https://api.geckoterminal.com/api/v2/networks/arbitrum/tokens/0x912ce59144191c1204e64559fe8253a0e49e6548/pools",
+    "verifiedAt": "2026-11-15T07:20:21.846Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xc6f780497a95e246eb9449f5e4770916dcd6396a",
+        "label": "ARB / WETH 0.05% / uniswap_v3_arbitrum",
+        "createdAt": "2023-03-17T01:49:14Z"
+      },
+      {
+        "pool": "0xaebdca1bc8d89177ebe2308d62af5e74885dccc3",
+        "label": "ARB / USDC 0.3% / uniswap_v3_arbitrum",
+        "createdAt": "2023-06-10T09:08:11Z"
+      }
+    ]
+  },
+  "uni": {
+    "network": "eth",
+    "token": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+    "symbol": "UNI",
+    "coinId": "uniswap",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984/pools",
+    "verifiedAt": "2026-11-15T07:20:24.739Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x1d42064fc4beb5f8aaf85f4617ae8b3b5b8bd801",
+        "label": "UNI / WETH 0.3% / uniswap_v3",
+        "createdAt": "2021-12-29T13:15:46Z"
+      },
+      {
+        "pool": "0x360b9726186c0f62cc719450685ce70280774dc8",
+        "label": "UNI / WETH 1% / uniswap_v3",
+        "createdAt": "2021-12-29T17:05:24Z"
+      }
+    ]
+  },
+  "aave": {
+    "network": "eth",
+    "token": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+    "symbol": "AAVE",
+    "coinId": "aave",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9/pools",
+    "verifiedAt": "2026-11-15T07:20:27.364Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x5ab53ee1d50eef2c1dd3d5402789cd27bb52c1bb",
+        "label": "AAVE / WETH 0.3% / uniswap_v3",
+        "createdAt": "2021-12-29T13:03:09Z"
+      },
+      {
+        "pool": "0x2187d779d9b173dd7202b38b54dca6eb04d1b32ca261980869195b5b9fa97ef8",
+        "label": "AAVE / USDC 0.3% / uniswap-v4-ethereum",
+        "createdAt": "2025-01-31T04:28:47Z"
+      }
+    ]
+  },
+  "wbtc": {
+    "network": "eth",
+    "token": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "symbol": "WBTC",
+    "coinId": "wrapped-bitcoin",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599/pools",
+    "verifiedAt": "2026-11-15T07:20:30.089Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xcbcdf9626bc03e24f779434178a73a0b4bad62ed",
+        "label": "WBTC / WETH 0.3% / uniswap_v3",
+        "createdAt": "2021-12-29T13:39:18Z"
+      },
+      {
+        "pool": "0x4585fe77225b41b697c938b018e2ac67ac5a20c0",
+        "label": "WBTC / WETH 0.05% / uniswap_v3",
+        "createdAt": "2021-12-29T12:36:14Z"
+      }
+    ]
+  },
+  "sol": {
+    "network": "solana",
+    "token": "So11111111111111111111111111111111111111112",
+    "symbol": "WSOL",
+    "coinId": "wrapped-solana",
+    "source": "https://api.geckoterminal.com/api/v2/networks/solana/tokens/So11111111111111111111111111111111111111112/pools",
+    "verifiedAt": "2026-11-15T07:20:32.929Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "Czfq3xZZDmsdGdUyrNLtRhGc47cXcZtLG4crryfu44zE",
+        "label": "SOL / USDC / orca",
+        "createdAt": "2023-07-05T14:34:02Z"
+      },
+      {
+        "pool": "58oQChx4yWmvKdwLLZzBi4ChoCc2fqCUWBkwMihLYQo2",
+        "label": "SOL / USDC / raydium",
+        "createdAt": "2022-04-28T09:46:08Z"
+      }
+    ]
+  },
+  "solUsdc": {
+    "network": "solana",
+    "token": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "symbol": "USDC",
+    "coinId": "usd-coin",
+    "source": "https://api.geckoterminal.com/api/v2/networks/solana/tokens/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/pools",
+    "verifiedAt": "2026-11-15T07:21:08.036Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "Czfq3xZZDmsdGdUyrNLtRhGc47cXcZtLG4crryfu44zE",
+        "label": "SOL / USDC / orca",
+        "createdAt": "2023-07-05T14:34:02Z"
+      }
+    ]
+  },
+  "bonk": {
+    "network": "solana",
+    "token": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+    "symbol": "BONK",
+    "coinId": "bonk",
+    "source": "https://api.geckoterminal.com/api/v2/networks/solana/tokens/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263/pools",
+    "verifiedAt": "2026-11-15T07:21:40.947Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "5zpyutJu9ee6jFymDGoK7F6S5Kczqtc9FomP3ueKuyA9",
+        "label": "Bonk / SOL / orca",
+        "createdAt": "2023-07-05T14:41:09Z"
+      },
+      {
+        "pool": "31p1hptjhFo6ZD8oBqkfutNXQKGGPyi7YcEAfsyKW777",
+        "label": "Bonk / USDC / meteora",
+        "createdAt": "2025-07-17T15:51:09Z"
+      }
+    ]
+  },
+  "mngo": {
+    "network": "solana",
+    "token": "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
+    "symbol": "MNGO",
+    "coinId": "mango-markets",
+    "source": "https://api.geckoterminal.com/api/v2/networks/solana/tokens/MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac/pools",
+    "verifiedAt": "2026-11-15T07:21:43.787Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "34tFULRrRwh4bMcBLPtJaNqqe5pVgGZACi5sR8Xz95KC",
+        "label": "MNGO / USDC / raydium",
+        "createdAt": "2022-04-28T09:49:04Z"
+      },
+      {
+        "pool": "Hk9ZCvmqVT1FHNkWJMrtMkkVnH1WqssWPAvmio5Vs3se",
+        "label": "MNGO / USDC / orca",
+        "createdAt": "2024-08-06T05:14:00Z"
+      }
+    ]
+  },
+  "tonic": {
+    "network": "cro",
+    "token": "0xdd73dea10abc2bff99c60882ec5b2b81bb1dc5b2",
+    "symbol": "TONIC",
+    "coinId": "tectonic",
+    "source": "https://api.geckoterminal.com/api/v2/networks/cro/tokens/0xdd73dea10abc2bff99c60882ec5b2b81bb1dc5b2/pools",
+    "verifiedAt": "2026-11-15T07:21:46.628Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x4b377121d968bf7a62d51b96523d59506e7c2bf0",
+        "label": "TONIC / WCRO / vvs",
+        "createdAt": "2021-12-23T06:27:53Z"
+      },
+      {
+        "pool": "0x08d819bf919f5d43880c9358c0648ad535880e64",
+        "label": "TONIC / WCRO 0.3% / vvs-v3",
+        "createdAt": "2023-11-06T21:25:30Z"
+      }
+    ]
+  },
+  "rseth": {
+    "network": "eth",
+    "token": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7",
+    "symbol": "RSETH",
+    "coinId": "kelp-dao-restaked-eth",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0xa1290d69c65a6fe4df752f95823fae25cb99e5a7/pools",
+    "verifiedAt": "2026-11-15T07:22:19.875Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x276084527b801e00db8e4410504f9baf93f72c67",
+        "label": "rsETH / ETH / fluid-ethereum",
+        "createdAt": "2024-12-20T21:19:47Z"
+      },
+      {
+        "pool": "0xcc7f7aeeb3586e59002bf743cb665af6d05d41e86d7cc871d0c0da0ba9834e30",
+        "label": "rsETH / USDT 99.99% / uniswap-v4-ethereum",
+        "createdAt": "2026-04-18T21:10:23Z"
+      }
+    ]
+  },
+  "gala": {
+    "network": "eth",
+    "token": "0xd1d2eb1b1e90b638588728b4130137d262c87cae",
+    "symbol": "GALA",
+    "coinId": "gala",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0xd1d2eb1b1e90b638588728b4130137d262c87cae/pools",
+    "verifiedAt": "2026-11-15T07:22:22.890Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x465e56cd21ad47d4d4790f17de5e0458f20c3719",
+        "label": "GALA / WETH 0.3% / uniswap_v3",
+        "createdAt": "2023-05-16T03:31:11Z"
+      },
+      {
+        "pool": "0xf1dd3569b7c82e93340d502e0f34a78fcb8e1597",
+        "label": "GALA / WETH 1% / uniswap_v3",
+        "createdAt": "2023-05-16T03:51:35Z"
+      }
+    ]
+  },
+  "shib": {
+    "network": "eth",
+    "token": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+    "symbol": "SHIB",
+    "coinId": "shiba-inu",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce/pools",
+    "verifiedAt": "2026-11-15T07:22:25.990Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xcf6daab95c476106eca715d48de4b13287ffdeaa",
+        "label": "SHIB / WETH / shibaswap",
+        "createdAt": "2022-01-04T09:47:46Z"
+      },
+      {
+        "pool": "0x811beed0119b4afce20d2583eb608c6f7af1954f",
+        "label": "SHIB / WETH / uniswap_v2",
+        "createdAt": "2021-10-11T01:35:36Z"
+      }
+    ]
+  },
+  "pepe": {
+    "network": "eth",
+    "token": "0x6982508145454ce325ddbe47a25d4ec3d2311933",
+    "symbol": "PEPE",
+    "coinId": "pepe",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0x6982508145454ce325ddbe47a25d4ec3d2311933/pools",
+    "verifiedAt": "2026-11-15T07:22:28.981Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xa43fe16908251ee70ef74718545e4fe6c5ccec9f",
+        "label": "PEPE / WETH / uniswap_v2",
+        "createdAt": "2023-04-14T17:21:11Z"
+      },
+      {
+        "pool": "0x11950d141ecb863f01007add7d1a342041227b58",
+        "label": "PEPE / WETH 0.3% / uniswap_v3",
+        "createdAt": "2023-04-19T22:22:35Z"
+      }
+    ]
+  },
+  "comp": {
+    "network": "eth",
+    "token": "0xc00e94cb662c3520282e6f5717214004a7f26888",
+    "symbol": "COMP",
+    "coinId": "compound-governance-token",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0xc00e94cb662c3520282e6f5717214004a7f26888/pools",
+    "verifiedAt": "2026-11-15T07:22:32.075Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x8767cc91765cb624777005cffebde6b2cf6481fb",
+        "label": "COMP / WETH / sashimiswap",
+        "createdAt": "2026-09-12T08:29:59Z"
+      },
+      {
+        "pool": "0x4786bb29a1589854204a4e62dcbe26a571224c0f",
+        "label": "USDC / COMP 1% / uniswap_v3",
+        "createdAt": "2022-01-01T02:49:29Z"
+      }
+    ]
+  },
+  "pyr": {
+    "network": "eth",
+    "token": "0x430ef9263e76dae63c84292c3409d61c598e9682",
+    "symbol": "PYR",
+    "coinId": "vulcan-forged",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0x430ef9263e76dae63c84292c3409d61c598e9682/pools",
+    "verifiedAt": "2026-11-15T07:23:05.272Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xf3dc70b0d0ed8ac5e284f58e43b616ce86d97641d60b81482c5dcc55a94a4fc8",
+        "label": "PYR / USDT 11% / uniswap-v4-ethereum",
+        "createdAt": "2026-10-08T04:54:11Z"
+      },
+      {
+        "pool": "0x2811dc515ee8477bd332ac3a204cd1604b7a0aac8bd63eb4e03837b0d16cf582",
+        "label": "PYR / USDC 10% / uniswap-v4-ethereum",
+        "createdAt": "2026-06-12T12:24:59Z"
+      }
+    ]
+  },
+  "sui": {
+    "network": "sui-network",
+    "token": "0x2::sui::SUI",
+    "symbol": "SUI",
+    "coinId": "sui",
+    "source": "https://api.geckoterminal.com/api/v2/networks/sui-network/tokens/0x2%3A%3Asui%3A%3ASUI/pools",
+    "verifiedAt": "2026-11-15T07:23:38.396Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xb8d7d9e66a60c239e7a60110efcf8de6c705580ed924d0dde141f4a0e2c90105",
+        "label": "USDC / SUI 0.25% / cetus",
+        "createdAt": ""
+      },
+      {
+        "pool": "0x455cf8d2ac91e7cb883f515874af750ed3cd18195c970b7a2d46235ac2b0c388",
+        "label": "SUI / USDC / momentum",
+        "createdAt": "2025-07-31T02:21:08Z"
+      }
+    ]
+  },
+  "suiUsdc": {
+    "network": "sui-network",
+    "token": "0xdba34672e30cb065b1f93e3ab55318768fd6fef66c15942c9f7cb846e2f900e7::usdc::USDC",
+    "symbol": "USDC",
+    "coinId": "usd-coin",
+    "source": "https://api.geckoterminal.com/api/v2/networks/sui-network/tokens/0xdba34672e30cb065b1f93e3ab55318768fd6fef66c15942c9f7cb846e2f900e7%3A%3Ausdc%3A%3AUSDC/pools",
+    "verifiedAt": "2026-11-15T07:23:41.273Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xb8d7d9e66a60c239e7a60110efcf8de6c705580ed924d0dde141f4a0e2c90105",
+        "label": "USDC / SUI 0.25% / cetus",
+        "createdAt": ""
+      },
+      {
+        "pool": "0x455cf8d2ac91e7cb883f515874af750ed3cd18195c970b7a2d46235ac2b0c388",
+        "label": "SUI / USDC / momentum",
+        "createdAt": "2025-07-31T02:21:08Z"
+      }
+    ]
+  },
+  "mamo": {
+    "network": "base",
+    "token": "0x7300b37dfdfab110d83290a29dfb31b1740219fe",
+    "symbol": "MAMO",
+    "coinId": "mamo",
+    "source": "https://api.geckoterminal.com/api/v2/networks/base/tokens/0x7300b37dfdfab110d83290a29dfb31b1740219fe/pools",
+    "verifiedAt": "2026-11-15T07:23:44.068Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xe2b3aa806e56603a244bfc111c9474f7dedd03db",
+        "label": "MAMO / cbBTC 0.3% / aerodrome-slipstream",
+        "createdAt": "2025-05-21T14:58:31Z"
+      },
+      {
+        "pool": "0x678f431da2abb9b5726bbf5ccdbaeebb60da9813",
+        "label": "MAMO / USDC 0.3% / aerodrome-slipstream",
+        "createdAt": "2025-07-14T18:02:05Z"
+      }
+    ]
+  },
+  "baseUsdc": {
+    "network": "base",
+    "token": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    "symbol": "USDC",
+    "coinId": "usd-coin",
+    "source": "https://api.geckoterminal.com/api/v2/networks/base/tokens/0x833589fcd6edb6e08f4c7c32d4f71b54bda02913/pools",
+    "verifiedAt": "2026-11-15T07:23:46.913Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+        "label": "WETH / USDC 0.3% / uniswap-v3-base",
+        "createdAt": "2023-11-18T05:59:09Z"
+      },
+      {
+        "pool": "0x4a7af46bc8abc00048c6c7920a1488daf568366c",
+        "label": "WETH / USDC 0.04% / aero-slipstream-base",
+        "createdAt": "2026-10-22T02:50:19Z"
+      }
+    ]
+  },
+  "arbUsdc": {
+    "network": "arbitrum",
+    "token": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "symbol": "USDC",
+    "coinId": "usd-coin",
+    "source": "https://api.geckoterminal.com/api/v2/networks/arbitrum/tokens/0xaf88d065e77c8cc2239327c5edb3a432268e5831/pools",
+    "verifiedAt": "2026-11-15T07:24:20.205Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xc6962004f452be9203591991d15f6b388e09e8d0",
+        "label": "USDC / WETH 0.05% / uniswap_v3_arbitrum",
+        "createdAt": "2023-06-08T21:28:24Z"
+      },
+      {
+        "pool": "0x3c0441b42195f4ad6aa9a0978e06096ea616cda7",
+        "label": "USDC / USDT / fluid-arbitrum",
+        "createdAt": "2025-02-06T18:47:25Z"
+      }
+    ]
+  },
+  "steth": {
+    "network": "eth",
+    "token": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+    "symbol": "STETH",
+    "coinId": "staked-ether",
+    "source": "https://api.geckoterminal.com/api/v2/networks/eth/tokens/0xae7ab96520de3a18e5e111b5eaab095312d7fe84/pools",
+    "verifiedAt": "2026-11-15T07:24:22.877Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0xdc24316b9ae028f1497c275eb9192a3ea0f67022",
+        "label": "stETH / ETH / curve",
+        "createdAt": "2022-07-13T11:46:11Z"
+      },
+      {
+        "pool": "0x21e27a5e5513d6e65c4f830167390997aa84843a",
+        "label": "ETH / stETH / curve",
+        "createdAt": "2023-05-18T00:29:05Z"
+      }
+    ]
+  },
+  "bnb": {
+    "network": "bsc",
+    "token": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    "symbol": "WBNB",
+    "coinId": "wbnb",
+    "source": "https://api.geckoterminal.com/api/v2/networks/bsc/tokens/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c/pools",
+    "verifiedAt": "2026-11-15T07:24:25.537Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae",
+        "label": "USDT / WBNB / pancakeswap_v2",
+        "createdAt": "2021-07-15T07:20:16Z"
+      },
+      {
+        "pool": "0x172fcd41e0913e95784454622d1c3724f546f849",
+        "label": "USDT / WBNB 0.01% / pancakeswap-v3-bsc",
+        "createdAt": "2025-11-09T12:44:04Z"
+      }
+    ]
+  },
+  "hyperUsdt": {
+    "network": "hyperevm",
+    "token": "0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb",
+    "symbol": "USDT0",
+    "coinId": "usdt0",
+    "source": "https://api.geckoterminal.com/api/v2/networks/hyperevm/tokens/0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb/pools",
+    "verifiedAt": "2026-11-15T07:24:58.693Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x46abbdfc675ffa9ddf032c64fee363745204e63e",
+        "label": "USDC / USD₮0 0.002% / ramses-v3-hyperevm",
+        "createdAt": "2025-12-01T02:17:26Z"
+      },
+      {
+        "pool": "0x613bc619741354a6171692b04228c9640373e54b",
+        "label": "USDC / USD₮0 0.002% / nest",
+        "createdAt": "2026-04-28T09:38:00Z"
+      }
+    ]
+  },
+  "bscUsdt": {
+    "network": "bsc",
+    "token": "0x55d398326f99059ff775485246999027b3197955",
+    "symbol": "BSC-USD",
+    "coinId": "binance-bridged-usdt-bnb-smart-chain",
+    "source": "https://api.geckoterminal.com/api/v2/networks/bsc/tokens/0x55d398326f99059ff775485246999027b3197955/pools",
+    "verifiedAt": "2026-11-15T07:25:02.014Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x4f31fa980a675570939b737ebdde0471a4be40eb",
+        "label": "USDT / USDC 0.05% / pancakeswap-v3-bsc",
+        "createdAt": "2023-05-03T11:14:49Z"
+      },
+      {
+        "pool": "0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae",
+        "label": "USDT / WBNB / pancakeswap_v2",
+        "createdAt": "2021-07-15T07:20:16Z"
+      }
+    ]
+  },
+  "cbBtc": {
+    "network": "base",
+    "token": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+    "symbol": "CBBTC",
+    "coinId": "coinbase-wrapped-btc",
+    "source": "https://api.geckoterminal.com/api/v2/networks/base/tokens/0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf/pools",
+    "verifiedAt": "2026-11-15T07:25:04.851Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x7aea2e8a3843516afa07293a10ac8e49906dabd1",
+        "label": "cbBTC / WETH 0.05% / uniswap-v3-base",
+        "createdAt": "2024-09-13T15:24:23Z"
+      },
+      {
+        "pool": "0x8c7080564b5a792a33ef2fd473fba6364d5495e5",
+        "label": "cbBTC / WETH 0.3% / uniswap-v3-base",
+        "createdAt": "2024-09-11T19:49:35Z"
+      }
+    ]
+  },
+  "baseEth": {
+    "network": "base",
+    "token": "0x4200000000000000000000000000000000000006",
+    "symbol": "WETH",
+    "coinId": "l2-standard-bridged-weth-base",
+    "source": "https://api.geckoterminal.com/api/v2/networks/base/tokens/0x4200000000000000000000000000000000000006/pools",
+    "verifiedAt": "2026-11-15T07:25:07.687Z",
+    "selectionVersion": 2,
+    "pools": [
+      {
+        "pool": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+        "label": "WETH / USDC 0.3% / uniswap-v3-base",
+        "createdAt": "2023-11-18T05:59:09Z"
+      },
+      {
+        "pool": "0x7aea2e8a3843516afa07293a10ac8e49906dabd1",
+        "label": "cbBTC / WETH 0.05% / uniswap-v3-base",
+        "createdAt": "2024-09-13T15:24:23Z"
+      }
+    ]
+  }
+}

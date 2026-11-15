@@ -6,6 +6,7 @@ import { use, useState } from "react"
 import { FlowSankey } from "@/components/FlowSankey"
 import { AnimatedFundFlow } from "@/components/AnimatedFundFlow"
 import { ImpactChart } from "@/components/ImpactChart"
+import { MarketImpactPanel } from "@/components/MarketImpactPanel"
 import { Boundary } from "@/components/Boundary"
 import { Timeline } from "@/components/Timeline"
 import { WalletTracker } from "@/components/WalletTracker"
@@ -1386,6 +1387,7 @@ export default function IncidentPage({
 
           {tab === "impact" && (
             <Boundary label="Impact Charts">
+              <MarketImpactPanel slug={slug} onEvidence={() => setTab('flow')} />
               <ImpactTab
                 slug={slug}
                 incidentTs={incident.start_ts}

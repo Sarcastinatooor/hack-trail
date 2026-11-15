@@ -1,4 +1,4 @@
-import { IncidentSummary } from './types'
+import type { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
