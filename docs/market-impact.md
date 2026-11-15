@@ -8,7 +8,7 @@ Every published incident has an explicit coverage entry in `src/data/market-pool
 
 - Without a key, requests use GeckoTerminal public API. Rate limits and historical coverage apply.
 - Optional `COINGECKO_ONCHAIN_API_KEY` and `COINGECKO_ONCHAIN_PLAN=demo|pro` explicitly select CoinGecko credentials. Do not infer tier from the key prefix.
-- Set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` for persistent readings. The app does not silently fall back to process memory or a serverless filesystem. Missing or failed storage is disclosed in the UI.
+- Set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` for persistent readings. Vercel's integration names `KV_REST_API_URL` and `KV_REST_API_TOKEN` are also supported as a pair. The app does not silently fall back to process memory or a serverless filesystem. Missing or failed storage is disclosed in the UI.
 - Redis retains at most 2,016 readings per network/token/pool, with a 30-day inactivity expiry. Writes are atomically limited to one per five-minute bucket. Sampling is request-driven while the panel is open, not an unattended monitoring service.
 
 ## Semantics

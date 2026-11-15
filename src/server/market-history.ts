@@ -2,8 +2,9 @@ import type { Reading } from '../utils/market-impact'
 
 // Shared Redis REST storage survives Vercel cold starts. No ephemeral fallback.
 export async function history(key: string, reading?: Reading): Promise<Reading[] | null> {
-  const url = process.env.UPSTASH_REDIS_REST_URL
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN
+  const direct = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+  const url = direct ? process.env.UPSTASH_REDIS_REST_URL : process.env.KV_REST_API_URL
+  const token = direct ? process.env.UPSTASH_REDIS_REST_TOKEN : process.env.KV_REST_API_TOKEN
   if (!url || !token) return null
   const redisKey = `market:v1:${key}`
   const bucket = reading ? Math.floor(Date.parse(reading.observedAt) / 300000) : 0

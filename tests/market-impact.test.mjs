@@ -89,3 +89,32 @@ test('storage failures and missing configuration remain unavailable', async () =
     else process.env.UPSTASH_REDIS_REST_TOKEN = savedToken
   }
 })
+test('Vercel Redis aliases support read and write commands without mixing credentials', async () => {
+  const names = ['UPSTASH_REDIS_REST_URL', 'UPSTASH_REDIS_REST_TOKEN', 'KV_REST_API_URL', 'KV_REST_API_TOKEN']
+  const saved = Object.fromEntries(names.map(name => [name, process.env[name]]))
+  const originalFetch = globalThis.fetch
+  try {
+    for (const name of names) delete process.env[name]
+    process.env.UPSTASH_REDIS_REST_URL = 'https://incomplete.invalid'
+    process.env.KV_REST_API_URL = 'https://vercel-redis.invalid'
+    process.env.KV_REST_API_TOKEN = 'test-only'
+    const reading = parsePool(config, fixture())
+    let command
+    globalThis.fetch = async (url, options) => {
+      assert.equal(url, 'https://vercel-redis.invalid')
+      assert.equal(options.headers.Authorization, 'Bearer test-only')
+      command = JSON.parse(options.body)
+      return Response.json({ result: [JSON.stringify(reading)] })
+    }
+    assert.deepEqual(await history('fixture', reading), [reading])
+    assert.equal(command[0], 'EVAL')
+    assert.deepEqual(await history('fixture'), [reading])
+    assert.equal(command[0], 'LRANGE')
+  } finally {
+    globalThis.fetch = originalFetch
+    for (const name of names) {
+      if (saved[name] === undefined) delete process.env[name]
+      else process.env[name] = saved[name]
+    }
+  }
+})
