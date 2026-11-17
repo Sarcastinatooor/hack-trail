@@ -22,12 +22,12 @@ export async function generateMetadata({
 
   if (!incident) {
     return {
-      title: "Incident Not Found | HackTrail",
+      title: "Incident Not Found | Hack Trail by Unrekt",
       description: "Crypto exploit intelligence and wallet exposure tracking by HackTrail.",
     }
   }
 
-  const title = `${incident.name} | HackTrail`
+  const title = `${incident.name} | Hack Trail by Unrekt`
   const description = truncate(incident.short_summary)
   const canonicalUrl = `${SITE_URL}/incident/${incident.slug}`
   const imageVersion =
@@ -54,7 +54,7 @@ export async function generateMetadata({
       title,
       description,
       url: canonicalUrl,
-      siteName: "HackTrail",
+      siteName: "Unrekt",
       type: "article",
       images: [
         {

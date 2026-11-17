@@ -19,9 +19,9 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hack-trail.vercel.app"),
-  title: "HackTrail — Crypto Exploit Intelligence",
+  title: "Unrekt | Onchain Security Intelligence",
   description:
-    "Real-time crypto exploit trail mapper. Chronological journey, USD-weighted fund flows, live wallet balances, and protocol damage — powered by on-chain data.",
+    "Investigate onchain incidents with Hack Trail, trace funds and check wallet exposure.",
 }
 
 function NavBar() {
@@ -32,15 +32,15 @@ function NavBar() {
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="w-8 h-8 relative flex items-center justify-center overflow-hidden rounded-lg bg-black border border-white/[0.08] shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:border-[#00ff88]/30 group-hover:shadow-[0_0_22px_rgba(0,255,136,0.13)] transition-all duration-300">
             <Image
-              src="/logo.svg"
-              alt="HackTrail Logo"
+              src="/unrekt.svg"
+              alt="Unrekt"
               fill
               sizes="32px"
               className="object-contain p-1 transition-transform duration-300 group-hover:scale-105"
             />
           </div>
           <span className="text-sm font-bold tracking-wider text-white">
-            HACK<span className="text-[#00ff88]">TRAIL</span>
+            Unrekt
           </span>
         </Link>
 
@@ -67,7 +67,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark`}>
       <body className="min-h-screen bg-[#050507] text-neutral-200 antialiased">
         <Providers>
-          <aside className="workspace-sidebar" aria-label="Main navigation"><Link href="/" className="sidebar-brand"><Image src="/logo.svg" alt="" width={26} height={26} /> HACK<span>TRAIL</span></Link><div className="sidebar-section">Workspace</div><NavLinks /><div className="sidebar-bottom"><span className="text-[#00ff88]">●</span> Public incident intelligence<br /><a href="https://github.com/Sarcastinatooor/hack-trail" target="_blank" rel="noreferrer">Source repository ↗</a></div></aside>
+          <aside className="workspace-sidebar" aria-label="Main navigation"><Link href="/" className="sidebar-brand"><Image src="/unrekt.svg" alt="" width={26} height={26} /> Unrekt</Link><div className="sidebar-section">Workspace</div><NavLinks /><div className="sidebar-bottom"><span className="text-[#00ff88]">●</span> Public incident intelligence<br /><a href="https://github.com/Sarcastinatooor/hack-trail" target="_blank" rel="noreferrer">Source repository ↗</a></div></aside>
           <div className="workspace-main"><NavBar /><main className="min-h-[calc(100vh-56px)]">{children}</main></div>
         </Providers>
         <Analytics />

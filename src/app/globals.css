@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+.tracker-title { display:flex; align-items:center; gap:12px; }
+.workspace-sidebar .sidebar-brand { gap:10px; font:650 20px var(--font-sans); }
+.screen-page .screen-eyebrow, .workspace-sidebar .sidebar-section, .incident-register thead th { font:500 11px/1.5 var(--font-mono); color:#a7b8b2; }
+.screen-metrics strong, .incident-register, .impact-panel { font-variant-numeric:tabular-nums; }
+.screen-page .screen-heading p, .screen-page .screen-destinations p { font-size:14px; line-height:1.55; }
+.screen-page .screen-metrics small, .workspace-main .impact-chart-footer { color:#9daba7; font-size:12px; }
+.workspace-links .nav-link[aria-current="page"] { box-shadow:inset 2px 0 #00ff88; }
+.workspace-main .screen-heading h1 { font-weight:600; line-height:1.2; }
+@media (prefers-reduced-motion: reduce) { .workspace-main .pulse-dot { animation:none; } }
+
 .impact-panel { min-width: 0; padding: 20px; border: 1px solid #ffffff18; background: #ffffff02; }
 .impact-panel-header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px; }
 .impact-panel h3 { font-size: 13px; font-weight: 500; }
