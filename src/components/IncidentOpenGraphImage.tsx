@@ -202,7 +202,7 @@ function MoonwellMamoOpenGraphCard() {
           <span style={{ color: "#3f3f46" }}>/</span>
           <span>Postmortem pending</span>
         </div>
-        <div style={{ display: "flex", color: "#00ff88", fontSize: 13, fontWeight: 900 }}>hack-trail.vercel.app/incident/moonwell-mamo</div>
+        <div style={{ display: "flex", color: "#00ff88", fontSize: 13, fontWeight: 900 }}>unrekttt.vercel.app/incident/moonwell-mamo</div>
       </div>
     </div>
   )
@@ -306,7 +306,7 @@ function AviciRainOpenGraphCard() {
         <div style={{ display: "flex", alignItems: "center", gap: 14, color: "#71717a", fontSize: 10 }}>
           <span style={{ color: "#a1a1aa", fontWeight: 800 }}>Rain: affected contract upgraded</span><span style={{ color: "#3f3f46" }}>/</span><span>No further unauthorized activity observed</span>
         </div>
-        <div style={{ display: "flex", color: "#00ff88", fontSize: 13, fontWeight: 900 }}>hack-trail.vercel.app/incident/avici-user-drain</div>
+        <div style={{ display: "flex", color: "#00ff88", fontSize: 13, fontWeight: 900 }}>unrekttt.vercel.app/incident/avici-user-drain</div>
       </div>
     </div>
   )
@@ -361,7 +361,7 @@ function TectonicCronosOpenGraphCard() {
       </div>
 
       <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", border: "1px solid rgba(139,92,246,0.23)", borderRadius: 7, background: "rgba(139,92,246,0.035)", padding: "10px 13px", marginTop: 7 }}><div style={{ display: "flex", alignItems: "center", gap: 12 }}><span style={{ display: "flex", color: "#a78bfa", fontSize: 9, fontWeight: 900, letterSpacing: 1.3 }}>PRELIMINARY TRAIL</span><span style={{ display: "flex", color: "#f4f4f5", fontSize: 15, fontWeight: 900 }}>TONIC &gt; inflated collateral &gt; Tectonic borrow</span><span style={{ display: "flex", color: "#71717a", fontSize: 11 }}>most value remains on Cronos</span></div><div style={{ display: "flex", color: "#a1a1aa", fontSize: 10 }}>Investigation ongoing</div></div>
-      <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 12, marginTop: 11 }}><div style={{ display: "flex", alignItems: "center", gap: 14, color: "#71717a", fontSize: 10 }}><span style={{ color: "#a1a1aa", fontWeight: 800 }}>Tectonic: do not interact</span><span style={{ color: "#3f3f46" }}>/</span><span>Root cause and final loss unconfirmed</span></div><div style={{ display: "flex", color: "#00ff88", fontSize: 13, fontWeight: 900 }}>hack-trail.vercel.app/incident/tectonic-cronos</div></div>
+      <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 12, marginTop: 11 }}><div style={{ display: "flex", alignItems: "center", gap: 14, color: "#71717a", fontSize: 10 }}><span style={{ color: "#a1a1aa", fontWeight: 800 }}>Tectonic: do not interact</span><span style={{ color: "#3f3f46" }}>/</span><span>Root cause and final loss unconfirmed</span></div><div style={{ display: "flex", color: "#00ff88", fontSize: 13, fontWeight: 900 }}>unrekttt.vercel.app/incident/tectonic-cronos</div></div>
     </div>
   )
 }
@@ -698,7 +698,7 @@ function RisexOpenGraphCard() {
           <div style={{ display: "flex" }}>SEAL 911 tracing underway</div>
         </div>
         <div style={{ display: "flex", color: "#00ff88", fontSize: 13, fontWeight: 900 }}>
-          hack-trail.vercel.app/incident/risex-xlp
+          unrekttt.vercel.app/incident/risex-xlp
         </div>
       </div>
     </div>
@@ -746,7 +746,7 @@ export function renderIncidentImage(slug: string) {
             <div style={{ fontSize: 13, color: "#a1a1aa", marginTop: 7 }}>{stat.note}</div>
           </div>)}
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", paddingTop: 18, borderTop: "1px solid #ffffff24", fontSize: 15 }}><span style={{ color: "#a1a1aa" }}>Fund flow · Tracked wallets · Impact</span><span style={{ color: "#00ff88" }}>hack-trail.vercel.app</span></div>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", paddingTop: 18, borderTop: "1px solid #ffffff24", fontSize: 15 }}><span style={{ color: "#a1a1aa" }}>Fund flow · Tracked wallets · Impact</span><span style={{ color: "#00ff88" }}>unrekttt.vercel.app</span></div>
       </div>, size,
     )
   }
@@ -993,7 +993,7 @@ export function renderIncidentImage(slug: string) {
         >
           <div>Wallet exposure checks, fund flow, timeline, and protocol impact</div>
           <div style={{ display: "flex", color: "#00ff88", fontWeight: 800 }}>
-            hack-trail.vercel.app/incident/{slug}
+            unrekttt.vercel.app/incident/{slug}
           </div>
         </div>
       </div>

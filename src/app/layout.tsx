@@ -18,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hack-trail.vercel.app"),
+  metadataBase: new URL("https://unrekttt.vercel.app"),
   title: "Unrekt | Onchain Security Intelligence",
   description:
     "Investigate onchain incidents with Hack Trail, trace funds and check wallet exposure.",

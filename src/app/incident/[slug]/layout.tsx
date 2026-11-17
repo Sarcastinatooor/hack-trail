@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { INCIDENTS } from "@/data/incidents"
 
-const SITE_URL = "https://hack-trail.vercel.app"
+const SITE_URL = "https://unrekttt.vercel.app"
 const OG_IMAGE_VERSION = "hacktrail-logo-v2"
 const RISEX_OG_IMAGE_VERSION = "risex-forensic-card-v1"
 const MOONWELL_MAMO_OG_IMAGE_VERSION = "moonwell-mamo-forensic-card-v1"
