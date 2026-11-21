@@ -3,8 +3,7 @@
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { use, useState } from "react"
-import { FlowSankey } from "@/components/FlowSankey"
-import { AnimatedFundFlow } from "@/components/AnimatedFundFlow"
+import { FundRoute } from "@/components/FundRoute"
 import { ImpactChart } from "@/components/ImpactChart"
 import { MarketImpactPanel } from "@/components/MarketImpactPanel"
 import { Boundary } from "@/components/Boundary"
@@ -106,13 +105,6 @@ const TABS: { id: Tab; icon: string; label: string }[] = [
   { id: "impact", icon: "◈", label: "Impact" },
 ]
 
-type FlowResp = {
-  nodes: Array<{ name: string; kind: string }>
-  links: Array<{
-    source: string; target: string; value: number
-    asset?: string; chain?: string; phase?: string; step?: number; summary?: string
-  }>
-}
 
 type ImpactResp = Record<string, unknown>
 
@@ -1091,27 +1083,6 @@ function OstiumIncidentMatrix() {
   )
 }
 
-function FlowTab({ slug }: { slug: string }) {
-  const isZcashExplainer = slug === "zcash-orchard"
-
-  const { data, isLoading } = useQuery<FlowResp>({
-    queryKey: ["flow", slug],
-    queryFn: () => fetch(`/api/flow/${slug}`).then((r) => r.json()),
-    enabled: !isZcashExplainer,
-  })
-
-  if (isZcashExplainer) {
-    return <ZecFlowExplainer />
-  }
-
-  if (isLoading)
-    return <div className="h-[400px] neon-card-static animate-pulse" />
-  if (!data) return null
-  if (slug.includes("binance") || slug === "vargan-points-otc") {
-    return <AnimatedFundFlow links={data.links} />
-  }
-  return <FlowSankey nodes={data.nodes} links={data.links} />
-}
 
 function ImpactTab({ slug, incidentTs, contagionEndTs }: { slug: string; incidentTs?: number; contagionEndTs?: number }) {
   const { data, isLoading, isFetching, refetch, error } = useQuery<ImpactResp>({
@@ -1362,7 +1333,7 @@ export default function IncidentPage({
 
           {tab === "flow" && (
             <Boundary label="Flow Diagram">
-              <FlowTab slug={slug} />
+              {slug === "zcash-orchard" ? <ZecFlowExplainer /> : <FundRoute hops={hops} />}
             </Boundary>
           )}
 
