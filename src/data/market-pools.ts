@@ -16,6 +16,7 @@ export interface MarketCoverage { assets: AssetKey[]; note: string }
 
 // Associations follow incident records; pools are context, not attacker attribution.
 export const MARKET_COVERAGE: Record<string, MarketCoverage> = {
+  'chainflip-ethereum-vault': { assets: ['eth', 'usdc', 'usdt'], note: 'Ethereum payout-asset markets; WETH is a native ETH proxy. No selected pool is attributed to attacker swaps.' },
   'vargan-points-otc': { assets: ['arbUsdc', 'dai', 'eth'], note: 'USDC escrow outflows and Ethereum proceeds. Variational points are not transferable tokens. WETH is an ETH market proxy.' },
   'binance-hot-wallet-2026': { assets: ['ena', 'usdt', 'usdc', 'arb', 'eth', 'sol', 'uni', 'aave'], note: 'Selected affected-asset and ecosystem markets, not a complete stolen-asset inventory. UNI/AAVE provide protocol context, not protocol volume or TVL. Native BTC, XRP and TRX are not replaced with unrelated wrapped assets. Pool volume is not UniswapX-wide volume.' },
   'near-intents-deposit-notification': { assets: ['bscUsdt'], note: 'BSC USDT payout-asset market context, not NEAR Intents internal liquidity.' },

@@ -1,3 +1,4 @@
+import { CHAINFLIP } from './chainflip-ethereum-vault'
 import { DRIFT_PROTOCOL_DATA } from "./drift-protocol"
 import { ALTURA_HYPEREVM_DATA } from "./altura-hyperevm"
 import {
@@ -43,6 +44,7 @@ import { BINANCE_HOT_WALLET_2026_DATA } from "./binance-hot-wallet-2026"
 import { VARGAN_POINTS_OTC_DATA } from "./vargan-points-otc"
 
 export const INCIDENT_DATA_BY_SLUG: Record<string, IncidentData> = {
+  'chainflip-ethereum-vault': CHAINFLIP,
   "vargan-points-otc": VARGAN_POINTS_OTC_DATA,
   "avici-user-drain": AVICI_DRAIN_DATA,
   "tectonic-cronos": TECTONIC_CRONOS_DATA,

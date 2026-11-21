@@ -2,6 +2,13 @@ import type { IncidentSummary } from './types'
 
 export const INCIDENTS: IncidentSummary[] = [
   {
+    id: 'chainflip-ethereum-vault', slug: 'chainflip-ethereum-vault', name: 'Chainflip Ethereum Vault Drain', victim: 'Chainflip',
+    date: '2026-11-21', date_label: 'Nov 21, 2026', loss_usd: 0, observed_outflow_usd: 4860000,
+    loss_label: '~$4.86M reported outflow', chains: ['Ethereum'], attack_vector: 'Reported aggregate-signature authorization',
+    attribution: 'Unknown', short_summary: 'Onchain Lens reports ETH, USDC and USDT leaving the Ethereum vault. The signing compromise hypothesis and final net loss remain unverified.',
+    status: 'ongoing', tags: ['Ethereum', 'vault', 'reported', 'under-investigation'],
+  },
+  {
     id: "vargan-points-otc-2026-11", slug: "vargan-points-otc",
     name: "Vargan Points OTC - Suspected Exit Scam", victim: "Third-party OTC escrow participants",
     date: "2026-11-06", date_label: "Nov 6, 2026", loss_usd: 0,

@@ -174,6 +174,7 @@ async function fetchCoinGeckoPrice(coinId: string, from: number, to: number): Pr
 
 // Config per incident slug
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
+  'chainflip-ethereum-vault': { tvl: [], prices: [{ key: 'eth_price', coinId: 'ethereum' }], from: 1795247654 - 86400, to: 1795247654 + 172800 },
   'vargan-points-otc': {
     tvl: [], prices: [], from: VARGAN_OUTFLOWS[0].ts, to: VARGAN_BRIDGES.at(-1)!.ts,
     staticSeries: [
